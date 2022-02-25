@@ -5,13 +5,13 @@ import java.util.Map;
 
 public class Corso {
     private String idCorso;
-    private String  nome;
+    private String  nomeCorso;
     private String  livello;
     private String  focus;
 
-    public Corso(String idCorso, String nome, String livello, String focus){
+    public Corso(String idCorso, String nomeCorso, String livello, String focus){
         this.idCorso =idCorso;
-        this.nome=nome;
+        this.nomeCorso=nomeCorso;
         this.livello=livello;
         this.focus=focus;
     }
@@ -21,7 +21,7 @@ public class Corso {
     }
 
     public String getNome() {
-        return nome;
+        return nomeCorso;
     }
 
     public String getLivello() {
@@ -36,8 +36,8 @@ public class Corso {
         this.idCorso = idCorso;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setNomeCorso(String nomeCorso) {
+        this.nomeCorso = nomeCorso;
     }
 
     public void setLivello(String livello) {
