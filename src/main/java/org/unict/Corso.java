@@ -5,9 +5,9 @@ import java.util.Map;
 
 public class Corso {
     private String idCorso;
-    private String  nomeCorso;
-    private String  livello;
-    private String  focus;
+    private String nomeCorso;
+    private String livello;
+    private String focus;
 
     public Corso(String idCorso, String nomeCorso, String livello, String focus){
         this.idCorso =idCorso;
@@ -46,6 +46,13 @@ public class Corso {
 
     public void setFocus(String focus) {
         this.focus = focus;
+    }
+
+    public void inserisciLezione(String idLezione, int idSlot){
+        Lezione l  = new Lezione(idLezione, idSlot);
+
+        System.out.println("Corso inserito");
+
     }
 
 

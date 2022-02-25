@@ -1,16 +1,14 @@
 package org.unict;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Attrezzi {
+public class Attrezzo {
     private String idAttrezzo;
-    private Map<String, Sala> elencoSale;
 
 
-    public Attrezzi(String idAttrezzo){
+    public Attrezzo(String idAttrezzo){
         this.idAttrezzo = idAttrezzo;
     }
 
@@ -21,10 +19,10 @@ public class Attrezzi {
     public void setIdAttrezzo(String idAttrezzo) {
         this.idAttrezzo = idAttrezzo;
     }
-    public  List<Sala> getSaleDisponibili(String idSala){
+    /*public  List<Sala> getSaleDisponibili(String idSala){
         List<Sala> salaList = new ArrayList<>();
         salaList.addAll(elencoSale.values());
         return salaList;
-    }
+    }*/
 
 }

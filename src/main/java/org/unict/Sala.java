@@ -7,18 +7,27 @@ import java.util.Map;
 public class Sala {
 
     private String idSala;
-    private Map<Integer, FasciaOraria> elencoFasceOrarie;
 
     public Sala(String idSala){
         this.idSala = idSala;
 
     }
+    public String getIdSala() {
 
-    public List<FasciaOraria> getFasceOrarieDisponibili(FasciaOraria fo, Sala s){
+        return idSala;
+    }
+
+    public String getDisponibile(String idAttrezzo, int idSlot){
+        if( == idSala & )
+    }
+    public void setIdSala(String idSala) {
+        this.idSala = idSala;
+    }
+    /*public List<FasciaOraria> getFasceOrarieDisponibili(FasciaOraria fo, Sala s){
         List<FasciaOraria> orariaList = new ArrayList<>();
         orariaList.addAll(elencoFasceOrarie.values());
         return  orariaList;
-    }
+    }*/
 
 
 }
