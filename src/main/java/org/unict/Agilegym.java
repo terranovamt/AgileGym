@@ -6,19 +6,18 @@ import java.util.List;
 import java.util.Map;
 
 public class Agilegym {
-
+    //attributi
     private static  Agilegym agilegym;
     private Corso corsoCorrente;
-    private  Map<String, Corso> elencoCorsi;
-    private  Map<String, Attrezzi> elencoAttrezzi;
-    private  Map<String, Sala> elencoSale;
-    private  Map<String, Istruttore> elencoIstruttori;
+    private Map<String, Corso> elencoCorsi;
+    private Map<String, Attrezzi> elencoAttrezzi;
+    private Map<String, Istruttore> elencoIstruttori;
 
+    //constructor
     private Agilegym(){
         this.elencoCorsi = new HashMap<>();
         this.elencoAttrezzi = new HashMap<>();
         this.elencoIstruttori = new HashMap<>();
-        this.elencoSale =new HashMap<>();
 
     }
 
@@ -35,6 +34,9 @@ public class Agilegym {
         this.corsoCorrente = new Corso(idCorso, nomeCorso, livello, focus);
         System.out.println("Corso inserito");
     }
+
+
+
 
 
 }
