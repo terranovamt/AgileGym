@@ -1,7 +1,6 @@
 package org.unict;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Agilegym {
     //attributes
@@ -66,7 +65,7 @@ public class Agilegym {
     public void loadSale(){
         int i;
         Sala[] s = new Sala[n];
-        for(i=0; i<=n; i++){
+        for(i=0; i<n; i++){
 
             s[i] = new Sala(String.valueOf(i));
             this.elencoSaleDisponibili.put(String.valueOf(i), s[i]);
@@ -78,7 +77,7 @@ public class Agilegym {
         int j;
         Istruttore[] i = new Istruttore[n];
         Slot slot = new Slot();
-        for(j=0; j<=n; j++){
+        for(j=0; j<n; j++){
 
             i[j] = new Istruttore(String.valueOf(j),  slot);
             this.elencoIstruttoriDisponibili.put(String.valueOf(i), i[j]);
@@ -88,18 +87,27 @@ public class Agilegym {
     }
     public void createAttrezzi(){
         int i;
-        int numAttrezzi = (int) Math.random();
+        int numAttrezzi = (int) Math.random()*10;
         Attrezzo[] a = new Attrezzo[n];
-        for(i=0; i<=n; i++){
+        for(i=0; i<n; i++){
 
             a[i] = new Attrezzo(String.valueOf(i),  numAttrezzi);
         }
         System.out.println("Attrezzi creati!");
 
     }
+    public List<Corso> getElencoCorsi() {
+        List<Corso> listCorsi = new ArrayList<>();
+        listCorsi.addAll(elencoCorsi.values());
+        return listCorsi;
+    }
 
+    public Corso getCorsoCorrente() {
+        return corsoCorrente;
+    }
 
-
-
+    public Corso getCorso(String idCorso) {
+        return elencoCorsi.get(idCorso);
+    }
 
 }
