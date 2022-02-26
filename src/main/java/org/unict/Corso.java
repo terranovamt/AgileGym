@@ -48,8 +48,8 @@ public class Corso {
         this.focus = focus;
     }
 
-    public void inserisciLezione(String idLezione, int idSlot){
-        Lezione l  = new Lezione(idLezione, idSlot);
+    public void inserisciLezione(String idLezione, int idSlot, Sala s, Istruttore i ){
+        Lezione l  = new Lezione(idLezione, idSlot, s,i);
 
         System.out.println("Corso inserito");
 

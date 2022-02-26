@@ -17,9 +17,12 @@ public class Sala {
         return idSala;
     }
 
-    public String getDisponibile(String idAttrezzo, int idSlot){
+    /*public String getDisponibile(String idAttrezzo, int idSlot){
         if( == idSala & )
-    }
+    }*/
+
+
+
     public void setIdSala(String idSala) {
         this.idSala = idSala;
     }

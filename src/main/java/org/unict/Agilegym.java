@@ -42,12 +42,11 @@ public class Agilegym {
         Sala s = elencoSaleDisponibili.get(idAttrezzo);
         Istruttore i = elencoIstruttoriDisponibili.get(idSlot);
             if(s != null){
-                this.corsoCorrente.inserisciLezione(idLezione, s.getIdSala(), i.getIdIstruttore() , idSlot);
+                this.corsoCorrente.inserisciLezione(idLezione, idSlot ,s, i);
                 System.out.println("Lezione Inserita");
             }
             else
                 System.out.println("Sala occupata");
-
 
         System.out.println("Corso inserito");
 
