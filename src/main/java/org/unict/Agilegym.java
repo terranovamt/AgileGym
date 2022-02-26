@@ -82,7 +82,6 @@ public class Agilegym {
 
             i[j] = new Istruttore(String.valueOf(j),  slot);
             this.elencoIstruttoriDisponibili.put(String.valueOf(i), i[j]);
-
         }
         System.out.println("Elenco Istruttori caricato!");
 

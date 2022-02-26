@@ -1,7 +1,6 @@
 package org.unict;
 
 
-
 public class Istruttore {
 
     private String idIstruttore;

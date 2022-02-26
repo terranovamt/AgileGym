@@ -15,7 +15,6 @@ public class Lezione {
     }
 
     public String getIdLezione() {
-
         return idLezione;
     }
     public int getIdSlot() {
