@@ -1,6 +1,6 @@
 package org.unict;
 
-public class app {
+public class App {
 
     public static void main (String [] args){
         Agilegym agilegym = Agilegym.getInstance();
