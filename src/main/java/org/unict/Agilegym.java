@@ -23,7 +23,7 @@ public class Agilegym {
         this.elencoSaleDisponibili = new HashMap<>();
         loadSale();
         loadIstruttore();
-        //loadAttrezzi();
+        createAttrezzi();
 
 
     }
@@ -85,6 +85,17 @@ public class Agilegym {
 
         }
         System.out.println("Elenco Istruttori caricato!");
+
+    }
+    public void createAttrezzi(){
+        int i;
+        int numAttrezzi = (int) Math.random();
+        Attrezzo[] a = new Attrezzo[n];
+        for(i=0; i<=n; i++){
+
+            a[i] = new Attrezzo(String.valueOf(i),  numAttrezzi);
+        }
+        System.out.println("Attrezzi creati!");
 
     }
 
