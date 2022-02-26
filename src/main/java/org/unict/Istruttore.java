@@ -3,11 +3,11 @@ package org.unict;
 public class Istruttore {
 
     private String idIstruttore;
-    private int idSlot;     //primo numero giorno della settimana e i successivi due indicano l'ora. N.B. 209= martedi' ore 9 am
+    private Slot s;     //primo numero giorno della settimana e i successivi due indicano l'ora. N.B. 209= martedi' ore 9 am
 
-    public Istruttore(String idIstruttore, int idSlot){
+    public Istruttore(String idIstruttore, Slot s){
          this.idIstruttore = idIstruttore;
-         this.idSlot = idSlot;
+         this.s =s;
      }
 
     public String getIdIstruttore() {
@@ -19,10 +19,10 @@ public class Istruttore {
     }
 
     public int getIdSlot() {
-        return idSlot;
+        return s.getIdSlot();
     }
 
-    public void setIdSlot(int idSlot) {
-        this.idSlot = idSlot;
+    public void setIdSlot(Slot s) {
+        this.s = s;
     }
 }

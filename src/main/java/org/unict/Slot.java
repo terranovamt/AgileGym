@@ -5,11 +5,16 @@ public class Slot {
     private boolean disponibile= true;
 
     public void setIdSlot(int idSlot) {
+
         this.idSlot = idSlot;
     }
 
     public void setDisponibile(boolean disponibile) {
         this.disponibile = disponibile;
+    }
+
+    public int getIdSlot() {
+        return idSlot;
     }
 
     public boolean isDisponibile(int idSlot) {

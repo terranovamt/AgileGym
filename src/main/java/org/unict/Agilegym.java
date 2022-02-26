@@ -22,7 +22,7 @@ public class Agilegym {
         this.elencoLezioni = new HashMap<>();
         this.elencoSaleDisponibili = new HashMap<>();
         loadSale();
-        //loadIstruttore();
+        loadIstruttore();
         //loadAttrezzi();
 
 
@@ -74,18 +74,19 @@ public class Agilegym {
         }
         System.out.println("Elenco Sale caricato!");
     }
-    /*public void loadIstruttore(){
+    public void loadIstruttore(){
         int j;
         Istruttore[] i = new Istruttore[n];
+        Slot slot = new Slot();
         for(j=0; j<=n; j++){
 
-            i[j] = new Istruttore(String.valueOf(j));
-            this.elencoSaleDisponibili.put(String.valueOf(i), s[i]);
+            i[j] = new Istruttore(String.valueOf(j),  slot);
+            this.elencoIstruttoriDisponibili.put(String.valueOf(i), i[j]);
 
         }
-        System.out.println("Elenco Sale caricato!");
+        System.out.println("Elenco Istruttori caricato!");
 
-    }*/
+    }
 
 
 
