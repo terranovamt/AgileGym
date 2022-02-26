@@ -1,0 +1,124 @@
+Index: src/main/java/org/unict/Corso.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.unict;\r\n\r\nimport java.util.HashMap;\r\nimport java.util.Map;\r\n\r\npublic class Corso {\r\n    private String idCorso;\r\n    private String  nomeCorso;\r\n    private String  livello;\r\n    private String  focus;\r\n\r\n    public Corso(String idCorso, String nomeCorso, String livello, String focus){\r\n        this.idCorso =idCorso;\r\n        this.nomeCorso=nomeCorso;\r\n        this.livello=livello;\r\n        this.focus=focus;\r\n    }\r\n\r\n    public String getIdCorso() {\r\n        return idCorso;\r\n    }\r\n\r\n    public String getNome() {\r\n        return nomeCorso;\r\n    }\r\n\r\n    public String getLivello() {\r\n        return livello;\r\n    }\r\n\r\n    public String getFocus() {\r\n        return focus;\r\n    }\r\n\r\n    public void setIdCorso(String idCorso) {\r\n        this.idCorso = idCorso;\r\n    }\r\n\r\n    public void setNomeCorso(String nomeCorso) {\r\n        this.nomeCorso = nomeCorso;\r\n    }\r\n\r\n    public void setLivello(String livello) {\r\n        this.livello = livello;\r\n    }\r\n\r\n    public void setFocus(String focus) {\r\n        this.focus = focus;\r\n    }\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/unict/Corso.java b/src/main/java/org/unict/Corso.java
+--- a/src/main/java/org/unict/Corso.java	(revision 62273d2b3d173947c4148af58a9ba8a11c4956e8)
++++ b/src/main/java/org/unict/Corso.java	(date 1645795419669)
+@@ -4,7 +4,7 @@
+ import java.util.Map;
+ 
+ public class Corso {
+-    private String idCorso;
++    private String  idCorso;
+     private String  nomeCorso;
+     private String  livello;
+     private String  focus;
+Index: src/main/java/org/unict/Sala.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.unict;\r\n\r\npublic class Sala {\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/unict/Sala.java b/src/main/java/org/unict/Sala.java
+--- a/src/main/java/org/unict/Sala.java	(revision 62273d2b3d173947c4148af58a9ba8a11c4956e8)
++++ b/src/main/java/org/unict/Sala.java	(date 1645798178146)
+@@ -1,4 +1,6 @@
+ package org.unict;
+ 
+ public class Sala {
++    private String idSala;
++
+ }
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"6a5b2f05-9589-4439-bd70-8ff067af0e69\" name=\"Changes\" comment=\"MTTcommit\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/org/unict/Agilegym.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/org/unict/Agilegym.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"22y59UuvreDgu7Qaxjdl5VzT7Ur\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">\r\n    <property name=\"RunOnceActivity.OpenProjectViewOnStart\" value=\"true\" />\r\n    <property name=\"RunOnceActivity.ShowReadmeOnStart\" value=\"true\" />\r\n    <property name=\"SHARE_PROJECT_CONFIGURATION_FILES\" value=\"true\" />\r\n    <property name=\"WebServerToolWindowFactoryState\" value=\"false\" />\r\n    <property name=\"last_opened_file_path\" value=\"$USER_HOME$/Desktop/Università/Primo anno/IS/metropol\" />\r\n    <property name=\"node.js.detected.package.eslint\" value=\"true\" />\r\n    <property name=\"node.js.detected.package.tslint\" value=\"true\" />\r\n    <property name=\"node.js.selected.package.eslint\" value=\"(autodetect)\" />\r\n    <property name=\"node.js.selected.package.tslint\" value=\"(autodetect)\" />\r\n    <property name=\"nodejs_package_manager_path\" value=\"npm\" />\r\n    <property name=\"project.structure.last.edited\" value=\"Project\" />\r\n    <property name=\"project.structure.proportion\" value=\"0.15\" />\r\n    <property name=\"project.structure.side.proportion\" value=\"0.2\" />\r\n    <property name=\"settings.editor.selected.configurable\" value=\"preferences.pluginManager\" />\r\n  </component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"Unnamed\" type=\"Application\" factoryName=\"Application\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"org.unict.app\" />\r\n      <module name=\"AgileGym\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"6a5b2f05-9589-4439-bd70-8ff067af0e69\" name=\"Changes\" comment=\"\" />\r\n      <created>1640796843678</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1640796843678</updated>\r\n      <workItem from=\"1640796846837\" duration=\"1367000\" />\r\n      <workItem from=\"1640798273596\" duration=\"78000\" />\r\n      <workItem from=\"1640798413385\" duration=\"2260000\" />\r\n      <workItem from=\"1640800935709\" duration=\"5000\" />\r\n      <workItem from=\"1640802749763\" duration=\"930000\" />\r\n      <workItem from=\"1640803840629\" duration=\"57000\" />\r\n      <workItem from=\"1645696653131\" duration=\"180000\" />\r\n      <workItem from=\"1645786377370\" duration=\"914000\" />\r\n      <workItem from=\"1645787329986\" duration=\"1382000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"firs commit\">\r\n      <created>1640797810569</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1640797810569</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"prova Hello Word\">\r\n      <created>1640797985827</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1640797985827</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"Ciao mondo\">\r\n      <created>1640798106676</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1640798106676</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"commit build\">\r\n      <created>1640800355127</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1640800355127</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"commit build\">\r\n      <created>1640803490454</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1640803490454</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"MTTcommit\">\r\n      <created>1640803586601</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1640803586601</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"MTTcommit\">\r\n      <created>1645788097589</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1645788097589</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00008\" summary=\"MTTcommit\">\r\n      <created>1645788261319</created>\r\n      <option name=\"number\" value=\"00008\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1645788261319</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"9\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"firs commit\" />\r\n    <MESSAGE value=\"prova Hello Word\" />\r\n    <MESSAGE value=\"Ciao mondo\" />\r\n    <MESSAGE value=\"commit build\" />\r\n    <MESSAGE value=\"MTTcommit\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"MTTcommit\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 62273d2b3d173947c4148af58a9ba8a11c4956e8)
++++ b/.idea/workspace.xml	(date 1645797693413)
+@@ -6,7 +6,8 @@
+   <component name="ChangeListManager">
+     <list default="true" id="6a5b2f05-9589-4439-bd70-8ff067af0e69" name="Changes" comment="MTTcommit">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/org/unict/Agilegym.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/unict/Agilegym.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/org/unict/Corso.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/unict/Corso.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/org/unict/Sala.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/unict/Sala.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -22,6 +23,14 @@
+   </component>
+   <component name="Git.Settings">
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
++  </component>
++  <component name="GitSEFilterConfiguration">
++    <file-type-list>
++      <filtered-out-file-type name="LOCAL_BRANCH" />
++      <filtered-out-file-type name="REMOTE_BRANCH" />
++      <filtered-out-file-type name="TAG" />
++      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
++    </file-type-list>
+   </component>
+   <component name="MarkdownSettingsMigration">
+     <option name="stateVersion" value="1" />
+@@ -73,7 +82,7 @@
+       <workItem from="1640803840629" duration="57000" />
+       <workItem from="1645696653131" duration="180000" />
+       <workItem from="1645786377370" duration="914000" />
+-      <workItem from="1645787329986" duration="1382000" />
++      <workItem from="1645787329986" duration="5310000" />
+     </task>
+     <task id="LOCAL-00001" summary="firs commit">
+       <created>1640797810569</created>
+@@ -131,7 +140,42 @@
+       <option name="project" value="LOCAL" />
+       <updated>1645788261319</updated>
+     </task>
+-    <option name="localTasksCounter" value="9" />
++    <task id="LOCAL-00009" summary="MTTcommit">
++      <created>1645788729065</created>
++      <option name="number" value="00009" />
++      <option name="presentableId" value="LOCAL-00009" />
++      <option name="project" value="LOCAL" />
++      <updated>1645788729065</updated>
++    </task>
++    <task id="LOCAL-00010" summary="MTTcommit">
++      <created>1645788786500</created>
++      <option name="number" value="00010" />
++      <option name="presentableId" value="LOCAL-00010" />
++      <option name="project" value="LOCAL" />
++      <updated>1645788786500</updated>
++    </task>
++    <task id="LOCAL-00011" summary="MTTcommit">
++      <created>1645793957141</created>
++      <option name="number" value="00011" />
++      <option name="presentableId" value="LOCAL-00011" />
++      <option name="project" value="LOCAL" />
++      <updated>1645793957141</updated>
++    </task>
++    <task id="LOCAL-00012" summary="MTTcommit">
++      <created>1645795149029</created>
++      <option name="number" value="00012" />
++      <option name="presentableId" value="LOCAL-00012" />
++      <option name="project" value="LOCAL" />
++      <updated>1645795149029</updated>
++    </task>
++    <task id="LOCAL-00013" summary="MTTcommit">
++      <created>1645795263487</created>
++      <option name="number" value="00013" />
++      <option name="presentableId" value="LOCAL-00013" />
++      <option name="project" value="LOCAL" />
++      <updated>1645795263487</updated>
++    </task>
++    <option name="localTasksCounter" value="14" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
