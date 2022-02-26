@@ -1,5 +1,7 @@
 package org.unict;
 
+
+
 public class Istruttore {
 
     private String idIstruttore;
@@ -8,7 +10,7 @@ public class Istruttore {
     public Istruttore(String idIstruttore, Slot s){
          this.idIstruttore = idIstruttore;
          this.s =s;
-     }
+    }
 
     public String getIdIstruttore() {
         return idIstruttore;
