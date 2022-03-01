@@ -4,9 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6a5b2f05-9589-4439-bd70-8ff067af0e69" name="Changes" comment="MTTcommit">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/unict/App.java" afterDir="false" />
+    <list default="true" id="6a5b2f05-9589-4439-bd70-8ff067af0e69" name="Changes" comment="FabiolaCommit">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/unict/Agilegym.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/unict/Agilegym.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/unict/Attrezzo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/unict/Attrezzo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/unict/Corso.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/unict/Corso.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/unict/Istruttore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/unict/Istruttore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/unict/Lezione.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/unict/Lezione.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/unict/Sala.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/unict/Sala.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/unict/Slot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/unict/Slot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/unict/app.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/unict/app.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/unict/slot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/unict/Agilegym.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/unict/Agilegym.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/unict/Corso.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/unict/Corso.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/unict/Istruttore.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/unict/Istruttore.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/unict/Lezione.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/unict/Lezione.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/unict/Sala.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/unict/Sala.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/unict/Slot.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/unict/Slot.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/unict/app.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/unict/app.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,21 +38,32 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="22y59UuvreDgu7Qaxjdl5VzT7Ur" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/Università/Primo anno/IS/metropol" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -74,6 +100,9 @@
       <workItem from="1645696653131" duration="180000" />
       <workItem from="1645786377370" duration="914000" />
       <workItem from="1645787329986" duration="1382000" />
+      <workItem from="1645956647051" duration="11711000" />
+      <workItem from="1646074184223" duration="7464000" />
+      <workItem from="1646157643690" duration="10069000" />
     </task>
     <task id="LOCAL-00001" summary="firs commit">
       <created>1640797810569</created>
@@ -131,14 +160,7 @@
       <option name="project" value="LOCAL" />
       <updated>1645788261319</updated>
     </task>
-    <task id="LOCAL-00009" summary="MTTcommit">
-      <created>1645874388047</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1645874388047</updated>
-    </task>
-    <option name="localTasksCounter" value="10" />
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -156,6 +178,7 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="firs commit" />
     <MESSAGE value="prova Hello Word" />
     <MESSAGE value="Ciao mondo" />

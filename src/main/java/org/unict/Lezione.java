@@ -6,10 +6,12 @@ public class Lezione {
     private int idSlot;
     private Sala s;
     private Istruttore i;
+    private Corso c;
 
-    public Lezione(String idLezione, int idSlot, Sala s, Istruttore i){
+    public Lezione(String idLezione, int idSlot, Corso c, Sala s, Istruttore i){
         this.idLezione = idLezione;
         this.idSlot = idSlot;
+        this.c= c;
         this.s=s;
         this.i=i;
     }

@@ -6,12 +6,13 @@ import java.util.Map;
 
 public class Attrezzo {
     private String idAttrezzo;
-    private int numAttrezzi;
+    //l'attrezzo non ha il numero di attrezzi, ce l'ha sala
+    //private int numAttrezzi;
 
 
-    public Attrezzo(String idAttrezzo, int numAttrezzi) {
+    public Attrezzo(String idAttrezzo) {
         this.idAttrezzo = idAttrezzo;
-        this.numAttrezzi= numAttrezzi;
+        //this.numAttrezzi= numAttrezzi;
     }
 
     public String getIdAttrezzo() {
@@ -22,13 +23,13 @@ public class Attrezzo {
         this.idAttrezzo = idAttrezzo;
     }
 
-    public int getNumAttrezzi() {
+   /* public int getNumAttrezzi() {
         return numAttrezzi;
     }
 
     public void setNumAttrezzi(int numAttrezzi) {
         this.numAttrezzi = numAttrezzi;//caricamente da file
-    }
+    }*/
 
     /*public  List<Sala> getSaleDisponibili(String idSala){
         List<Sala> salaList = new ArrayList<>();
@@ -36,4 +37,11 @@ public class Attrezzo {
         return salaList;
     }*/
 
+    @Override
+    public String toString(){
+        String a =
+                "ID-Attrezzo:\t" + idAttrezzo + "\n";
+                        //"Num.Attrezzi:\t" + numAttrezzi;
+        return a;
+    }
 }
