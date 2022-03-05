@@ -32,17 +32,7 @@ public class Attrezzo {
         this.idAttrezzo = idAttrezzo;
     }
 
-   public List getSaleDisponibili(){
-       List listaSaleDisponibili = new ArrayList();
-       Iterator iterator = listaSalediAttrezzo.entrySet().iterator();
-       while (iterator.hasNext()) {
-           Map.Entry mapSet2 = (Map.Entry) iterator.next();
-           System.out.println(" "+mapSet2.getKey() + " " + mapSet2.getValue());
-           listaSaleDisponibili.add(mapSet2.getValue());
-       }
 
-        return listaSaleDisponibili;
-   }
 
     @Override
     public String toString(){

@@ -213,7 +213,7 @@ public class Agilegym {
         //dal secondo file si carica le sale
         String idAttrezzo;
         Map<String,Sala> listaSaleAttrezzo = loadSale();
-        int i =1;
+
         System.out.println("sono dentro loadListaAttrezzi\n\n");
 
         try {
@@ -221,9 +221,8 @@ public class Agilegym {
             idAttrezzo = br.readLine();
             //System.out.println(id);
             while (idAttrezzo != null){
-                listaAttrezzi.put(String.valueOf(i), new Attrezzo(idAttrezzo, listaSaleAttrezzo));
+                listaAttrezzi.put(idAttrezzo, new Attrezzo(idAttrezzo, listaSaleAttrezzo));
                 idAttrezzo = br.readLine();
-                i++;
             }
         }catch (IOException e) {
             System.out.println("ERRORE NEL CARICAMENTO DEL FILE Attrezzi.txt\n" );
@@ -255,8 +254,7 @@ public class Agilegym {
         //funziona, ma non funzione il toString di slot, c'è qualcosa che no va nella stamp adi elenco---disponibili
 
     }
-    public void inserisciCorso(){
-        //METTEVAMO ANCHE L'ID DELL'ATTREZZO E DELLO SLOT, MA IN CORSO NO, PERCHE'?
+    public void inserisciCorso() throws inserisciCorsoException {
         String idCorso;
         String nomeCorso;
         String livello;
@@ -276,48 +274,28 @@ public class Agilegym {
             livello = br.readLine();
             System.out.println("Inserisci il focus del corso: \n");
             focus = br.readLine();
-            System.out.println("Inserisci l'ID dell'attrezzo del corso: \n" );
+            System.out.println("Inserisci l'ID dell'attrezzo del corso: \n");
             //l'amministatore inserisce l'id dell'attrezzo che vuole per quel corso, si cerca se quell'attrezzo
             //e' presente nella lista degli attrezzi, una volta trovato, si prende quell'attrezzo e lo si inserisce nel corso
             idAttrezzo = br.readLine();
-            this.corsoCorrente = new Corso(idCorso, nomeCorso, livello, focus, idAttrezzo);
-            Iterator iterator = listaAttrezzi.entrySet().iterator();
-            while (iterator.hasNext()) {
-                Map.Entry mapSet2 = (Map.Entry) iterator.next();
-                //System.out.println(" "+mapSet2.getKey() + " " + mapSet2.getValue());
-                System.out.println(mapSet2.getValue());
-
-                if(mapSet2.getValue() == idAttrezzo){
-                    System.out.println("ciao");
-
-                }
+            attrezzoSelezionato = listaAttrezzi.get(idAttrezzo);
+            System.out.println(attrezzoSelezionato.toString());
+            if (attrezzoSelezionato == null) {
+                throw new inserisciCorsoException("Errore attrezzo inserito\n");
+            } else {
+                this.corsoCorrente = new Corso(idCorso, nomeCorso, livello, focus, idAttrezzo);
+                System.out.println("Corso inserito");
+                System.out.println("Lista delle sale contenenti questo attrezzo: \n");
+                System.out.println(attrezzoSelezionato.getListaSalediAttrezzo());
+                //anche qui bisogna aggiustare il tostring, non stampa getlistasalediattrezzo
             }
-            /*if(listaAttrezzi.containsValue(idAttrezzo)){
-                System.out.println("sono dentro l'if\n" );
-
-                attrezzoSelezionato = listaAttrezzi.get(idAttrezzo);
-                System.out.println("sto stampandando le sale disponibili" );
-
-                System.out.println(attrezzoSelezionato.getSaleDisponibili());
-
-                /*saleDisponibili = attrezzoSelezionato.getListaSalediAttrezzo();
-                Iterator iterator = saleDisponibili.entrySet().iterator();
-                while (iterator.hasNext()) {
-                    Map.Entry mapSet2 = (Map.Entry) iterator.next();
-
-                }*/
-            /*}*/
-
-            //System.out.println(corsoCorrente.toString());*/
-            System.out.println("Corso inserito");
-            //System.out.println(corsoCorrente.toString());
-        }catch(Exception e) {
-            System.out.println(e);
+        } catch (Exception e) {
+            System.out.println("ERRORE NELLA LETTURA DA TASTIERA:\n" );
+            System.exit(-12);
         }
 
-
-
     }
+
     public boolean equals(Attrezzo a){
         return a.getIdAttrezzo() == idAttrezzo;
     }
