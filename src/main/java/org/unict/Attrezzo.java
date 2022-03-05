@@ -32,6 +32,13 @@ public class Attrezzo {
         this.idAttrezzo = idAttrezzo;
     }
 
+    public String stampaListaSale(){
+        String s="";
+        for (Map.Entry<String, Sala> entry : listaSalediAttrezzo.entrySet()) {
+            s+=entry.getValue().getIdSala() /*+ " - " + entry.getValue().get()*/; // Fabiola ti serve per il to string di lista sala
+        }
+        return s;
+    }
 
 
     @Override

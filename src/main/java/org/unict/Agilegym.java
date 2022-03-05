@@ -286,7 +286,7 @@ public class Agilegym {
                 this.corsoCorrente = new Corso(idCorso, nomeCorso, livello, focus, idAttrezzo);
                 System.out.println("Corso inserito");
                 System.out.println("Lista delle sale contenenti questo attrezzo: \n");
-                System.out.println(attrezzoSelezionato.getListaSalediAttrezzo());
+                System.out.println(attrezzoSelezionato.stampaListaSale());
                 //anche qui bisogna aggiustare il tostring, non stampa getlistasalediattrezzo
             }
         } catch (Exception e) {

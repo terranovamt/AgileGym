@@ -5,7 +5,6 @@ import java.util.*;
 import java.util.Map;
 
 public class Sala {
-
     private String idSala;
     //non deve avere il numero degli attrezzi, perchè implementi via codice la ricerca del numero di occorrenze presente nella lista
     //LinkedList<Attrezzo> listaAttrezzi;
