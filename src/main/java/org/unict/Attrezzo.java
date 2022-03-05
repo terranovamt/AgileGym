@@ -1,18 +1,27 @@
 package org.unict;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Attrezzo {
     private String idAttrezzo;
     //l'attrezzo non ha il numero di attrezzi, ce l'ha sala
-    //private int numAttrezzi;
+    //private int numAttrezzi;      //l'attrezzo deve avere il numero di attrezi di quel tipo
+    //attrezzo deve avere una lista di sale, perchè quando faccio l'inserisci corso faccio il find attrezzo nella lista di attrezzi di attrezzo
 
+    private Map<String, Sala> listaSalediAttrezzo;
 
-    public Attrezzo(String idAttrezzo) {
+    public Attrezzo(String idAttrezzo, Map<String, Sala> listaSalediAttrezzo) {
         this.idAttrezzo = idAttrezzo;
-        //this.numAttrezzi= numAttrezzi;
+        this.listaSalediAttrezzo = new HashMap<>();
+    }
+
+
+    public void setListaSalediAttrezzo(Map<String, Sala> listaSalediAttrezzo) {
+        this.listaSalediAttrezzo = listaSalediAttrezzo;
+    }
+
+    public Map<String, Sala> getListaSalediAttrezzo() {
+        return listaSalediAttrezzo;
     }
 
     public String getIdAttrezzo() {
@@ -23,25 +32,23 @@ public class Attrezzo {
         this.idAttrezzo = idAttrezzo;
     }
 
-   /* public int getNumAttrezzi() {
-        return numAttrezzi;
-    }
+   public List getSaleDisponibili(){
+       List listaSaleDisponibili = new ArrayList();
+       Iterator iterator = listaSalediAttrezzo.entrySet().iterator();
+       while (iterator.hasNext()) {
+           Map.Entry mapSet2 = (Map.Entry) iterator.next();
+           System.out.println(" "+mapSet2.getKey() + " " + mapSet2.getValue());
+           listaSaleDisponibili.add(mapSet2.getValue());
+       }
 
-    public void setNumAttrezzi(int numAttrezzi) {
-        this.numAttrezzi = numAttrezzi;//caricamente da file
-    }*/
-
-    /*public  List<Sala> getSaleDisponibili(String idSala){
-        List<Sala> salaList = new ArrayList<>();
-        salaList.addAll(elencoSale.values());
-        return salaList;
-    }*/
+        return listaSaleDisponibili;
+   }
 
     @Override
     public String toString(){
         String a =
-                "ID-Attrezzo:\t" + idAttrezzo + "\n";
-                        //"Num.Attrezzi:\t" + numAttrezzi;
+                "ID-Attrezzo:\t" + idAttrezzo + "\n" +
+                        "ListaSale:\n\t" + listaSalediAttrezzo;
         return a;
     }
 }

@@ -7,17 +7,16 @@ public class app {
     public static void main (String [] args) {
 
         Agilegym agilegym = Agilegym.getInstance();
-        //agilegym.loadListaAttrezzi();
+        agilegym.loadAttrezzi();
         agilegym.loadSlot();
-        //agilegym.loadSale();
-        //agilegym.loadIstruttore();
-
+        agilegym.loadSale();
+        agilegym.loadIstruttore();
+        agilegym.inserisciCorso();
         //caso d'uso di avviamento:caricamento lista attrezzi, caricamento sale, caricamento istruttori
 
-        //agilegym.loadAttrezzi();
-        //agilegym.loadIstruttore();
+
         //System.out.println("Inserimento nuovo corso");
-        //agilegym.inserisciCorso();
+
         //agilegym.conferma();
         //agilegym.inserisciLezione("XXX","1",108);
         //System.out.println(agilegym.getCorsoCorrente()+"0------00");

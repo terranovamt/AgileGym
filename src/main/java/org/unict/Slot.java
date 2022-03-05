@@ -13,7 +13,6 @@ public class Slot {
         this.idSlot = idSlot;
     }
 
-
     public boolean isDisponibile() {
         return disponibile;
     }

@@ -3,19 +3,22 @@ package org.unict;
 import java.util.HashMap;
 import java.util.Map;
 
+//corso deve creare la lezione per information expert
+//un corso ha una lista di lezioni
+
 public class Corso {
     private String idCorso;
     private String nomeCorso;
     private String livello;
     private String focus;
-    private Attrezzo a;
+    private String idAttrezzo;
 
-    public Corso(String idCorso, String nomeCorso, String livello, String focus, Attrezzo a){
+    public Corso(String idCorso, String nomeCorso, String livello, String focus, String idAttrezzo){
         this.idCorso =idCorso;
         this.nomeCorso=nomeCorso;
         this.livello=livello;
         this.focus=focus;
-        this.a = a;
+        this.idAttrezzo = idAttrezzo;
     }
 
     public String getIdCorso() {
@@ -50,20 +53,22 @@ public class Corso {
         this.focus = focus;
     }
 
-    public void inserisciLezione(String idLezione, int idSlot, Corso c, Sala s, Istruttore i ){
+    public String getIdAttrezzo() {
+        return idAttrezzo;
+    }
+
+    public void setIdAttrezzo(String idAttrezzo) {
+        this.idAttrezzo = idAttrezzo;
+    }
+
+    /*public void inserisciLezione(String idLezione, int idSlot, Corso c, Sala s, Istruttore i ){
         Lezione l  = new Lezione(idLezione, idSlot, c, s,i);
 
         System.out.println("Corso inserito");
 
-    }
+    }*/
 
-    public Attrezzo getA() {
-        return a;
-    }
 
-    public void setA(Attrezzo a) {
-        this.a = a;
-    }
 
     @Override
     public String toString(){
@@ -73,8 +78,7 @@ public class Corso {
                         "Nome:\t" + nomeCorso + "\n" +
                         "Livello:\t " + livello+ "\n" +
                         "Focus:\t" + focus + "\n" +
-                        "ID-Attrezzo:\t" + a.getIdAttrezzo();
-                        //"Num.Attrezzi:\t" + a.getNumAttrezzi();
+                        "ID-Attrezzo:\t" + idAttrezzo;
         return s;
     }
 

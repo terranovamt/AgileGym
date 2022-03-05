@@ -7,31 +7,23 @@ import java.util.Map;
 public class Sala {
 
     private String idSala;
-    private int numAttrezzi;
-    LinkedList<Attrezzo> listaAttrezzi;
+    //non deve avere il numero degli attrezzi, perchè implementi via codice la ricerca del numero di occorrenze presente nella lista
+    //LinkedList<Attrezzo> listaAttrezzi;
     //ciascuna sala non ha un id slot, ma ha una lista di idslot
-    LinkedList<Slot> listaSlot;
+    Map<String, Slot> listaSlot;
+    List listaAttrezzi;
 
-    public Sala(String idSala, int numattrezzi, LinkedList<Slot> listaSlot, LinkedList<Attrezzo> listaAttrezzi){
+    public Sala(String idSala, Map<String, Slot> listaSlot, List listaAttrezzi){
         this.idSala = idSala;
-        this.numAttrezzi = numattrezzi;
-        this.listaSlot = new LinkedList<Slot>();
-        this.listaAttrezzi = new LinkedList<Attrezzo>();
+        this.listaSlot = new HashMap<>();
+        this.listaAttrezzi = new ArrayList();
     }
 
-    public int getNumAttrezzi() {
-        return numAttrezzi;
-    }
-
-    public void setNumAttrezzi(int numAttrezzi) {
-        this.numAttrezzi = numAttrezzi;
-    }
-
-    public LinkedList<Attrezzo> getListaAttrezzi() {
+    public List getListaAttrezzi() {
         return listaAttrezzi;
     }
 
-    public void setListaAttrezzi(LinkedList<Attrezzo> listaAttrezzi) {
+    public void setListaAttrezzi(List listaAttrezzi) {
         this.listaAttrezzi = listaAttrezzi;
     }
 
@@ -43,11 +35,11 @@ public class Sala {
         this.idSala = idSala;
     }
 
-    public LinkedList<Slot> getListaSlot() {
+    public Map<String, Slot> getListaSlot() {
         return listaSlot;
     }
 
-    public void setListaSlot(LinkedList<Slot> listaSlot) {
+    public void setListaSlot(Map<String, Slot> listaSlot) {
         this.listaSlot = listaSlot;
     }
     /*public boolean salaDisponibile(String idSala, int idSlot){
@@ -62,29 +54,27 @@ public class Sala {
         return  orariaList;
     }*/
 
-    public String stampaListaAttrezzi(){
+   /* public String stampaListaAttrezzi(){
         String stringa="";
-        for(Attrezzo a:listaAttrezzi){
-            stringa += a.toString();
-        }
+
+
+
         return stringa;
     }
     public String stampaListaSlot(){
         String stringa="";
-        for(Slot s:listaSlot){
-            stringa += s.toString();
-        }
+        stringa +=listaSlot;
         return stringa;
     }
-
+*/
+//NON FUNZIONA IL TOSTRING DI LISTASLOT E LISTA ATTREZZI
     @Override
     public String toString(){
 
         String s =
                         "ID-Sala:\t" + idSala + "\n" +
-                        "Lista Slot:\t" + stampaListaSlot() + "\n" +
-                                "Numero Attrezzi:\t" + numAttrezzi +
-                        "Lista Attrezzi della sala:\t " + stampaListaAttrezzi() + "\n";
+                        "Lista Slot:\t" + listaSlot+ "\n" +
+                        "Lista Attrezzi della sala:\t " + listaAttrezzi + "\n";
         return s;
     }
 
