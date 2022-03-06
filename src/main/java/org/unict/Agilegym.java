@@ -227,7 +227,7 @@ public class Agilegym {
 
         System.out.println("sono dentro listaAtrezziInSale\n\n");
         try {
-            BufferedReader br = new BufferedReader(new FileReader("listaAtrezziInSale.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("Sale.txt"));
             String [] strings;
             str = br.readLine();
             while (str != null){
@@ -242,7 +242,7 @@ public class Agilegym {
                 str = br.readLine();
             }
         }catch (IOException e) {
-            System.out.println("ERRORE NEL CARICAMENTO DEL FILE listaAtrezziInSale.txt\n" );
+            System.out.println("ERRORE NEL CARICAMENTO DEL FILE Sale.txt\n" );
             System.exit(-10);
         }
         //fare la creazione e il put con un for
