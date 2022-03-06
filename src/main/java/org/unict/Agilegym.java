@@ -21,8 +21,12 @@ public class Agilegym {
     private Map<String, Sala> elencoSaleDisponibili;
     private Map<String, Istruttore> elencoIstruttoriDisponibili;
     private Map<String, Lezione>  elencoLezioni;
-    private Map<String, Slot> listaSlot;
+    private Map<Integer, Slot> listaSlot;
     private Map<String, Attrezzo> listaAttrezzi;
+    private Attrezzo attrezzoSelezionato;
+    private Sala salaSelezioanta;
+    private Slot slotSelezionato;
+    private Istruttore istruttoreSelezionato;
 
 
     //constructor
@@ -61,23 +65,49 @@ public class Agilegym {
 
     public void inserisciLezione(Corso c)throws inserisciCorsoException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String idLezione=String.valueOf(abs((int) System.currentTimeMillis()) + (int)(Math.random()*(10000)));
+        String s="", idSalaSelezioanta, idIstruttoreSelezioanto, idLezione=String.valueOf(abs((int) System.currentTimeMillis()) + (int)(Math.random()*(10000)));;
+        int idSlotSelezionato=0;
         System.out.println("-------Inserisci una Lezione-------\n");
         try {
-            System.out.println(str);
-            System.out.print("Inserisci una sala Disponibile: ");
-            String idSala = br.readLine();
-            Sala s = elencoSaleDisponibili.get(idSala);
-            if(s != null){
-                System.out.println(s.getSlotDiponibili());
-                System.out.print("Inserisci uno slot Disponibile: ");
-                String idSlot = br.readLine();
+            System.out.print("Elenco degli Sale dispnibili per l'attrezzo ^" +attrezzoSelezionato.getIdAttrezzo()+"^:");
+            System.out.println(attrezzoSelezionato.stampaListaSale());
+            do {
+                System.out.print("Inserisci una sala Disponibile: ");
+                idSalaSelezioanta = br.readLine();
+                if(attrezzoSelezionato.getListaSalediAttrezzo().contains(idSalaSelezioanta)){
+                    System.out.print("Condizione vera");
+                    salaSelezioanta = elencoSaleDisponibili.get(idSalaSelezioanta);
+                }
+            }while (salaSelezioanta==null);
 
-                Istruttore i = elencoIstruttoriDisponibili.get(idSlot);
-                //System.out.print(i.toString());
+            System.out.println(salaSelezioanta.getSlotDiponibili());//STAMPA SLOT DIAPONIBILI
+
+            do {
+                System.out.print("Inserisci uno slot Disponibile: ");
+                idSlotSelezionato = Integer.parseInt(br.readLine());
+                if(salaSelezioanta.getListaSlot().containsKey(idSlotSelezionato)){
+                    System.out.print("Condizione vera");
+                    salaSelezioanta = elencoSaleDisponibili.get(idSalaSelezioanta);
+                }
+            }while (idSlotSelezionato==0);
+            //System.out.println(idSlotSelezionato);
+            Iterator it = elencoIstruttoriDisponibili.entrySet().iterator();
+            System.out.print("Elenco degli Istruttori dispnibili per la Slot ^" +idSlotSelezionato+"^:");
+            while (it.hasNext()) {
+                // Utilizza il nuovo elemento (coppia chiave-valore) dell'hashmap
+                Map.Entry entry = (Map.Entry)it.next();
+                Istruttore i=(Istruttore) entry.getValue();
+                s+=i.getIstruttoreDiponibili(idSlotSelezionato);
             }
-            else
-                System.out.println("Sala occupata");
+            s=s.substring(0, s.length()-2);//rimuove l'ultimo ", "
+            System.out.println(s);//STAMPA ISTRUTTORI DISPONIBILI
+            do {
+                System.out.print("Inserisci una istruttore Disponibile: ");
+                idIstruttoreSelezioanto = br.readLine();
+                istruttoreSelezionato = elencoIstruttoriDisponibili.get(idIstruttoreSelezioanto);
+            }while (istruttoreSelezionato==null);
+            //System.out.println(idIstruttoreSelezioanto);
+            //System.out.println(istruttoreSelezionato);
         }catch (Exception e) {
             System.out.println("ERRORE NELLA LETTURA DA TASTIERA:\n" );
             System.exit(-12);//CONTROLLA IL NUMERO
@@ -92,7 +122,7 @@ public class Agilegym {
         }
     }
 
-    public  Map<String, Slot> loadSlot(){
+    public  Map<Integer, Slot> loadSlot(){
         String idSlot;
         boolean disponibilita;
         //Slot [] s = new Slot[n];
@@ -120,7 +150,7 @@ public class Agilegym {
                 s = new Slot(idSlot, disponibilita);
                 s.setIdSlot(idSlot);
                 s.setDisponibile(disponibilita);
-                this.listaSlot.put(s.getIdSlot(), s);
+                this.listaSlot.put(Integer.parseInt(s.getIdSlot()), s);
                 idSlot = br1.readLine();
             }
         }catch (IOException e) {
@@ -371,16 +401,14 @@ public class Agilegym {
 
     public void loadIstruttore(){
         String idIstruttore;
-        Map<String, Slot> listaOrari = loadSlot();
-        int i = 1;
+        Map<Integer, Slot> listaOrari = loadSlot();
         try{
             //System.out.println("sono dentro load istruttore\n\n");
             BufferedReader br = new BufferedReader(new FileReader("Istruttori.txt"));
             idIstruttore = br.readLine();
             while (idIstruttore != null){
-                this.elencoIstruttoriDisponibili.put(String.valueOf(i), new Istruttore(idIstruttore, listaOrari));
+                this.elencoIstruttoriDisponibili.put(idIstruttore, new Istruttore(idIstruttore, listaOrari));
                 idIstruttore = br.readLine();
-                i++;
             }
         }catch (IOException e){
             System.out.println("ERRORE NEL CARICAMENTO DEL FILE istruttori.txt:\n" );
@@ -400,7 +428,6 @@ public class Agilegym {
         String livello;
         String focus;
         String idAttrezzo;
-        Attrezzo attrezzoSelezionato;
         Map<String, Sala> saleDisponibili;
         LinkedList<Sala> sale;
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -416,20 +443,20 @@ public class Agilegym {
             livello = br.readLine();
             System.out.print("Inserisci il focus del corso: ");
             focus = br.readLine();
-            System.out.print("Inserisci l'ID dell'attrezzo del corso: ");
             //l'amministatore inserisce l'id dell'attrezzo che vuole per quel corso, si cerca se quell'attrezzo
             //e' presente nella lista degli attrezzi, una volta trovato, si prende quell'attrezzo e lo si inserisce nel corso
-            idAttrezzo = br.readLine();
-            attrezzoSelezionato = listaAttrezzi.get(idAttrezzo);
+            do {
+                System.out.print("Inserisci l'ID dell'attrezzo del corso: ");
+                idAttrezzo = br.readLine();
+                attrezzoSelezionato = listaAttrezzi.get(idAttrezzo);
+            }while (attrezzoSelezionato == null);
             //System.out.println(attrezzoSelezionato.toString());
             if (attrezzoSelezionato == null) {
                 throw new inserisciCorsoException("Errore attrezzo inserito\n");
             } else {
                 this.corsoCorrente = new Corso(idCorso, nomeCorso, livello, focus, idAttrezzo);
-                System.out.println("\n"+corsoCorrente);
-                System.out.println("-------Corso inserito-------\n");
-                str="Lista delle sale disponibili: ";    //SALVO LE SALE DISPONIBILE PER STAMPARLE DOPO
-                str+=attrezzoSelezionato.stampaListaSale();
+                System.out.println("\n-------Corso inserito-------");
+                System.out.println(corsoCorrente+"\n------------------------------\n");
                 inserisciLezione(corsoCorrente);
             }
         } catch (Exception e) {

@@ -9,25 +9,25 @@ public class Sala {
     //non deve avere il numero degli attrezzi, perchè implementi via codice la ricerca del numero di occorrenze presente nella lista
     //LinkedList<Attrezzo> listaAttrezzi;
     //ciascuna sala non ha un id slot, ma ha una lista di idslot
-    Map<String, Slot> listaSlot;
+    Map<Integer, Slot> listaSlot;
     List<String> listaAttrezzi;
 
-    public Sala(String idSala, Map<String, Slot> listaSlot, List listaAttrezzi){
+    public Sala(String idSala, Map<Integer, Slot> listaSlot, List listaAttrezzi){
         this.idSala = idSala;
         this.listaSlot = listaSlot;                                //NON E NEW altimenti crea una cosa vuolta invece devi inserire quello che passi
         this.listaAttrezzi = listaAttrezzi;
     }
 
 
-    public String getSlotDiponibili(){
-        String s="Elenco degli Slot dispnibili per la sala ^" + this.idSala+"^: ";
+    public  Map<String, Slot> getSlotDiponibili(){
+        Map<String, Slot> s=new HashMap<>();
 
-        for (Map.Entry<String, Slot> entry : listaSlot.entrySet()) {
+        for (Map.Entry<Integer, Slot> entry : listaSlot.entrySet()) {
             if (entry.getValue().isDisponibile()==true) {
-                s += entry.getValue().getIdSlot() + ", ";
+                s.put(entry.getValue().getIdSlot(), entry.getValue());
             }
         }
-        s=s.substring(0, s.length()-2);//rimuove l'ultimo ", "
+
         return s;
 
     }
@@ -48,11 +48,11 @@ public class Sala {
         this.idSala = idSala;
     }
 
-    public Map<String, Slot> getListaSlot() {
+    public Map<Integer, Slot> getListaSlot() {
         return listaSlot;
     }
 
-    public void setListaSlot(Map<String, Slot> listaSlot) {
+    public void setListaSlot(Map<Integer, Slot> listaSlot) {
         this.listaSlot = listaSlot;
     }
     /*public boolean salaDisponibile(String idSala, int idSlot){
@@ -84,7 +84,7 @@ public class Sala {
        String s="";
        /*+ " - " + entry.getValue().get()*/
        // Fabiola ti serve per il to string di lista sala
-       for (Map.Entry<String, Slot> entry : listaSlot.entrySet()) {
+       for (Map.Entry<Integer, Slot> entry : listaSlot.entrySet()) {
            //s+="Sonodentroilfor";
            s += entry.getValue().getIdSlot() +"-" +entry.getValue().isDisponibile() +", ";
        }
