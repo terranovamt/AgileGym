@@ -16,7 +16,7 @@ public class Agilegym {
     private int n= 5;
     private static  Agilegym agilegym;
     private Corso corsoCorrente;
-    private String idAttrezzo;
+    private String str;
     private Map<String, Corso> elencoCorsi;
     private Map<String, Sala> elencoSaleDisponibili;
     private Map<String, Istruttore> elencoIstruttoriDisponibili;
@@ -34,8 +34,11 @@ public class Agilegym {
         this.listaSlot  = new HashMap<>();
         this.listaAttrezzi  = new HashMap<>();
 
-       // loadSale();
-       // loadIstruttore();
+        loadAttrezzi();
+        loadSale();
+        loadIstruttore();
+
+        // loadSale();
         // loadIstruttore();
         //loadListaAttrezzi();
 
@@ -56,16 +59,31 @@ public class Agilegym {
         return agilegym;
     }
 
-    /*public void inserisciLezione(String idLezione, String idAttrezzo, int  idSlot){
-        Sala s = elencoSaleDisponibili.get(idAttrezzo);
-        Istruttore i = elencoIstruttoriDisponibili.get(idSlot);
+    public void inserisciLezione(Corso c)throws inserisciCorsoException{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String idLezione=String.valueOf(abs((int) System.currentTimeMillis()) + (int)(Math.random()*(10000)));
+        System.out.println("-------Inserisci una Lezione-------\n");
+        try {
+            System.out.println(str);
+            System.out.print("Inserisci una sala Disponibile: ");
+            String idSala = br.readLine();
+            Sala s = elencoSaleDisponibili.get(idSala);
             if(s != null){
-                this.corsoCorrente.inserisciLezione(idLezione, idAttrezzo, idSlot);
-                System.out.println("Lezione Inserita");
+                System.out.println(s.getSlotDiponibili());
+                System.out.print("Inserisci uno slot Disponibile: ");
+                String idSlot = br.readLine();
+
+                Istruttore i = elencoIstruttoriDisponibili.get(idSlot);
+                //System.out.print(i.toString());
             }
             else
                 System.out.println("Sala occupata");
-    }*/
+        }catch (Exception e) {
+            System.out.println("ERRORE NELLA LETTURA DA TASTIERA:\n" );
+            System.exit(-12);//CONTROLLA IL NUMERO
+        }
+
+    }
 
     public  void conferma(){
         if(corsoCorrente != null){
@@ -80,7 +98,7 @@ public class Agilegym {
         //Slot [] s = new Slot[n];
         Slot s;
         try {
-            System.out.println("sono dentro loadSlot");
+            //System.out.println("sono dentro loadSlot");
             BufferedReader br1 = new BufferedReader(new FileReader("slot.txt"));
             //BufferedReader br1 = new BufferedReader(new FileReader("C:\\Utenti\\Fabiola Marchì\\slot.txt"));
             //id = br1.readLine();
@@ -195,7 +213,7 @@ public class Agilegym {
             System.exit(-9);
         }
         return listaAttrezziSala5;
-    }*/
+    }
     public List loadListaAtrezziinSala(String idSala) {
         String str;
         List listaAtrezziSala = new ArrayList();        //questa è l'elenco degli atrezzi in una sala
@@ -220,14 +238,42 @@ public class Agilegym {
 
         System.out.println("Ecco la lista degli attrezzi:\n" + listaAttrezzi );
         return listaAtrezziSala;
+    }*/
+
+    public Map<String, Attrezzo> loadAttrezzi(){
+        String str, idAtrezzo;
+        //System.out.println("sono dentro Attrezzi\n\n");
+        try{
+            BufferedReader br = new BufferedReader(new FileReader("Attrezzi.txt"));
+            String [] strings;
+            str = br.readLine();
+            while (str != null){
+                strings=str.split("-");
+                idAtrezzo=strings[0];
+                List listaSala=new ArrayList<>();
+                for(int i =1; i<strings.length; i++) {
+                    listaSala.add(strings[i]);
+                }
+                Attrezzo a=new Attrezzo(idAtrezzo,listaSala);
+                this.listaAttrezzi.put(idAtrezzo,a);
+                str = br.readLine();
+            }
+        }catch (IOException e) {
+            System.out.println("ERRORE NEL CARICAMENTO DEL FILE Attrezzi.txt\n" );
+            System.exit(-10);
+        }
+        System.out.println("Elenco Attezzi:");
+        for (String key: listaAttrezzi.keySet()){
+            System.out.println(listaAttrezzi.get(key));
+        }
+        return listaAttrezzi;
     }
 
     public Map<String, Sala> loadSale() {
         String str, idSala;
-
-        System.out.println("sono dentro listaAtrezziInSale\n\n");
+        //System.out.println("sono dentro listaAtrezziInSale\n\n");
         try {
-            BufferedReader br = new BufferedReader(new FileReader("Sale.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("sale.txt"));
             String [] strings;
             str = br.readLine();
             while (str != null){
@@ -256,7 +302,7 @@ public class Agilegym {
         //this.elencoSaleDisponibili.put(sala3.getIdSala(), sala3);
         //this.elencoSaleDisponibili.put(sala4.getIdSala(), sala4);
         //this.elencoSaleDisponibili.put(sala5.getIdSala(), sala5);
-        System.out.println("Elenco Sale Disponibili:\n");
+        System.out.println("Elenco Sale Disponibili:");
         for (String key: elencoSaleDisponibili.keySet()){//Serve per non stampare con le graffe e avere solo il valore e non la key, la formattazione e va fatto nel to string del tipo(sala.toString)
             System.out.println(elencoSaleDisponibili.get(key));
         }
@@ -287,7 +333,7 @@ public class Agilegym {
             System.exit(-13);
         }
         return elencoSaleAttrezzate;
-    }*/
+    }
 
     public void loadAttrezzi() {
         //dal primo file si carica la lista di attrezzi che fa parte dell'oggetto sala,
@@ -300,7 +346,7 @@ public class Agilegym {
         System.out.println("sono dentro loadListaAttrezzi\n\n");
 
         try {
-            BufferedReader br1 = new BufferedReader(new FileReader("saleDiAttrezzo.txt"));
+            BufferedReader br1 = new BufferedReader(new FileReader("Attrezzi.txt"));
             String [] strings;
             str = br1.readLine();
             //idAttrezzo = br.readLine();
@@ -321,7 +367,7 @@ public class Agilegym {
         System.out.println("Ecco la lista degli attrezzi:\n" + listaAttrezzi );
         //funziona, ma non funzione il toString di sala
 
-    }
+    }*/
 
     public void loadIstruttore(){
         String idIstruttore;
@@ -340,10 +386,14 @@ public class Agilegym {
             System.out.println("ERRORE NEL CARICAMENTO DEL FILE istruttori.txt:\n" );
             System.exit(-11);
         }
-        System.out.println("Ecco l'elenco degli istruttori disponibili:\n" + elencoIstruttoriDisponibili );
+        System.out.println("Ecco l'elenco degli istruttori disponibili:");
+        for (String key: elencoIstruttoriDisponibili.keySet()){
+            System.out.println(elencoIstruttoriDisponibili.get(key));
+        }
         //funziona, ma non funzione il toString di slot, c'è qualcosa che no va nella stamp adi elenco---disponibili
 
     }
+
     public void inserisciCorso() throws inserisciCorsoException {
         String idCorso;
         String nomeCorso;
@@ -354,32 +404,33 @@ public class Agilegym {
         Map<String, Sala> saleDisponibili;
         LinkedList<Sala> sale;
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Inserisci un corso: \n");
+        System.out.println("-------Inserisci un corso-------\n");
         try {
             //System.out.println("Inserisci l'ID del corso: \n");
             //idCorso = br.readLine();
             idCorso=String.valueOf(abs((int) System.currentTimeMillis()) + (int)(Math.random()*(10000)));
-            System.out.println("ID CORSO:"+idCorso +" (generato autonomamente) \n");
-            System.out.println("Inserisci il nome del corso: \n");
+            System.out.println("ID CORSO:"+idCorso +" (generato autonomamente)");
+            System.out.print("Inserisci il nome del corso: ");
             nomeCorso = br.readLine();
-            System.out.println("Inserisci il livello del corso: \n");
+            System.out.print("Inserisci il livello del corso: ");
             livello = br.readLine();
-            System.out.println("Inserisci il focus del corso: \n");
+            System.out.print("Inserisci il focus del corso: ");
             focus = br.readLine();
-            System.out.println("Inserisci l'ID dell'attrezzo del corso: \n");
+            System.out.print("Inserisci l'ID dell'attrezzo del corso: ");
             //l'amministatore inserisce l'id dell'attrezzo che vuole per quel corso, si cerca se quell'attrezzo
             //e' presente nella lista degli attrezzi, una volta trovato, si prende quell'attrezzo e lo si inserisce nel corso
             idAttrezzo = br.readLine();
             attrezzoSelezionato = listaAttrezzi.get(idAttrezzo);
-            System.out.println(attrezzoSelezionato.toString());
+            //System.out.println(attrezzoSelezionato.toString());
             if (attrezzoSelezionato == null) {
                 throw new inserisciCorsoException("Errore attrezzo inserito\n");
             } else {
                 this.corsoCorrente = new Corso(idCorso, nomeCorso, livello, focus, idAttrezzo);
-                System.out.println("Corso inserito");
-                System.out.println("Lista delle sale contenenti questo attrezzo: \n");
-                System.out.println(attrezzoSelezionato.toString());
-                //anche qui bisogna aggiustare il tostring, non stampa getlistasalediattrezzo
+                System.out.println("\n"+corsoCorrente);
+                System.out.println("-------Corso inserito-------\n");
+                str="Lista delle sale disponibili: ";    //SALVO LE SALE DISPONIBILE PER STAMPARLE DOPO
+                str+=attrezzoSelezionato.stampaListaSale();
+                inserisciLezione(corsoCorrente);
             }
         } catch (Exception e) {
             System.out.println("ERRORE NELLA LETTURA DA TASTIERA:\n" );
@@ -388,10 +439,10 @@ public class Agilegym {
 
     }
 
-    public boolean equals(Attrezzo a){
+    /*public boolean equals(Attrezzo a){
         return a.getIdAttrezzo() == idAttrezzo;
     }
-    /*public List<Corso> getElencoCorsi() {
+    public List<Corso> getElencoCorsi() {
         List<Corso> listCorsi = new ArrayList<>();
         listCorsi.addAll(elencoCorsi.values());
         return listCorsi;

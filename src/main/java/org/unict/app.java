@@ -4,14 +4,36 @@ import java.io.IOException;
 
 public class app {
 
+    private static void logo0() {
+        System.out.println( "     _              _   _           ____                     \n" +
+                "    / \\      __ _  (_) | |   ___   / ___|  _   _   _ __ ___  \n" +
+                "   / _ \\    / _` | | | | |  / _ \\ | |  _  | | | | | '_ ` _ \\ \n" +
+                "  / ___ \\  | (_| | | | | | |  __/ | |_| | | |_| | | | | | | |\n" +
+                " /_/   \\_\\  \\__, | |_| |_|  \\___|  \\____|  \\__, | |_| |_| |_|\n" +
+                "            |___/                          |___/             \n\n\n");
+    }
+    private static void logo1() {
+        System.out.println( " █████   ██████  ██ ██      ███████  ██████  ██    ██ ███    ███ \n" +
+                            "██   ██ ██       ██ ██      ██      ██        ██  ██  ████  ████ \n" +
+                            "███████ ██   ███ ██ ██      █████   ██   ███   ████   ██ ████ ██ \n" +
+                            "██   ██ ██    ██ ██ ██      ██      ██    ██    ██    ██  ██  ██ \n" +
+                            "██   ██  ██████  ██ ███████ ███████  ██████     ██    ██      ██ \n\n\n");
+    }
+
+
     public static void main (String [] args) throws Exception, inserisciCorsoException {
 
+
+
+
         Agilegym agilegym = Agilegym.getInstance();
-        //agilegym.loadAttrezzi();
         //agilegym.loadSlot();
-        agilegym.loadSale();
-        agilegym.loadIstruttore();
+        //agilegym.loadAttrezzi();
+        //agilegym.loadSale();
+        //agilegym.loadIstruttore();
+        logo1();
         agilegym.inserisciCorso();
+
         //caso d'uso di avviamento:caricamento lista attrezzi, caricamento sale, caricamento istruttori
 
 

@@ -76,10 +76,8 @@ public class Slot {
     }
     @Override
     public String toString(){
-
        String s =
-                "ID-Slot:\t" + idSlot + "\n" +
-                        "Disponibile?':\t" + disponibile + "\n";
+                "\tID-Slot:" + idSlot  +"\tDisponibile?':\t" + disponibile + "\n";
         return s;
     }
 }

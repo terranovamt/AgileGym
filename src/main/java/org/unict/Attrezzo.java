@@ -40,12 +40,19 @@ public class Attrezzo {
        // return s;
    // }*/
 
-
+    public String stampaListaSale(){
+        String s="";
+        for (Object l:listaSalediAttrezzo) {
+            s += l +", ";
+        }
+        s=s.substring(0, s.length()-2);//rimuove l'ultimo ", "
+        return s;
+    }
     @Override
     public String toString(){
         String a =
                 "ID-Attrezzo:\t" + idAttrezzo + "\n" +
-                        "ListaSale:\n\t" + listaSalediAttrezzo;
+                        "\tListaSale:\t" + stampaListaSale()+"\n";
         return a;
     }
 }

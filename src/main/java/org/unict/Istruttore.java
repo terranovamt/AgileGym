@@ -32,19 +32,21 @@ public class Istruttore {
         return listaSlot;
     }
 
-    /*public String stampaListaSlot(){
-        String stringa="";
-        for(Slot s:listaSlot){
-            stringa += s.toString();
+    public String stampaListaSlot(){
+        String s="";
+        for (Map.Entry<String, Slot> entry : listaSlot.entrySet()) {
+            //s+="Sonodentroilfor";
+            s += entry.getValue().getIdSlot() +"-" +entry.getValue().isDisponibile() +", ";
         }
-        return stringa;
-    }*/
+        s=s.substring(0, s.length()-2);//rimuove l'ultimo ", "
+        return s;
+    }
     @Override
     public String toString(){
 
         String s =
                 "ID-Istruttore:\t" + idIstruttore + "\n" +
-                        "Lista Slot Orari:\t" + listaSlot+ "\n";
+                        "\tLista Slot Orari:\t" + stampaListaSlot()+ "\n";
         return s;
     }
 }

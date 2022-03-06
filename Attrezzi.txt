@@ -1,9 +1,9 @@
-tappetino
-tapirulant
-boxing bag
-ball
-step
-chest press
-leg machine
-pesi
-bike
+tappetino-Sala1-Sala2
+tapirulant-Sala3-Sala5
+boxing bag-Sala4
+ball-Sala1-Sala2
+step-Sala1-Sala4
+chest press-Sala3
+leg machine-Sala3
+pesi-Sala5
+bike-Sala5

@@ -18,6 +18,20 @@ public class Sala {
         this.listaAttrezzi = listaAttrezzi;
     }
 
+
+    public String getSlotDiponibili(){
+        String s="Elenco degli Slot dispnibili per la sala ^" + this.idSala+"^: ";
+
+        for (Map.Entry<String, Slot> entry : listaSlot.entrySet()) {
+            if (entry.getValue().isDisponibile()==true) {
+                s += entry.getValue().getIdSlot() + ", ";
+            }
+        }
+        s=s.substring(0, s.length()-2);//rimuove l'ultimo ", "
+        return s;
+
+    }
+
     public List getListaAttrezzi() {
         return listaAttrezzi;
     }
@@ -74,6 +88,7 @@ public class Sala {
            //s+="Sonodentroilfor";
            s += entry.getValue().getIdSlot() +"-" +entry.getValue().isDisponibile() +", ";
        }
+       s=s.substring(0, s.length()-2);//rimuove l'ultimo ", "
        return s;
    }
     public String stampaListaAtrezzi(){
@@ -83,6 +98,7 @@ public class Sala {
         for (String l:listaAttrezzi) {
             s += l +", ";
         }
+        s=s.substring(0, s.length()-2);//rimuove l'ultimo ", "
         return s;
     }
 
@@ -93,7 +109,7 @@ public class Sala {
 
         String s =      "ID-Sala: " + idSala + "\n" +
                         "\tLista Slot: " + stampaListaSlot()+ "\n" +
-                        "\tLista Attrezzi della sala: " + stampaListaAtrezzi() + "\n";
+                        "\tLista Attrezzi della sala:\t " + stampaListaAtrezzi() + "\n";
         return s;
     }
 

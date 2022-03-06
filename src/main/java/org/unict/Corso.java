@@ -20,6 +20,12 @@ public class Corso {
         this.focus=focus;
         this.idAttrezzo = idAttrezzo;
     }
+    public void inserisciLezione(String idLezione, Slot slot, Corso c, Sala s, Istruttore i ){
+        Lezione l  = new Lezione(idLezione, slot, c, s,i);
+
+        System.out.println("Corso inserito");
+
+    }
 
     public String getIdCorso() {
         return idCorso;
@@ -61,24 +67,15 @@ public class Corso {
         this.idAttrezzo = idAttrezzo;
     }
 
-    /*public void inserisciLezione(String idLezione, int idSlot, Corso c, Sala s, Istruttore i ){
-        Lezione l  = new Lezione(idLezione, idSlot, c, s,i);
-
-        System.out.println("Corso inserito");
-
-    }*/
-
-
-
     @Override
     public String toString(){
         String s =
                 "CORSO: \n" +
-                        "ID:\t" + idCorso + "\n" +
-                        "Nome:\t" + nomeCorso + "\n" +
-                        "Livello:\t " + livello+ "\n" +
-                        "Focus:\t" + focus + "\n" +
-                        "ID-Attrezzo:\t" + idAttrezzo;
+                        "ID: " + idCorso + "\n" +
+                        "Nome: " + nomeCorso + "\n" +
+                        "Livello:  " + livello+ "\n" +
+                        "Focus: " + focus + "\n" +
+                        "ID-Attrezzo: " + idAttrezzo;
         return s;
     }
 
