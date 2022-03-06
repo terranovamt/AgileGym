@@ -8,19 +8,19 @@ public class Attrezzo {
     //private int numAttrezzi;      //l'attrezzo deve avere il numero di attrezi di quel tipo
     //attrezzo deve avere una lista di sale, perchè quando faccio l'inserisci corso faccio il find attrezzo nella lista di attrezzi di attrezzo
 
-    private Map<String, Sala> listaSalediAttrezzo;
+    private List listaSalediAttrezzo;
 
-    public Attrezzo(String idAttrezzo, Map<String, Sala> listaSalediAttrezzo) {
+    public Attrezzo(String idAttrezzo, List listaSalediAttrezzo) {
         this.idAttrezzo = idAttrezzo;
         this.listaSalediAttrezzo = listaSalediAttrezzo;
     }
 
 
-    public void setListaSalediAttrezzo(Map<String, Sala> listaSalediAttrezzo) {
+    public void setListaSalediAttrezzo(List listaSalediAttrezzo) {
         this.listaSalediAttrezzo = listaSalediAttrezzo;
     }
 
-    public Map<String, Sala> getListaSalediAttrezzo() {
+    public List getListaSalediAttrezzo() {
         return listaSalediAttrezzo;
     }
 
@@ -32,13 +32,13 @@ public class Attrezzo {
         this.idAttrezzo = idAttrezzo;
     }
 
-    public String stampaListaSale(){
+   /* public String stampaListaSale(){
         String s="";
-        for (Map.Entry<String, Sala> entry : listaSalediAttrezzo.entrySet()) {
-            s+= entry.getValue().getIdSala() +"\n"/*+ " - " + entry.getValue().get()*/; // Fabiola ti serve per il to string di lista sala
-        }
-        return s;
-    }
+        for (String str: listaSalediAttrezzo) {
+            s+= str.toString();/*+ " - " + entry.getValue().get()*/; // Fabiola ti serve per il to string di lista sala
+        //}
+       // return s;
+   // }*/
 
 
     @Override
