@@ -12,7 +12,7 @@ public class Istruttore {
         //l'istruttore non ha uno slot, ma ha una lista di slot in cui lavora
     public Istruttore(String idIstruttore, Map<String, Slot> listaSlot){
          this.idIstruttore = idIstruttore;
-         this.listaSlot = new HashMap<>();
+         this.listaSlot = listaSlot;
     }
 
 

@@ -8,6 +8,8 @@ import javax.management.StringValueExp;
 import java.util.*;
 import java.io.*;
 
+import static java.lang.Math.abs; //rand num
+
 public class Agilegym {
     //attributes
 
@@ -75,15 +77,14 @@ public class Agilegym {
     public  Map<String, Slot> loadSlot(){
         String idSlot;
         boolean disponibilita;
-        int i = 1;
+        int i = 1;                                                                                                              //Dove serve?
         Slot [] s = new Slot[n];
         try {
             System.out.println("sono dentro loadSlot");
-            BufferedReader br1 = new BufferedReader(new FileReader("C:\\Users\\Fabiola Marchì\\IdeaProjects\\AgileGym\\slot.txt"));
-
+            BufferedReader br1 = new BufferedReader(new FileReader("slot.txt"));
             //BufferedReader br1 = new BufferedReader(new FileReader("C:\\Utenti\\Fabiola Marchì\\slot.txt"));
             //id = br1.readLine();
-            for(int j= 0; j<5; j++) {
+            for(int j= 0; j<5; j++) {                                                                                           //Non dovrebbe essere auomatico il num di righe
                 idSlot = br1.readLine();
                 while (idSlot != null) {
                     disponibilita = Boolean.parseBoolean(br1.readLine());
@@ -108,7 +109,7 @@ public class Agilegym {
         List listaAttrezziSala1 = new ArrayList();
         String idAttrezzo;
         try {
-            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Fabiola Marchì\\IdeaProjects\\AgileGym\\AttrezziSala1.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("AttrezziSala1.txt"));
                 idAttrezzo = br.readLine();
                 while (idAttrezzo != null) {
                     listaAttrezziSala1.add(idAttrezzo);
@@ -118,7 +119,7 @@ public class Agilegym {
             System.out.println("ERRORE CARICAMENTO FILE AttrezziSala1.txt\n" );
             System.exit(-5);
         }
-       // System.out.println("ListaAttrezziSala1:\n" +listaAttrezziSala1 );
+        //System.out.println("ListaAttrezziSala1:\n" +listaAttrezziSala1 );
 
         return listaAttrezziSala1;
     }
@@ -126,7 +127,7 @@ public class Agilegym {
         List listaAttrezziSala2 = new ArrayList();
         String idAttrezzo;
         try {
-            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Fabiola Marchì\\IdeaProjects\\AgileGym\\AttrezziSala2.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("AttrezziSala2.txt"));
             idAttrezzo = br.readLine();
             while (idAttrezzo != null) {
                 listaAttrezziSala2.add(idAttrezzo);
@@ -142,7 +143,7 @@ public class Agilegym {
         List listaAttrezziSala3 = new ArrayList();
         String idAttrezzo;
         try {
-            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Fabiola Marchì\\IdeaProjects\\AgileGym\\AttrezziSala3.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("AttrezziSala3.txt"));
             idAttrezzo = br.readLine();
             while (idAttrezzo != null) {
                 listaAttrezziSala3.add(idAttrezzo);
@@ -158,7 +159,7 @@ public class Agilegym {
         List listaAttrezziSala4 = new ArrayList();
         String idAttrezzo;
         try {
-            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Fabiola Marchì\\IdeaProjects\\AgileGym\\AttrezziSala4.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("AttrezziSala4.txt"));
             idAttrezzo = br.readLine();
             while (idAttrezzo != null) {
                 listaAttrezziSala4.add(idAttrezzo);
@@ -174,7 +175,7 @@ public class Agilegym {
         List listaAttrezziSala5 = new ArrayList();
         String idAttrezzo;
         try {
-            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Fabiola Marchì\\IdeaProjects\\AgileGym\\AttrezziSala5.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("AttrezziSala5.txt"));
             idAttrezzo = br.readLine();
             while (idAttrezzo != null) {
                 listaAttrezziSala5.add(idAttrezzo);
@@ -198,7 +199,8 @@ public class Agilegym {
         this.elencoSaleDisponibili.put("4", sala4);
         this.elencoSaleDisponibili.put("5", sala5);
         System.out.println("Elenco Sale Disponibili:\n");
-        //System.out.println(elencoSaleDisponibili);
+        //System.out.println(sala1.toString());
+        System.out.println(elencoSaleDisponibili);
         /*elencoSaleDisponibili.entrySet().forEach(entry->{
             System.out.println(entry.getKey() + " = " + entry.getValue());
         });*/
@@ -217,7 +219,7 @@ public class Agilegym {
         System.out.println("sono dentro loadListaAttrezzi\n\n");
 
         try {
-            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Fabiola Marchì\\IdeaProjects\\AgileGym\\Attrezzi.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("Attrezzi.txt"));
             idAttrezzo = br.readLine();
             //System.out.println(id);
             while (idAttrezzo != null){
@@ -239,7 +241,7 @@ public class Agilegym {
         int i = 1;
         try{
             System.out.println("sono dentro load istruttore\n\n");
-            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Fabiola Marchì\\IdeaProjects\\AgileGym\\Istruttori.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("Istruttori.txt"));
             idIstruttore = br.readLine();
             while (idIstruttore != null){
                 this.elencoIstruttoriDisponibili.put(String.valueOf(i), new Istruttore(idIstruttore, listaOrari));
@@ -266,8 +268,10 @@ public class Agilegym {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Inserisci un corso: \n");
         try {
-            System.out.println("Inserisci l'ID del corso: \n");
-            idCorso = br.readLine();
+            //System.out.println("Inserisci l'ID del corso: \n");
+            //idCorso = br.readLine();
+            idCorso=String.valueOf(abs((int) System.currentTimeMillis()) + (int)(Math.random()*(10000)));
+            System.out.println("ID CORSO:"+idCorso +" (generato autonomamente) \n");
             System.out.println("Inserisci il nome del corso: \n");
             nomeCorso = br.readLine();
             System.out.println("Inserisci il livello del corso: \n");
@@ -279,7 +283,7 @@ public class Agilegym {
             //e' presente nella lista degli attrezzi, una volta trovato, si prende quell'attrezzo e lo si inserisce nel corso
             idAttrezzo = br.readLine();
             attrezzoSelezionato = listaAttrezzi.get(idAttrezzo);
-            System.out.println(attrezzoSelezionato.toString());
+            //System.out.println(attrezzoSelezionato.toString());
             if (attrezzoSelezionato == null) {
                 throw new inserisciCorsoException("Errore attrezzo inserito\n");
             } else {

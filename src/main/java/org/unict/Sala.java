@@ -10,12 +10,12 @@ public class Sala {
     //LinkedList<Attrezzo> listaAttrezzi;
     //ciascuna sala non ha un id slot, ma ha una lista di idslot
     Map<String, Slot> listaSlot;
-    List listaAttrezzi;
+    List<String> listaAttrezzi;
 
     public Sala(String idSala, Map<String, Slot> listaSlot, List listaAttrezzi){
         this.idSala = idSala;
-        this.listaSlot = new HashMap<>();
-        this.listaAttrezzi = new ArrayList();
+        this.listaSlot = listaSlot;                                //NON E NEW altimenti crea una cosa vuolta invece devi inserire quello che passi
+        this.listaAttrezzi = listaAttrezzi;
     }
 
     public List getListaAttrezzi() {
@@ -66,14 +66,35 @@ public class Sala {
         return stringa;
     }
 */
-//NON FUNZIONA IL TOSTRING DI LISTASLOT E LISTA ATTREZZI
+   public String stampaListaSlot(){
+       String s="";
+       /*+ " - " + entry.getValue().get()*/
+       // Fabiola ti serve per il to string di lista sala
+       for (Map.Entry<String, Slot> entry : listaSlot.entrySet()) {
+           //s+="Sonodentroilfor";
+           s += entry.getValue().getIdSlot() +"-" +entry.getValue().isDisponibile() +"\n";
+       }
+       return s;
+   }
+    public String stampaListaAtrezzi(){
+        String s="";
+        /*+ " - " + entry.getValue().get()*/
+        // Fabiola ti serve per il to string di lista sala
+        for (String l:listaAttrezzi) {
+            s += l +", ";
+        }
+        return s;
+    }
+
+
+    //NON FUNZIONA IL TOSTRING DI LISTASLOT E LISTA ATTREZZI
     @Override
     public String toString(){
 
         String s =
                         "ID-Sala:\t" + idSala + "\n" +
-                        "Lista Slot:\t" + listaSlot+ "\n" +
-                        "Lista Attrezzi della sala:\t " + listaAttrezzi + "\n";
+                        "Lista Slot:\n" + stampaListaSlot()+ "\n" +
+                        "Lista Attrezzi della sala:\t " + stampaListaAtrezzi() + "\n";
         return s;
     }
 

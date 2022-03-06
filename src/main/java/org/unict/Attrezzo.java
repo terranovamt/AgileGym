@@ -12,7 +12,7 @@ public class Attrezzo {
 
     public Attrezzo(String idAttrezzo, Map<String, Sala> listaSalediAttrezzo) {
         this.idAttrezzo = idAttrezzo;
-        this.listaSalediAttrezzo = new HashMap<>();
+        this.listaSalediAttrezzo = listaSalediAttrezzo;
     }
 
 
@@ -35,7 +35,7 @@ public class Attrezzo {
     public String stampaListaSale(){
         String s="";
         for (Map.Entry<String, Sala> entry : listaSalediAttrezzo.entrySet()) {
-            s+=entry.getValue().getIdSala() /*+ " - " + entry.getValue().get()*/; // Fabiola ti serve per il to string di lista sala
+            s+= entry.getValue().getIdSala() +"\n"/*+ " - " + entry.getValue().get()*/; // Fabiola ti serve per il to string di lista sala
         }
         return s;
     }
