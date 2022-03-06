@@ -36,7 +36,7 @@ public class Agilegym {
 
        // loadSale();
        // loadIstruttore();
-        //loadIstruttore();
+        // loadIstruttore();
         //loadListaAttrezzi();
 
 
@@ -77,7 +77,6 @@ public class Agilegym {
     public  Map<String, Slot> loadSlot(){
         String idSlot;
         boolean disponibilita;
-        int i = 1;                                                                                                              //Dove serve?
         //Slot [] s = new Slot[n];
         Slot s;
         try {
@@ -110,11 +109,11 @@ public class Agilegym {
             System.out.println("ERRORE CARICAMENTO FILE slot.txt\n" );
             System.exit(-3);
         }
-        System.out.println("Ecco la lista degli slot orari:\n\n");
-        System.out.println(listaSlot);
+       // System.out.println("Ecco la lista degli slot orari:\n\n");
+       // System.out.println(listaSlot);
         return listaSlot;
     }
-
+/*
     public List caricamentoListaAttrezziSala1(){
         List listaAttrezziSala1 = new ArrayList();
         String idAttrezzo;
@@ -196,25 +195,75 @@ public class Agilegym {
             System.exit(-9);
         }
         return listaAttrezziSala5;
+    }*/
+    public List loadListaAtrezziinSala(String idSala) {
+        String str;
+        List listaAtrezziSala = new ArrayList();        //questa è l'elenco degli atrezzi in una sala
+        System.out.println("sono dentro listaAtrezziInSale\n\n");
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("listaAtrezziInSale.txt"));
+            String [] strings;
+            str = br.readLine();
+            while (str != null){
+                strings=str.split("-");
+                if (idSala.equals(strings[0])){
+                    for(int i =1; i<strings.length; i++) {
+                        listaAtrezziSala.add(strings[i]);
+                    }
+                }
+                str = br.readLine();
+            }
+        }catch (IOException e) {
+            System.out.println("ERRORE NEL CARICAMENTO DEL FILE listaAtrezziInSale.txt\n" );
+            System.exit(-10);
+        }
+
+        System.out.println("Ecco la lista degli attrezzi:\n" + listaAttrezzi );
+        return listaAtrezziSala;
     }
+
     public Map<String, Sala> loadSale() {
+        String str, idSala;
+
+        System.out.println("sono dentro listaAtrezziInSale\n\n");
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("listaAtrezziInSale.txt"));
+            String [] strings;
+            str = br.readLine();
+            while (str != null){
+                strings=str.split("-");
+                idSala=strings[0];
+                List listaAtrezziSala = new ArrayList(); //questa è l'elenco degli atrezzi in una sala, ogni volta che ciclo deve essere ua lista nuova, non la dichiaro fuori
+                for(int i =1; i<strings.length; i++) {
+                    listaAtrezziSala.add(strings[i]);
+                }
+                Sala s=new Sala(idSala,loadSlot(),listaAtrezziSala);
+                this.elencoSaleDisponibili.put(idSala, s);
+                str = br.readLine();
+            }
+        }catch (IOException e) {
+            System.out.println("ERRORE NEL CARICAMENTO DEL FILE listaAtrezziInSale.txt\n" );
+            System.exit(-10);
+        }
         //fare la creazione e il put con un for
-        Sala sala1 = new Sala("Sala1", loadSlot(), caricamentoListaAttrezziSala1());
-        Sala sala2 = new Sala("Sala2", loadSlot(), caricamentoListaAttrezziSala2());
-        Sala sala3 = new Sala("Sala3", loadSlot(), caricamentoListaAttrezziSala3());
-        Sala sala4 = new Sala("Sala4", loadSlot(), caricamentoListaAttrezziSala4());
-        Sala sala5 = new Sala("Sala5", loadSlot(), caricamentoListaAttrezziSala5());
-        this.elencoSaleDisponibili.put(sala1.getIdSala(), sala1);
-        this.elencoSaleDisponibili.put(sala2.getIdSala(), sala2);
-        this.elencoSaleDisponibili.put(sala3.getIdSala(), sala3);
-        this.elencoSaleDisponibili.put(sala4.getIdSala(), sala4);
-        this.elencoSaleDisponibili.put(sala5.getIdSala(), sala5);
+        //Sala sala1 = new Sala("Sala1", loadSlot(), loadListaAtrezziinSala("Sala1"));
+        //Sala sala2 = new Sala("Sala2", loadSlot(), caricamentoListaAttrezziSala2());
+        //Sala sala3 = new Sala("Sala3", loadSlot(), caricamentoListaAttrezziSala3());
+        //Sala sala4 = new Sala("Sala4", loadSlot(), caricamentoListaAttrezziSala4());
+        //Sala sala5 = new Sala("Sala5", loadSlot(), caricamentoListaAttrezziSala5());
+        //this.elencoSaleDisponibili.put(sala1.getIdSala(), sala1);
+        //this.elencoSaleDisponibili.put(sala2.getIdSala(), sala2);
+        //this.elencoSaleDisponibili.put(sala3.getIdSala(), sala3);
+        //this.elencoSaleDisponibili.put(sala4.getIdSala(), sala4);
+        //this.elencoSaleDisponibili.put(sala5.getIdSala(), sala5);
         System.out.println("Elenco Sale Disponibili:\n");
-        //System.out.println(sala1.toString());
-        System.out.println(elencoSaleDisponibili);
+        for (String key: elencoSaleDisponibili.keySet()){//Serve per non stampare con le graffe e avere solo il valore e non la key, la formattazione e va fatto nel to string del tipo(sala.toString)
+            System.out.println(elencoSaleDisponibili.get(key));
+        }
         /*elencoSaleDisponibili.entrySet().forEach(entry->{
             System.out.println(entry.getKey() + " = " + entry.getValue());
         });*/
+        //System.out.println(sala1.toString());
         //System.out.println(this.elencoSaleDisponibili);
         //System.out.println(caricamentoListaAttrezziSala1());
         //System.out.println(loadSlot());
@@ -273,12 +322,13 @@ public class Agilegym {
         //funziona, ma non funzione il toString di sala
 
     }
+
     public void loadIstruttore(){
         String idIstruttore;
         Map<String, Slot> listaOrari = loadSlot();
         int i = 1;
         try{
-            System.out.println("sono dentro load istruttore\n\n");
+            //System.out.println("sono dentro load istruttore\n\n");
             BufferedReader br = new BufferedReader(new FileReader("Istruttori.txt"));
             idIstruttore = br.readLine();
             while (idIstruttore != null){
@@ -290,7 +340,7 @@ public class Agilegym {
             System.out.println("ERRORE NEL CARICAMENTO DEL FILE istruttori.txt:\n" );
             System.exit(-11);
         }
-        System.out.println("Ecco l'elenco degli istruttori disponibili:\n" +elencoIstruttoriDisponibili );
+        System.out.println("Ecco l'elenco degli istruttori disponibili:\n" + elencoIstruttoriDisponibili );
         //funziona, ma non funzione il toString di slot, c'è qualcosa che no va nella stamp adi elenco---disponibili
 
     }

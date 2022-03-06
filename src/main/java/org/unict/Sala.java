@@ -72,7 +72,7 @@ public class Sala {
        // Fabiola ti serve per il to string di lista sala
        for (Map.Entry<String, Slot> entry : listaSlot.entrySet()) {
            //s+="Sonodentroilfor";
-           s += entry.getValue().getIdSlot() +"-" +entry.getValue().isDisponibile() +"\n";
+           s += entry.getValue().getIdSlot() +"-" +entry.getValue().isDisponibile() +", ";
        }
        return s;
    }
@@ -91,10 +91,9 @@ public class Sala {
     @Override
     public String toString(){
 
-        String s =
-                        "ID-Sala:\t" + idSala + "\n" +
-                        "Lista Slot:\n" + stampaListaSlot()+ "\n" +
-                        "Lista Attrezzi della sala:\t " + stampaListaAtrezzi() + "\n";
+        String s =      "ID-Sala: " + idSala + "\n" +
+                        "\tLista Slot: " + stampaListaSlot()+ "\n" +
+                        "\tLista Attrezzi della sala: " + stampaListaAtrezzi() + "\n";
         return s;
     }
 
