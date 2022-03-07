@@ -1,0 +1,20 @@
+1000-Yoga-principiante-equilibrio-tappetino
+1010-Yoga-intermedio-equilibrio-tappetino
+1020-Yoga-avanzato-equilibrio-tappetino
+1001-Spinning-principiante-resistenza-bike
+1012-Fit Boxe-intermedio-tecnica-boxing bag
+1022-Fit Boxe-avanzato-tecnica-boxing bag
+1032-Fit Boxe-esperto-tecnica-boxing bag
+1003-Cardio-principiante-resistenza-tapirulant
+1024-Workout-avanzato-forza-chest press
+1034-Workout-esperto-forza-chest press
+1005-Aerobica-principiante-resistenza-step
+1015-Aerobica-intermedio-resistenza-step
+1006-Pilates-principiante-equilibrio-ball
+1016-Pilates-intermedio-equilibrio-ball
+1026-Pilates-avanzato-equilibrio-ball
+1017-Gag-intermedio-forza-leg machine
+1027-Gag-avanzato-forza-leg machine
+1028-Functional-avanzato-resistenza-pesi
+1038-Functional-esperto-resistenza-pesi
+
