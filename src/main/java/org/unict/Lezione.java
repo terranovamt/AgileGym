@@ -36,7 +36,7 @@ public class Lezione {
                 case 6: giorno="SABATO ore ";      break;
                 default:giorno="";
             }
-            ora+= slot.getIdSlot().charAt(1)+slot.getIdSlot().charAt(2);
+            ora= slot.getIdSlot().charAt(1)+String.valueOf((slot.getIdSlot().charAt(2)));
             str+=giorno+ora+":00";
         return str;
     }
