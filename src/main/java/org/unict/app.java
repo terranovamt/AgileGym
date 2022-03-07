@@ -32,7 +32,7 @@ public class app {
                         System.out.print    ("  #--------------NON CI SONO CORSI, INSERISCILI !!!--------------#");
                         System.out.println  ("\n#--------------------------------------------------------------#\n");
 
-                    };
+                    }
                     for (String key: agilegym.getElencoCorsi().keySet()){
                         System.out.println(agilegym.getElencoCorsi().get(key));
                     }
