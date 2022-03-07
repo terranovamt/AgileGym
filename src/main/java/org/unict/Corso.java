@@ -12,6 +12,7 @@ public class Corso {
     private String livello;
     private String focus;
     private String idAttrezzo;
+    private Map<String, Lezione> elencoLezioni;
 
     public Corso(String idCorso, String nomeCorso, String livello, String focus, String idAttrezzo){
         this.idCorso =idCorso;
@@ -19,12 +20,11 @@ public class Corso {
         this.livello=livello;
         this.focus=focus;
         this.idAttrezzo = idAttrezzo;
+        this.elencoLezioni=new HashMap<>();
     }
     public void inserisciLezione(String idLezione, Slot slot, Corso c, Sala s, Istruttore i ){
-        Lezione l  = new Lezione(idLezione, slot, c, s,i);
-
-        System.out.println("Corso inserito");
-
+        Lezione l  = new Lezione(idLezione, slot, c, s, i);
+        elencoLezioni.put(idLezione,l);
     }
 
     public String getIdCorso() {
@@ -41,6 +41,10 @@ public class Corso {
 
     public String getFocus() {
         return focus;
+    }
+
+    public Map<String, Lezione> getElencoLezioni() {
+        return elencoLezioni;
     }
 
     public void setIdCorso(String idCorso) {
@@ -67,15 +71,24 @@ public class Corso {
         this.idAttrezzo = idAttrezzo;
     }
 
+    public String stampaLezione() {
+        String str="";
+        for (String key: elencoLezioni.keySet()){//STAMPA ISTRUTTORI DISPONIBILI
+            str=elencoLezioni.get(key).toString();
+        }
+        return str;
+    }
+
     @Override
     public String toString(){
         String s =
                 "CORSO: \n" +
-                        "ID: " + idCorso + "\n" +
-                        "Nome: " + nomeCorso + "\n" +
-                        "Livello:  " + livello+ "\n" +
-                        "Focus: " + focus + "\n" +
-                        "ID-Attrezzo: " + idAttrezzo;
+                        "\tID: " + idCorso + "\n" +
+                        "\tNome: " + nomeCorso + "\n" +
+                        "\tLivello:  " + livello+ "\n" +
+                        "\tFocus: " + focus + "\n" +
+                        "\tID-Attrezzo: " + idAttrezzo+ "\n" +
+                        "\tLista delle lezioni: \n" + stampaLezione();
         return s;
     }
 

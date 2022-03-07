@@ -1,23 +1,86 @@
 package org.unict;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+
 
 public class app {
+
+    public static void main (String [] args) throws Exception, inserisciCorsoException {
+
+        int scelta = 0;
+        Agilegym agilegym = Agilegym.getInstance();
+
+        logo1();
+
+        do{
+            scelta = menu();
+            switch(scelta){
+                case 1:
+                        agilegym.inserisciCorso();
+                    break;
+                case 2:
+
+                    break;
+                case 3:
+
+                    break;
+                case 4:
+
+                    break;
+                case 5:
+                    System.exit(0);
+                    break;
+            }
+        }while(scelta!=6);
+
+
+
+
+        //caso d'uso di avviamento:caricamento lista attrezzi, caricamento sale, caricamento istruttori
+
+        /*PER IL MENU
+        * 1.Crea corso
+        * 1.Craa lezione, stampa i corsi o chiese se si vuole aggiungere una lezione alla
+        *
+        *
+        *
+        * */
+
+
+
+    }
+    public static int menu(){
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        try{
+            System.out.println("\n#-----------------------------MENU-----------------------#\n");
+            System.out.println("1. Inserisci Corso\n");
+            System.out.println("2. \n");
+            System.out.println("3. \n");
+            System.out.println("4. \n");
+            System.out.println("5. Esci\n");
+            return Integer.parseInt(br.readLine());
+        }catch(IOException e){
+            System.out.println("ERRORE!");
+            return -1;
+        }
+    }
+
     public static void clearConsole(){
-        System.out.print("\033[2J");
+        System.out.print("\\033[H\\033[2J");
         System.out.flush();
         logo1();
     }
-
     private static void logo0() {
         System.out.println( "     _              _   _           ____                     \n" +
-                "    / \\      __ _  (_) | |   ___   / ___|  _   _   _ __ ___  \n" +
-                "   / _ \\    / _` | | | | |  / _ \\ | |  _  | | | | | '_ ` _ \\ \n" +
-                "  / ___ \\  | (_| | | | | | |  __/ | |_| | | |_| | | | | | | |\n" +
-                " /_/   \\_\\  \\__, | |_| |_|  \\___|  \\____|  \\__, | |_| |_| |_|\n" +
-                "            |___/                          |___/             \n\n\n");
+                            "    / \\      __ _  (_) | |   ___   / ___|  _   _   _ __ ___  \n" +
+                            "   / _ \\    / _` | | | | |  / _ \\ | |  _  | | | | | '_ ` _ \\ \n" +
+                            "  / ___ \\  | (_| | | | | | |  __/ | |_| | | |_| | | | | | | |\n" +
+                            " /_/   \\_\\  \\__, | |_| |_|  \\___|  \\____|  \\__, | |_| |_| |_|\n" +
+                            "            |___/                          |___/             \n\n\n");
     }
-    private static void logo1() {
+    public static void logo1() {
         System.out.println( " █████   ██████  ██ ██      ███████  ██████  ██    ██ ███    ███ \n" +
                             "██   ██ ██       ██ ██      ██      ██        ██  ██  ████  ████ \n" +
                             "███████ ██   ███ ██ ██      █████   ██   ███   ████   ██ ████ ██ \n" +
@@ -25,30 +88,6 @@ public class app {
                             "██   ██  ██████  ██ ███████ ███████  ██████     ██    ██      ██ \n\n\n");
     }
 
-
-    public static void main (String [] args) throws Exception, inserisciCorsoException {
-
-
-
-
-        Agilegym agilegym = Agilegym.getInstance();
-        //agilegym.loadSlot();
-        //agilegym.loadAttrezzi();
-        //agilegym.loadSale();
-        //agilegym.loadIstruttore();
-        logo1();
-        agilegym.inserisciCorso();
-
-        //caso d'uso di avviamento:caricamento lista attrezzi, caricamento sale, caricamento istruttori
-
-
-        //System.out.println("Inserimento nuovo corso");
-
-        //agilegym.conferma();
-        //agilegym.inserisciLezione("XXX","1",108);
-        //System.out.println(agilegym.getCorsoCorrente()+"0------00");
-    }
-
-
-
 }
+
+

@@ -15,17 +15,13 @@ public class Istruttore {
          this.listaSlot = listaSlot;
     }
 
-    public String getIstruttoreDiponibili(int idSlot){
-
-        String s="";
-
-        for (Map.Entry<Integer, Slot> entry : listaSlot.entrySet()) {
-            if (Integer.parseInt(entry.getValue().getIdSlot())==idSlot) {
-                s += this.idIstruttore+ ", ";
+    public boolean isIstruttoreDiponibili(int idSlot){
+        for (Map.Entry<Integer, Slot> entry : listaSlot.entrySet()) { //scorre gli slot per l'istuttore corrente
+            if (Integer.parseInt(entry.getValue().getIdSlot())==idSlot) {// seleziona l'id slot gisuto
+                if (entry.getValue().isDisponibile() == true) return true;// se disponibile torna vero
             }
         }
-        return s;
-
+        return false;
     }
 
     public String getIdIstruttore() {

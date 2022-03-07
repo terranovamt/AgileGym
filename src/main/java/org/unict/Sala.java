@@ -19,17 +19,15 @@ public class Sala {
     }
 
 
-    public  Map<String, Slot> getSlotDiponibili(){
-        Map<String, Slot> s=new HashMap<>();
+    public  Map<Integer, Slot> getSlotDiponibili(){
+        Map<Integer, Slot> s=new HashMap<>();
 
         for (Map.Entry<Integer, Slot> entry : listaSlot.entrySet()) {
             if (entry.getValue().isDisponibile()==true) {
-                s.put(entry.getValue().getIdSlot(), entry.getValue());
+                s.put(Integer.parseInt(entry.getValue().getIdSlot()), entry.getValue());
             }
         }
-
         return s;
-
     }
 
     public List getListaAttrezzi() {
@@ -100,9 +98,9 @@ public class Sala {
         /*+ " - " + entry.getValue().get()*/
         // Fabiola ti serve per il to string di lista sala
         for (String l:listaAttrezzi) {
-            s +="\t\t"+ l +", \n";
+            s +="\t\t"+ l +"\n";
         }
-        s=s.substring(0, s.length()-3);//rimuove l'ultimo ", "
+        //s=s.substring(0, s.length()-3);//rimuove l'ultimo ", "
         return s;
     }
 
