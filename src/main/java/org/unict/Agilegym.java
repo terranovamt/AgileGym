@@ -12,31 +12,27 @@ import static java.lang.Math.abs; //rand num
 
 public class Agilegym {
     //attributes
-
-    private int n= 5;
     private static  Agilegym agilegym;
     private Corso corsoCorrente;
-    private String str;
     private Map<String, Corso> elencoCorsi;
-    private Map<String, Sala> elencoSaleDisponibili;
-    private Map<String, Istruttore> elencoIstruttoriDisponibili;
-    private Map<String, Lezione>  elencoLezioni;
-    private Map<Integer, Slot> listaSlot;
-    private Map<String, Attrezzo> listaAttrezzi;
     private Attrezzo attrezzoSelezionato;
+    private Map<String, Attrezzo> elencoAttrezzi;
     private Sala salaSelezioanta;
+    private Map<String, Sala> elencoSaleDisponibili;
     private Slot slotSelezionato;
+    private Map<Integer, Slot> listaSlot;
     private Istruttore istruttoreSelezionato;
+    private Map<String, Istruttore> elencoIstruttoriDisponibili;
+
 
 
     //constructor
     private Agilegym() throws IOException {
-        this.elencoCorsi = new HashMap<>();
-        this.elencoIstruttoriDisponibili = new HashMap<>();
-        this.elencoLezioni = new HashMap<>();
-        this.elencoSaleDisponibili = new HashMap<>();
         this.listaSlot  = new HashMap<>();
-        this.listaAttrezzi  = new HashMap<>();
+        this.elencoCorsi = new HashMap<>();
+        this.elencoAttrezzi  = new HashMap<>();
+        this.elencoSaleDisponibili = new HashMap<>();
+        this.elencoIstruttoriDisponibili = new HashMap<>();
 
         loadAttrezzi();
         loadSale();
@@ -69,18 +65,21 @@ public class Agilegym {
         int idSlotSelezionato=0;
         System.out.println("-------Inserisci una Lezione-------\n");
         try {
-            System.out.print("Elenco degli Sale dispnibili per l'attrezzo ^" +attrezzoSelezionato.getIdAttrezzo()+"^:");
+            System.out.println("Elenco degli Sale dispnibili per l'attrezzo ~" +attrezzoSelezionato.getIdAttrezzo()+"~:");
             System.out.println(attrezzoSelezionato.stampaListaSale());
             do {
                 System.out.print("Inserisci una sala Disponibile: ");
                 idSalaSelezioanta = br.readLine();
                 if(attrezzoSelezionato.getListaSalediAttrezzo().contains(idSalaSelezioanta)){
-                    System.out.print("Condizione vera");
                     salaSelezioanta = elencoSaleDisponibili.get(idSalaSelezioanta);
                 }
             }while (salaSelezioanta==null);
 
-            System.out.println(salaSelezioanta.getSlotDiponibili());//STAMPA SLOT DIAPONIBILI
+            //STAMPA SLOT DIAPONIBILI
+            System.out.println("Elenco degli Slot dispnibili per la sala ~" +salaSelezioanta.getIdSala()+"~:");
+            for (String key: salaSelezioanta.getSlotDiponibili().keySet()){//Serve per non stampare con le graffe e avere solo il valore e non la key, la formattazione e va fatto nel to string del tipo(sala.toString)
+                System.out.print(salaSelezioanta.getSlotDiponibili().get(key));
+            }
 
             do {
                 System.out.print("Inserisci uno slot Disponibile: ");
@@ -285,7 +284,7 @@ public class Agilegym {
                     listaSala.add(strings[i]);
                 }
                 Attrezzo a=new Attrezzo(idAtrezzo,listaSala);
-                this.listaAttrezzi.put(idAtrezzo,a);
+                this.elencoAttrezzi.put(idAtrezzo,a);
                 str = br.readLine();
             }
         }catch (IOException e) {
@@ -293,10 +292,10 @@ public class Agilegym {
             System.exit(-10);
         }
         System.out.println("Elenco Attezzi:");
-        for (String key: listaAttrezzi.keySet()){
-            System.out.println(listaAttrezzi.get(key));
+        for (String key: elencoAttrezzi.keySet()){
+            System.out.println(elencoAttrezzi.get(key));
         }
-        return listaAttrezzi;
+        return elencoAttrezzi;
     }
 
     public Map<String, Sala> loadSale() {
@@ -445,16 +444,16 @@ public class Agilegym {
             focus = br.readLine();
             //l'amministatore inserisce l'id dell'attrezzo che vuole per quel corso, si cerca se quell'attrezzo
             //e' presente nella lista degli attrezzi, una volta trovato, si prende quell'attrezzo e lo si inserisce nel corso
-            do {
-                System.out.print("Inserisci l'ID dell'attrezzo del corso: ");
-                idAttrezzo = br.readLine();
-                attrezzoSelezionato = listaAttrezzi.get(idAttrezzo);
+             do{
+                 System.out.print("Inserisci l'ID dell'attrezzo del corso: ");
+                 idAttrezzo = br.readLine();
+                 attrezzoSelezionato = elencoAttrezzi.get(idAttrezzo);
             }while (attrezzoSelezionato == null);
             //System.out.println(attrezzoSelezionato.toString());
             if (attrezzoSelezionato == null) {
                 throw new inserisciCorsoException("Errore attrezzo inserito\n");
             } else {
-                this.corsoCorrente = new Corso(idCorso, nomeCorso, livello, focus, idAttrezzo);
+                this.corsoCorrente = new Corso(idCorso, nomeCorso, livello, focus, attrezzoSelezionato.getIdAttrezzo());
                 System.out.println("\n-------Corso inserito-------");
                 System.out.println(corsoCorrente+"\n------------------------------\n");
                 inserisciLezione(corsoCorrente);

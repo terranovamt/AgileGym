@@ -46,11 +46,9 @@ public class Istruttore {
 
     public String stampaListaSlot(){
         String s="";
-        for (Map.Entry<Integer, Slot> entry : listaSlot.entrySet()) {
-            //s+="Sonodentroilfor";
-            s += entry.getValue().getIdSlot() +"-" +entry.getValue().isDisponibile() +", ";
+        for (Integer key: listaSlot.keySet()){//Serve per non stampare con le graffe e avere solo il valore e non la key, la formattazione e va fatto nel to string del tipo(sala.toString)
+            s +="\t"+listaSlot.get(key);
         }
-        s=s.substring(0, s.length()-2);//rimuove l'ultimo ", "
         return s;
     }
     @Override
@@ -58,7 +56,7 @@ public class Istruttore {
 
         String s =
                 "ID-Istruttore:\t" + idIstruttore + "\n" +
-                        "\tLista Slot Orari:\t" + stampaListaSlot()+ "\n";
+                        "\tLista Slot Orari:\n" + stampaListaSlot();
         return s;
     }
 }

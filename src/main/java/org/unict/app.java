@@ -3,6 +3,11 @@ package org.unict;
 import java.io.IOException;
 
 public class app {
+    public static void clearConsole(){
+        System.out.print("\033[2J");
+        System.out.flush();
+        logo1();
+    }
 
     private static void logo0() {
         System.out.println( "     _              _   _           ____                     \n" +

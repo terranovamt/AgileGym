@@ -82,13 +82,17 @@ public class Sala {
 */
    public String stampaListaSlot(){
        String s="";
-       /*+ " - " + entry.getValue().get()*/
+       /*+ " - " + entry.getValue().get()
        // Fabiola ti serve per il to string di lista sala
+
        for (Map.Entry<Integer, Slot> entry : listaSlot.entrySet()) {
            //s+="Sonodentroilfor";
            s += entry.getValue().getIdSlot() +"-" +entry.getValue().isDisponibile() +", ";
        }
-       s=s.substring(0, s.length()-2);//rimuove l'ultimo ", "
+       s=s.substring(0, s.length()-2);//rimuove l'ultimo ", "*/
+       for (Integer key: listaSlot.keySet()){//Serve per non stampare con le graffe e avere solo il valore e non la key, la formattazione e va fatto nel to string del tipo(sala.toString)
+           s +="\t"+listaSlot.get(key);
+       }
        return s;
    }
     public String stampaListaAtrezzi(){
@@ -96,9 +100,9 @@ public class Sala {
         /*+ " - " + entry.getValue().get()*/
         // Fabiola ti serve per il to string di lista sala
         for (String l:listaAttrezzi) {
-            s += l +", ";
+            s +="\t\t"+ l +", \n";
         }
-        s=s.substring(0, s.length()-2);//rimuove l'ultimo ", "
+        s=s.substring(0, s.length()-3);//rimuove l'ultimo ", "
         return s;
     }
 
@@ -108,8 +112,8 @@ public class Sala {
     public String toString(){
 
         String s =      "ID-Sala: " + idSala + "\n" +
-                        "\tLista Slot: " + stampaListaSlot()+ "\n" +
-                        "\tLista Attrezzi della sala:\t " + stampaListaAtrezzi() + "\n";
+                        "\tLista Attrezzi della sala:\n " + stampaListaAtrezzi() + "\n" +
+                        "\tLista Slot Orari: \n" + stampaListaSlot();
         return s;
     }
 

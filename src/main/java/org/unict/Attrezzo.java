@@ -43,16 +43,16 @@ public class Attrezzo {
     public String stampaListaSale(){
         String s="";
         for (Object l:listaSalediAttrezzo) {
-            s += l +", ";
+            s +="\t\t"+ l +", \n";
         }
-        s=s.substring(0, s.length()-2);//rimuove l'ultimo ", "
+        s=s.substring(0, s.length()-3);//rimuove l'ultimo ", "
         return s;
     }
     @Override
     public String toString(){
         String a =
-                "ID-Attrezzo:\t" + idAttrezzo + "\n" +
-                        "\tListaSale:\t" + stampaListaSale()+"\n";
+                "ID-Attrezzo: " + idAttrezzo + "\n" +
+                        "\tLista Sale:\n" + stampaListaSale()+"\n";
         return a;
     }
 }
