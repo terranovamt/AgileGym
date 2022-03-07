@@ -315,10 +315,12 @@ public class Agilegym {
                 strings=str.split("-");
             }
         }catch (IOException e) {
-            System.out.println("ERRORE NEL CARICAMENTO DEL FILE corssi.txt\n" );
+            System.out.println("ERRORE NEL CARICAMENTO DEL FILE corsi.txt\n" );
             System.exit(-10);
         }
     }
 
-
+    public Map<String, Corso> getElencoCorsi() {
+        return elencoCorsi;
+    }
 }

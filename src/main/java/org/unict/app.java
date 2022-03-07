@@ -27,7 +27,15 @@ public class app {
 
                     break;
                 case 4:
+                    if(agilegym.getElencoCorsi().isEmpty()){
+                        System.out.print    ("\n#--------------------------------------------------------------#\n");
+                        System.out.print    ("  #--------------NON CI SONO CORSI, INSERISCILI !!!--------------#");
+                        System.out.println  ("\n#--------------------------------------------------------------#\n");
 
+                    };
+                    for (String key: agilegym.getElencoCorsi().keySet()){
+                        System.out.println(agilegym.getElencoCorsi().get(key));
+                    }
                     break;
                 case 5:
                     System.exit(0);
@@ -54,12 +62,13 @@ public class app {
     public static int menu(){
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         try{
-            System.out.println("\n#-----------------------------MENU-----------------------#\n");
+            System.out.println("\n#-----------------------------MENU-----------------------------#\n");
             System.out.println("1. Inserisci Corso\n");
             System.out.println("2. \n");
             System.out.println("3. \n");
-            System.out.println("4. \n");
+            System.out.println("4.Stampa Corsi\n");
             System.out.println("5. Esci\n");
+            System.out.print("Scelta: ");
             return Integer.parseInt(br.readLine());
         }catch(IOException e){
             System.out.println("ERRORE!");
@@ -85,7 +94,7 @@ public class app {
                             "██   ██ ██       ██ ██      ██      ██        ██  ██  ████  ████ \n" +
                             "███████ ██   ███ ██ ██      █████   ██   ███   ████   ██ ████ ██ \n" +
                             "██   ██ ██    ██ ██ ██      ██      ██    ██    ██    ██  ██  ██ \n" +
-                            "██   ██  ██████  ██ ███████ ███████  ██████     ██    ██      ██ \n\n\n");
+                            "██   ██  ██████  ██ ███████ ███████  ██████     ██    ██      ██ \n");
     }
 
 }
