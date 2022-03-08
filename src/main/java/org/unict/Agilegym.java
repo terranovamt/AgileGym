@@ -32,7 +32,6 @@ public class Agilegym {
         loadAttrezzi();
         loadSale();
         loadIstruttore();
-        riempiPalestra();
     }
 
     public static Agilegym getInstance(){
@@ -302,7 +301,7 @@ public class Agilegym {
         }*/
     }
 
-    private void riempiPalestra(){
+    public void riempiPalestra(){
         String str;
         //System.out.println("\nsono dentro Riempi palestra\n\n");
         try {

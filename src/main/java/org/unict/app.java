@@ -39,12 +39,15 @@ public class app {
                 case 6:
                     stampaIstruttori();
                     break;
-
                 case 7:
+                    agilegym.riempiPalestra();
+                    break;
+
+                case 8:
                     System.exit(0);
                     break;
             }
-        }while(scelta!=7);
+        }while(scelta!=8);
 
     }
 
@@ -60,7 +63,8 @@ public class app {
             System.out.println("4. Stampa Corsi");
             System.out.println("5. Stampa Sale");
             System.out.println("6. Stampa Istuttori");
-            System.out.println("7. Esci");
+            System.out.println("7. Riempi Palestra");
+            System.out.println("8. Esci");
             System.out.print("Scelta: ");
             return Integer.parseInt(br.readLine());
         }catch(IOException e){
