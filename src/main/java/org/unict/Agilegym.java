@@ -303,7 +303,6 @@ public class Agilegym {
 
     public void riempiPalestra(){
         String str;
-        //System.out.println("\nsono dentro Riempi palestra\n\n");
         try {
             BufferedReader bcorsi = new BufferedReader(new FileReader("corsi.txt"));
             BufferedReader blezioni = new BufferedReader(new FileReader("lezioni.txt"));
@@ -328,6 +327,7 @@ public class Agilegym {
                 i.setOccupato(slot.getDataora());
                 str = blezioni.readLine();
             }
+            System.out.println("\nI corsi e le lezioni sono stati inseriti con successo\n\n");
         }catch (IOException e) {
             System.out.println("ERRORE NEL CARICAMENTO DEL FILE corsi.txt\n" );
             System.exit(-10);
