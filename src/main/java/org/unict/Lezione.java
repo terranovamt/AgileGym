@@ -37,7 +37,7 @@ public class Lezione {
                 default:giorno="";
             }
             ora= slot.getDataora().charAt(1)+String.valueOf((slot.getDataora().charAt(2)));
-            str+=giorno+ora+":00";
+            str+=giorno+ora+":00\n";
         return str;
     }
     @Override

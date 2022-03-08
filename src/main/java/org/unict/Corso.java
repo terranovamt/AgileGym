@@ -74,22 +74,29 @@ public class Corso {
     public String stampaLezione() {
         String str="";
         for (String key: elencoLezioni.keySet()){//STAMPA ISTRUTTORI DISPONIBILI
-            str=elencoLezioni.get(key).toString();
+            str+= elencoLezioni.get(key).toString();
         }
         return str;
     }
 
+
     @Override
     public String toString(){
-        String s =
-                "CORSO: \n" +
-                        "\tID: " + idCorso + "\n" +
-                        "\tNome: " + nomeCorso + "\n" +
-                        "\tLivello:  " + livello+ "\n" +
-                        "\tFocus: " + focus + "\n" +
-                        "\tID-Attrezzo: " + idAttrezzo+ "\n" +
-                        "\tLista delle lezioni: \n" + stampaLezione();
+
+        String l=stampaLezione(),
+                s =
+                    "\tID: " + idCorso + "\n" +
+                    "\tNome: " + nomeCorso + "\n" +
+                    "\tLivello:  " + livello+ "\n" +
+                    "\tFocus: " + focus + "\n" +
+                    "\tID-Attrezzo: " + idAttrezzo+ "\n\n";
+
+        if (l.length()!=0){
+            s+="Lista delle lezioni: \n\n"+l;
+        }
+        else {
+            s+="\n\t\tNESSUNA LEZIONE INSERITA\n";
+        }
         return s;
     }
-
 }

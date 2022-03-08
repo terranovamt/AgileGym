@@ -36,13 +36,29 @@ public class Slot {
     public String getDataora() {
         return dataora;
     }
+    private String stampadata(String slot){
+        String str="", giorno, ora="";
+
+        switch (Integer.parseInt(String.valueOf(slot.charAt(0)))){
+            case 1: giorno="LUNEDI' ore ";     break;
+            case 2: giorno="MARTEDI' ore ";    break;
+            case 3: giorno="MERCOLEDI' ore ";  break;
+            case 4: giorno="GIOVEDI ore ";     break;
+            case 5: giorno="VENERDI ore ";     break;
+            case 6: giorno="SABATO ore ";      break;
+            default:giorno="";
+        }
+        ora= slot.charAt(1)+String.valueOf((slot.charAt(2)));
+        str+=giorno+ora+":00";
+        return str;
+    }
 
     @Override
     public String toString(){
         String dis="";
-        if (disponibile==true)dis="\tDisponibile";else dis="\tOccupato";
+        if (disponibile==true)dis="  Disponibile";else dis="  Occupato";
        String s =
-                "\tID-Slot:" + dataora  + dis +"\n";
+                "\tSlot: " + stampadata( dataora)  + dis +"\n";
         return s;
     }
 }
