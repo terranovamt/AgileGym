@@ -92,7 +92,7 @@ public class Corso {
                     "\tID-Attrezzo: " + idAttrezzo+ "\n\n";
 
         if (l.length()!=0){
-            s+="Lista delle lezioni: \n\n"+l;
+            s+="Lista delle lezioni: \n"+l;
         }
         else {
             s+="\n\t\tNESSUNA LEZIONE INSERITA\n";
