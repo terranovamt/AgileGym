@@ -27,7 +27,7 @@ public class Lezione {
     private String stampadata(){
         String str="", giorno, ora="";
 
-            switch (Integer.parseInt(String.valueOf(String.valueOf(slot.getIdSlot()).charAt(0)))){
+            switch (Integer.parseInt(String.valueOf(String.valueOf(slot.getDataora()).charAt(0)))){
                 case 1: giorno="LUNEDI' ore ";     break;
                 case 2: giorno="MARTEDI' ore ";    break;
                 case 3: giorno="MERCOLEDI' ore ";  break;
@@ -36,7 +36,7 @@ public class Lezione {
                 case 6: giorno="SABATO ore ";      break;
                 default:giorno="";
             }
-            ora= slot.getIdSlot().charAt(1)+String.valueOf((slot.getIdSlot().charAt(2)));
+            ora= slot.getDataora().charAt(1)+String.valueOf((slot.getDataora().charAt(2)));
             str+=giorno+ora+":00";
         return str;
     }
