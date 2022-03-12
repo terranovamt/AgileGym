@@ -1,4 +1,4 @@
-package org.unict;
+package org.unict.domain;
 
 public class Lezione {
 
@@ -11,7 +11,7 @@ public class Lezione {
     public Lezione(String idLezione, Slot slot, Corso c, Sala s, Istruttore i){
         this.idLezione = idLezione;
         this.slot = slot;
-        this.c= c;
+        this.c=c;
         this.s=s;
         this.i=i;
     }
@@ -22,6 +22,12 @@ public class Lezione {
 
     public void setIdLezione(String idLezione){
         this.idLezione = idLezione;
+    }
+
+    public int postidisponibili(){
+        String idAtrezzo = this.c.getIdAttrezzo();
+        Integer p=this.s.getnumAtrezzi(idAtrezzo);
+        return p;
     }
 
     private String stampadata(){

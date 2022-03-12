@@ -1,4 +1,4 @@
-package org.unict;
+package org.unict.domain;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -57,6 +57,20 @@ public class Sala {
         this.listaSlot.get(Integer.parseInt(s)).setDisponibile(false);
     }
 
+
+    public int getnumAtrezzi(String idAtrezzo){
+        int count=0;
+        for (String s :listaAttrezzi){
+            if(s.equals(idAtrezzo)){
+                count++;
+            }
+        }
+        return count;
+    }
+
+
+
+
     public String getIdSala() {
 
         return idSala;
@@ -92,12 +106,23 @@ public class Sala {
 
     public String stampaListaAtrezzi(){
         String s="";
-        /*+ " - " + entry.getValue().get()*/
+        List<String> lista = new ArrayList<>();
+        for (String l:listaAttrezzi) {
+            if(!lista.contains(l)){
+                lista.add(l);
+                int n =getnumAtrezzi(l);
+                s +="\t\t n"+n+" "+ l +"\n";
+            }
+        }
+
+        /*
+        + " - " + entry.getValue().get()
         // Fabiola ti serve per il to string di lista sala
         for (String l:listaAttrezzi) {
             s +="\t\t"+ l +"\n";
         }
         //s=s.substring(0, s.length()-3);//rimuove l'ultimo ", "
+        */
         return s;
     }
 

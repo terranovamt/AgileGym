@@ -1,4 +1,6 @@
-package org.unict;
+package org.unict.domain;
+
+import org.unict.UI.MainFrame;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,7 +8,7 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.unict.Agilegym.agilegym;
+import static org.unict.domain.Agilegym.agilegym;
 
 
 public class app {
@@ -14,6 +16,8 @@ public class app {
     public static void main (String [] args) throws inserisciCorsoException {
 
         int scelta = 0;
+        //MainFrame frame= new MainFrame();
+        //frame.setVisible(true);
         Agilegym agilegym = Agilegym.getInstance();
         System.out.println("\n\n");
         System.out.println(logo(2));
@@ -42,7 +46,6 @@ public class app {
                 case 7:
                     agilegym.riempiPalestra();
                     break;
-
                 case 8:
                     System.exit(0);
                     break;

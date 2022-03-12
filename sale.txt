@@ -1,5 +1,5 @@
-Sala1-tappetino-tappetino-tappetino-ball-ball-step
-Sala2-tappetino-ball-ball-ball
-Sala3-tapirulant-tapirulant-chest press-leg machine
-Sala4-step-step-step-boxing bag-boxing bag-boxing bag-boxing bag
-Sala5-pesi-pesi-pesi-pesi-pesi-tapirulant-tapirulant-bike-bike-bike
+Sala1-tappetino-tappetino-tappetino-tappetino-tappetino-tappetino-tappetino-tappetino-tappetino-ball-ball-ball-ball-ball-ball-ball-ball-ball-step-ball-step-ball-step-step-step-step-step-step-step-step-step-step-tappetino-tappetino-tappetino-tappetino-tappetino-tappetino-tappetino-tappetino-tappetino-ball-ball-ball-ball-ball-ball-ball-ball-ball-step-step-step-step-step-step-step-step-step-step
+Sala2-tappetino-tappetino-tappetino-tappetino-tappetino-tappetino-tappetino-tappetino-tappetino-tappetino-tappetino-tappetino-tappetino-tappetino-ball-tappetino-ball-ball-ball-ball-ball-ball-ball-ball-ball-ball-ball-ball-ball
+Sala3-tapirulant-tapirulant-tapirulant-tapirulant-tapirulant-chest press-leg machine-chest press-leg machine-chest press-leg machine
+Sala4-step-step-step-step-step-step-step-step-step-step-step-step-step-step-step-step-step-step-boxing bag-boxing bag-boxing bag-boxing bag-step-step-step-boxing bag-boxing bag-boxing bag-boxing bag-step-step-step-boxing bag-boxing bag-boxing bag-boxing bag
+Sala5-pesi-pesi-pesi-pesi-pesi-pesi-pesi-pesi-pesi-pesi-pesi-pesi-pesi-pesi-pesi-tapirulant-tapirulant-bike-bike-bike-tapirulant-tapirulant-bike-bike-bike

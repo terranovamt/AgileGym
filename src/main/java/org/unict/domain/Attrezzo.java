@@ -1,4 +1,4 @@
-package org.unict;
+package org.unict.domain;
 
 import java.util.*;
 

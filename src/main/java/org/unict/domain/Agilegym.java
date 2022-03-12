@@ -1,4 +1,4 @@
-package org.unict;
+package org.unict.domain;
 
 //caso d'uso di avviamento, caricamento sale, caricamento lista attrezzi, caricamento slot e caricamento istruttori
 
@@ -71,8 +71,12 @@ public class Agilegym {
             focus = br.readLine();
             //l'amministatore inserisce l'id dell'attrezzo che vuole per quel corso, si cerca se quell'attrezzo
             //e' presente nella lista degli attrezzi, una volta trovato, si prende quell'attrezzo e lo si inserisce nel corso
+            System.out.print("Attrezzi della palestre:");
+            for (String key: elencoAttrezzi.keySet()){//Serve per non stampare con le graffe e avere solo il valore e non la key, la formattazione e va fatto nel to string del tipo(sala.toString)
+                System.out.print(elencoAttrezzi.get(key).getIdAttrezzo()+",");
+            }
             do{
-                System.out.print("Inserisci l'ID dell'attrezzo del corso: ");
+                System.out.print("\nInserisci l'ID dell'attrezzo del corso: ");
                 idAttrezzo = br.readLine();
                 attrezzoSelezionato = elencoAttrezzi.get(idAttrezzo);
             }while (attrezzoSelezionato == null);
