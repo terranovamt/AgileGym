@@ -16,8 +16,7 @@ public class app {
     public static void main (String [] args) throws inserisciCorsoException {
 
         int scelta = 0;
-        //MainFrame frame= new MainFrame();
-        //frame.setVisible(true);
+
         Agilegym agilegym = Agilegym.getInstance();
         System.out.println("\n\n");
         System.out.println(logo(2));

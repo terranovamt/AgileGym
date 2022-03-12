@@ -8,7 +8,7 @@ public class Slot {
     private boolean disponibile;
 
     public Slot(String dataora, boolean disponibile){
-        this.idSlot = String.valueOf((abs((int) System.currentTimeMillis() + (int)(Math.random()*(1000000000)))/10));
+        this.idSlot = Agilegym.randId();
         this.dataora=dataora;
         this.disponibile = disponibile;
     }

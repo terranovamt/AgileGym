@@ -1,5 +1,6 @@
 package org.unict.domain;
 
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -63,7 +64,7 @@ public class Corso {
         this.focus = focus;
     }
 
-    public String getIdAttrezzo() {
+    public String  getIdAttrezzo() {
         return idAttrezzo;
     }
 

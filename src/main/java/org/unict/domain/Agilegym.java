@@ -13,7 +13,7 @@ public class Agilegym {
     private Corso corsoCorrente;
     private Map<String, Corso> elencoCorsi;
     private Attrezzo attrezzoSelezionato;
-    private Map<String, Attrezzo> elencoAttrezzi;
+    public Map<String, Attrezzo> elencoAttrezzi;
     private Sala salaSelezioanta;
     private Map<String, Sala> elencoSale;
     private Slot slotSelezionato;
@@ -61,7 +61,7 @@ public class Agilegym {
         try {
             //System.out.println("Inserisci l'ID del corso: \n");
             //idCorso = br.readLine();
-            idCorso=String.valueOf((abs((int) System.currentTimeMillis() + (int)(Math.random()*(1000000000)))/10));
+            idCorso=randId();
             System.out.println("ID CORSO:"+idCorso +" (generato autonomamente)");
             System.out.print("Inserisci il nome del corso: ");
             nomeCorso = br.readLine();
@@ -113,7 +113,7 @@ public class Agilegym {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String  idSalaSelezioanta="",
                 idIstruttoreSelezioanto="",
-                idLezione=String.valueOf((abs((int) System.currentTimeMillis() + (int)(Math.random()*(1000000000)))/10));
+                idLezione=randId();
         int dataora=0;
         corsoCorrente =corso;
 
@@ -338,6 +338,10 @@ public class Agilegym {
         }
     }
 
+    public static String randId(){
+        return String.valueOf((abs((int) System.currentTimeMillis() + (int)(Math.random()*(1000000000)))/10));
+    }
+
     public Map<String, Corso> getElencoCorsi() {
         return elencoCorsi;
     }
@@ -348,5 +352,10 @@ public class Agilegym {
 
     public Map<String, Istruttore> getElencoIstruttori() {
         return elencoIstruttori;
+    }
+
+
+    public void setCorsoCorrente(Corso corsoCorrente) {
+        this.corsoCorrente = corsoCorrente;
     }
 }
