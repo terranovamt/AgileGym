@@ -2,50 +2,29 @@ package org.unict.domain;
 
 import java.util.*;
 
-public class Attrezzo {
-    private String idAttrezzo;
-    //l'attrezzo non ha il numero di attrezzi, ce l'ha sala
-    //private int numAttrezzi;      //l'attrezzo deve avere il numero di attrezi di quel tipo
-    //attrezzo deve avere una lista di sale, perchè quando faccio l'inserisci corso faccio il find attrezzo nella lista di attrezzi di attrezzo
+public record Attrezzo(String idAttrezzo, List<String> listaSaleDiAttrezzo) {
 
-    private List listaSalediAttrezzo;
-
-    public Attrezzo(String idAttrezzo, List listaSalediAttrezzo) {
-        this.idAttrezzo = idAttrezzo;
-        this.listaSalediAttrezzo = listaSalediAttrezzo;
-    }
-
-
-    public void setListaSalediAttrezzo(List listaSalediAttrezzo) {
-        this.listaSalediAttrezzo = listaSalediAttrezzo;
-    }
-
-    public List getListaSalediAttrezzo() {
-        return listaSalediAttrezzo;
+    //GET E SET STANDARD
+    public List<String> getListaSaleDiAttrezzo() {
+        return listaSaleDiAttrezzo;
     }
 
     public String getIdAttrezzo() {
         return idAttrezzo;
     }
 
-    public void setIdAttrezzo(String idAttrezzo) {
-        this.idAttrezzo = idAttrezzo;
-    }
-
-
-    public String stampaListaSale(){
-        String s="";
-        for (Object l:listaSalediAttrezzo) {
-            s +="\t\t"+ l +"\n";
+    //STAMPA
+    public String stampaListaSale() {
+        StringBuilder s = new StringBuilder();
+        for (Object l : listaSaleDiAttrezzo) {
+            s.append("\t\t").append(l).append("\n");
         }
         //s=s.substring(0, s.length()-3);//rimuove l'ultimo ", "
-        return s;
+        return s.toString();
     }
+
     @Override
-    public String toString(){
-        String a =
-                "ID-Attrezzo: " + idAttrezzo + "\n" +
-                        "\tLista Sale:\n" + stampaListaSale();
-        return a;
+    public String toString() {
+        return "ID-Attrezzo: " + idAttrezzo + "\n" + "\tLista Sale:\n" + stampaListaSale();
     }
 }
