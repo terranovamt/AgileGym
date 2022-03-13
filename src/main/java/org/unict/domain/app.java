@@ -27,7 +27,7 @@ public class app {
                     sottoScelta();
                     break;
                 case 3:
-
+                    agilegym.nuovaPrenotazione();
                     break;
                 case 4:
                     stampaCorsi();
@@ -57,7 +57,8 @@ public class app {
             System.out.println("#--------------------------------------------------------------#\n");
             System.out.println("1. Inserisci Corso");
             System.out.println("2. Inserisci Lezione");
-            System.out.println("3. ");
+            System.out.println("3. Nuova Prenotazione");
+            System.out.print    ("\n#--------------------------------------------------------------#\n");
             System.out.println("4. Stampa Corsi");
             System.out.println("5. Stampa Sale");
             System.out.println("6. Stampa Istruttori");
@@ -98,7 +99,7 @@ public class app {
 
         }catch(IOException e){
             System.out.println("ERRORE!");
-            System.exit(-10);// NUMERO PIU' ALTO DI EXIT
+            System.exit(-11);// NUMERO PIU' ALTO DI EXIT
         }
     }
 

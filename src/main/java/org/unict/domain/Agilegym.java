@@ -239,6 +239,65 @@ public class Agilegym {
         }
     }
 
+    public void nuovaPrenotazione(){
+        int i=0;
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        for (String key : elencoCorsi.keySet()) {
+            i++;
+            System.out.println("CORSO: "+ i );
+            System.out.println(elencoCorsi.get(key).stampaCorsi());
+        }
+        System.out.println("Scegli un corso: ");
+        int scelta = 0;
+        try {
+            do{
+                int s=Integer.parseInt(br.readLine());
+                if(s>0 || s < getElencoCorsi().size()){
+                    mostraLezione(scelta);
+                }
+            }while(true);
+        }catch (Exception e) {
+            System.out.println("ERRORE NELLA LETTURA DA TASTIERA:" +e.getMessage());
+            System.exit(-10);
+        }
+    }
+
+    public void mostraLezione(int scelta){
+        int i=0;
+        Map<Integer,Corso> corsi =new HashMap<>();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        for (String key : elencoCorsi.keySet()) {
+            i++;
+            corsi.put(i,getElencoCorsi().get(key));
+        }
+        corsoCorrente=corsi.get(scelta);
+        //
+        //
+        // DEVO FARE LA SCELTA DELLA LEZIONE
+        //
+        //
+        for (String key : elencoCorsi.keySet()) {
+            i++;
+            System.out.println("CORSO: "+ i );
+            System.out.println(elencoCorsi.get(key).stampaCorsi());
+        }
+        System.out.println("Scegli un corso: ");
+        int s = 0;
+        try {
+            do{
+                int scelta=Integer.parseInt(br.readLine());
+                if(scelta>0 || scelta < getElencoCorsi().size()){
+                    corsoCorrente=elencoCorsi.get(s);
+                }
+            }while(s==0);
+        }catch (Exception e) {
+            System.out.println("ERRORE NELLA LETTURA DA TASTIERA:" +e.getMessage());
+            System.exit(-10);
+        }
+    }
+
     public void loadAttrezzi(){
         String str, idAtrezzo;
         String [] strings;

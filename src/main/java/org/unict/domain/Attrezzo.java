@@ -2,7 +2,14 @@ package org.unict.domain;
 
 import java.util.*;
 
-public record Attrezzo(String idAttrezzo, List<String> listaSaleDiAttrezzo) {
+public class Attrezzo{
+    String idAttrezzo;
+    List<String> listaSaleDiAttrezzo;
+
+    public Attrezzo(String idAttrezzo, List<String> listaSaleDiAttrezzo){
+        this.idAttrezzo = idAttrezzo;
+        this.listaSaleDiAttrezzo = listaSaleDiAttrezzo;
+    }
 
     //GET E SET STANDARD
     public List<String> getListaSaleDiAttrezzo() {

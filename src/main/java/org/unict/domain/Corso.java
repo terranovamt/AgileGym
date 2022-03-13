@@ -64,4 +64,9 @@ public class Corso {
         }
         return s;
     }
+    public String stampaCorsi(){
+        return  "\tNome: " + nomeCorso + "\n" +
+                "\tLivello:  " + livello+ "\n" +
+                "\tFocus: " + focus ;
+    }
 }
