@@ -2,11 +2,11 @@ package org.unict.domain;
 
 public class Lezione {
 
-    private String idLezione;
-    private Slot slot;
-    private Sala s;
-    private Istruttore i;
-    private Corso c;
+    private final String idLezione;
+    private final Slot slot;
+    private final Sala s;
+    private final Istruttore i;
+    private final Corso c;
 
     public Lezione(String idLezione, Slot slot, Corso c, Sala s, Istruttore i){
         this.idLezione = idLezione;
@@ -16,20 +16,7 @@ public class Lezione {
         this.i=i;
     }
 
-    public String getIdLezione() {
-        return idLezione;
-    }
-
-    public void setIdLezione(String idLezione){
-        this.idLezione = idLezione;
-    }
-
-    public int postidisponibili(){
-        String idAtrezzo = this.c.getIdAttrezzo();
-        Integer p=this.s.getnumAtrezzi(idAtrezzo);
-        return p;
-    }
-
+    //STAMPA
     private String stampadata(){
         String str="", giorno, ora="";
 
@@ -46,17 +33,14 @@ public class Lezione {
             str+=giorno+ora+":00\n";
         return str;
     }
+
     @Override
     public String toString(){
-
-        String str =
-                "LEZIONE: \n" +
-                        "\tID: " + idLezione + "\n" +
-                        "\tNome Corso: " + c.getNome() + "\n" +
-                        "\tSala: " + s.getIdSala()+ "\n" +
-                        "\tIstruttore: " + i.getIdIstruttore() + "\n" +
-                        "\tData: " +stampadata();
-
-        return str;
+        return "LEZIONE: \n" +
+                "\tID: " + idLezione + "\n" +
+                "\tNome Corso: " + c.getNome() + "\n" +
+                "\tSala: " + s.getIdSala()+ "\n" +
+                "\tIstruttore: " + i.getIdIstruttore() + "\n" +
+                "\tData: " +stampadata();
     }
 }

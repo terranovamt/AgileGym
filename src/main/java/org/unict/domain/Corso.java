@@ -1,11 +1,6 @@
 package org.unict.domain;
 
-import java.awt.*;
-import java.util.HashMap;
-import java.util.Map;
-
-//corso deve creare la lezione per information expert
-//un corso ha una lista di lezioni
+import java.util.*;
 
 public class Corso {
     private String idCorso;
@@ -13,7 +8,7 @@ public class Corso {
     private String livello;
     private String focus;
     private String idAttrezzo;
-    private Map<String, Lezione> elencoLezioni;
+    private final Map<String, Lezione> elencoLezioni;
 
     public Corso(String idCorso, String nomeCorso, String livello, String focus, String idAttrezzo){
         this.idCorso =idCorso;
@@ -23,11 +18,13 @@ public class Corso {
         this.idAttrezzo = idAttrezzo;
         this.elencoLezioni=new HashMap<>();
     }
+
     public void inserisciLezione(String idLezione, Slot slot, Corso c, Sala s, Istruttore i ){
         Lezione l  = new Lezione(idLezione, slot, c, s, i);
         elencoLezioni.put(idLezione,l);
     }
 
+    //GET E SET STANDARD
     public String getIdCorso() {
         return idCorso;
     }
@@ -36,42 +33,11 @@ public class Corso {
         return nomeCorso;
     }
 
-    public String getLivello() {
-        return livello;
-    }
-
-    public String getFocus() {
-        return focus;
-    }
-
-    public Map<String, Lezione> getElencoLezioni() {
-        return elencoLezioni;
-    }
-
-    public void setIdCorso(String idCorso) {
-        this.idCorso = idCorso;
-    }
-
-    public void setNomeCorso(String nomeCorso) {
-        this.nomeCorso = nomeCorso;
-    }
-
-    public void setLivello(String livello) {
-        this.livello = livello;
-    }
-
-    public void setFocus(String focus) {
-        this.focus = focus;
-    }
-
     public String  getIdAttrezzo() {
         return idAttrezzo;
     }
 
-    public void setIdAttrezzo(String idAttrezzo) {
-        this.idAttrezzo = idAttrezzo;
-    }
-
+    //STAMPA
     public String stampaLezione() {
         String str="";
         for (String key: elencoLezioni.keySet()){//STAMPA ISTRUTTORI DISPONIBILI
@@ -80,10 +46,8 @@ public class Corso {
         return str;
     }
 
-
     @Override
     public String toString(){
-
         String l=stampaLezione(),
                 s =
                     "\tID: " + idCorso + "\n" +

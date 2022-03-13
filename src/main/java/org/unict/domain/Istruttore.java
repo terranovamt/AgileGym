@@ -1,18 +1,12 @@
 package org.unict.domain;
 
-
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.*;
+import java.util.*;
 
 public class Istruttore {
+    private final String idIstruttore;
+    private final Map<Integer, Slot> listaSlot; //primo numero giorno della settimana e i successivi due indicano l'ora. N.B. 209= martedi' ore 9 am
 
-    private String idIstruttore;
-    private Map<Integer, Slot> listaSlot; //primo numero giorno della settimana e i successivi due indicano l'ora. N.B. 209= martedi' ore 9 am
-
-        //l'istruttore non ha uno slot, ma ha una lista di slot in cui lavora
     public Istruttore(String idIstruttore){
          this.idIstruttore = idIstruttore;
          this.listaSlot = loadSlot();
@@ -29,14 +23,14 @@ public class Istruttore {
             dataora = br1.readLine();
             while (dataora != null) {
                 s = new Slot(dataora, disponibilita);
-                s.setDataora(dataora);
+                s.setDataOra(dataora);
                 s.setDisponibile(disponibilita);
                 map.put(Integer.parseInt(dataora), s);
                 dataora = br1.readLine();
             }
         }catch (IOException e) {
-            System.out.println("ERRORE CARICAMENTO FILE slot.txt\n" );
-            System.exit(-3);
+            System.out.println("ERRORE CARICAMENTO FILE slot.txt DI ISTRUTTORE\n" );
+            System.exit(-2);
         }
         return map;
     }
@@ -44,7 +38,7 @@ public class Istruttore {
     public boolean isIstruttoreDiponibili(int dataora){
         for (Map.Entry<Integer, Slot> entry : listaSlot.entrySet()) { //scorre gli slot per l'istuttore corrente
             if (Integer.parseInt(entry.getValue().getDataora())==dataora) {// seleziona l'id slot gisuto
-                if (entry.getValue().isDisponibile() == true) return true;// se disponibile torna vero
+                if (entry.getValue().isDisponibile()) return true;// se disponibile torna vero
             }
         }
         return false;
@@ -55,35 +49,21 @@ public class Istruttore {
                 c.setDisponibile(false);
     }
 
+    //GET E SET STANDARD
     public String getIdIstruttore() {
         return idIstruttore;
     }
 
-    public Map<Integer, Slot> getListaSlot() {
-        return listaSlot;
-    }
-
-    public void setIdIstruttore(String idIstruttore) {
-        this.idIstruttore = idIstruttore;
-    }
-
-    public void setListaSlot(Map<Integer, Slot> listaSlot) {
-        this.listaSlot = listaSlot;
-    }
-
+    //STAMPA
     public String stampaListaSlot(){
-        String s="";
+        StringBuilder s= new StringBuilder();
         for (Integer key: listaSlot.keySet()){
-            s +="\t"+listaSlot.get(key);
+            s.append("\t").append(listaSlot.get(key));
         }
-        return s;
+        return s.toString();
     }
     @Override
     public String toString(){
-
-        String s =
-                    "ID-Istruttore:\t" + idIstruttore + "\n" +
-                    "\tLista Slot Orari:\n" + stampaListaSlot();
-        return s;
+        return "ID-Istruttore:\t" + idIstruttore + "\n" + "\tLista Slot Orari:\n" + stampaListaSlot();
     }
 }

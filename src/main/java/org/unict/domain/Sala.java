@@ -1,24 +1,20 @@
 package org.unict.domain;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.io.*;
 import java.util.*;
-import java.util.Map;
 
 public class Sala {
-    private String idSala;
-    //non deve avere il numero degli attrezzi, perchè implementi via codice la ricerca del numero di occorrenze presente nella lista
-    Map<Integer, Slot> listaSlot;
-    List<String> listaAttrezzi;
+    private final String idSala;
+    private final Map<Integer, Slot> mapSlot;
+    private List<String> listaAttrezzi;
 
     public Sala(String idSala){
         this.idSala = idSala;
-        this.listaSlot = loadSlot();
+        this.mapSlot = loadSlot();
         this.listaAttrezzi = new ArrayList<>();
     }
 
+    //Caricamento degli slot da file
     public Map<Integer, Slot>  loadSlot(){
         Map<Integer, Slot> map=new HashMap<>();
         String dataora;
@@ -30,23 +26,24 @@ public class Sala {
             dataora = br1.readLine();
             while (dataora != null) {
                 s = new Slot(dataora, disponibilita);
-                s.setDataora(dataora);
+                s.setDataOra(dataora);
                 s.setDisponibile(disponibilita);
                 map.put(Integer.parseInt(s.getDataora()), s);
                 dataora = br1.readLine();
             }
         }catch (IOException e) {
-            System.out.println("ERRORE CARICAMENTO FILE slot.txt\n" );
-            System.exit(-3);
+            System.out.println("ERRORE CARICAMENTO FILE slot.txt IN SALA\n" );
+            System.exit(-1);
         }
         return map;
     }
 
+    //Ricerca nella listaSlot se l'attributo disponibilità è settato su falso
     public  Map<Integer, Slot> getSlotDisponibili(){
         Map<Integer, Slot> s=new HashMap<>();
 
-        for (Map.Entry<Integer, Slot> entry : this.listaSlot.entrySet()) {
-            if (entry.getValue().isDisponibile()==true) {
+        for (Map.Entry<Integer, Slot> entry : this.mapSlot.entrySet()) {
+            if (entry.getValue().isDisponibile()) {
                 s.put(Integer.parseInt(entry.getValue().getDataora()), entry.getValue());
             }
         }
@@ -54,11 +51,10 @@ public class Sala {
     }
 
     public void setOccupato(String s){
-        this.listaSlot.get(Integer.parseInt(s)).setDisponibile(false);
+        this.mapSlot.get(Integer.parseInt(s)).setDisponibile(false);
     }
 
-
-    public int getnumAtrezzi(String idAtrezzo){
+    public int getNumAttrezzi(String idAtrezzo){
         int count=0;
         for (String s :listaAttrezzi){
             if(s.equals(idAtrezzo)){
@@ -68,70 +64,47 @@ public class Sala {
         return count;
     }
 
-
-
-
+    //GET E SET STANDARD
     public String getIdSala() {
-
         return idSala;
     }
 
-    public List getListaAttrezzi() {
-        return listaAttrezzi;
-    }
-
     public Map<Integer, Slot> getListaSlot() {
-        return listaSlot;
+        return mapSlot;
     }
 
-    public void setIdSala(String idSala) {
-        this.idSala = idSala;
-    }
-
-    public void setListaAttrezzi(List listaAttrezzi) {
+    public void setListaAttrezzi(List<String> listaAttrezzi) {
         this.listaAttrezzi = listaAttrezzi;
     }
 
-    public void setListaSlot(Map<Integer, Slot> listaSlot) {
-        this.listaSlot = listaSlot;
+    //STAMPA
+    public String stampaListaSlot () {
+        StringBuilder s = new StringBuilder();
+
+        for (Integer key : mapSlot.keySet()) {
+            s.append("\t").append(mapSlot.get(key));
+        }
+        return s.toString();
     }
 
-   public String stampaListaSlot(){
-       String s="";
-       for (Integer key: listaSlot.keySet()){
-           s +="\t"+listaSlot.get(key);
-       }
-       return s;
-   }
-
-    public String stampaListaAtrezzi(){
-        String s="";
+    public String stampaListaAttrezzi() {
+        StringBuilder s = new StringBuilder();
         List<String> lista = new ArrayList<>();
-        for (String l:listaAttrezzi) {
-            if(!lista.contains(l)){
+
+        for (String l : listaAttrezzi) {
+            if (!lista.contains(l)) {
                 lista.add(l);
-                int n =getnumAtrezzi(l);
-                s +="\t\t n"+n+" "+ l +"\n";
+                int n = getNumAttrezzi(l);
+                s.append("\t\t n").append(n).append(" ").append(l).append("\n");
             }
         }
-
-        /*
-        + " - " + entry.getValue().get()
-        // Fabiola ti serve per il to string di lista sala
-        for (String l:listaAttrezzi) {
-            s +="\t\t"+ l +"\n";
-        }
-        //s=s.substring(0, s.length()-3);//rimuove l'ultimo ", "
-        */
-        return s;
+        return s.toString();
     }
 
     @Override
     public String toString(){
-
-        String s =      "ID-Sala: " + idSala + "\n" +
-                        "\tLista Attrezzi della sala:\n " + stampaListaAtrezzi() + "\n" +
+        return "ID-Sala: " + idSala + "\n" +
+                        "\tLista Attrezzi della sala:\n " + stampaListaAttrezzi() + "\n" +
                         "\tLista Slot Orari: \n" + stampaListaSlot()+ "\n";
-        return s;
     }
 }

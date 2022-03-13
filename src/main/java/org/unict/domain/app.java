@@ -1,26 +1,18 @@
 package org.unict.domain;
 
-import org.unict.UI.MainFrame;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.*;
+import java.util.*;
 
 import static org.unict.domain.Agilegym.agilegym;
 
-
 public class app {
 
-    public static void main (String [] args) throws inserisciCorsoException {
-
-        int scelta = 0;
+    public static void main (String [] args){
+        int scelta;
 
         Agilegym agilegym = Agilegym.getInstance();
         System.out.println("\n\n");
-        System.out.println(logo(2));
-
+        System.out.println(logo(1));
         do{
             scelta = menu();
             switch(scelta){
@@ -28,7 +20,11 @@ public class app {
                     agilegym.inserisciCorso();
                     break;
                 case 2:
-                    sottoscelta();
+                    if(agilegym.getElencoCorsi().isEmpty()){
+                        stampaCorsi();
+                        break;
+                    }
+                    sottoScelta();
                     break;
                 case 3:
 
@@ -45,11 +41,11 @@ public class app {
                 case 7:
                     agilegym.riempiPalestra();
                     break;
-                case 8:
+                case 0:
                     System.exit(0);
                     break;
             }
-        }while(scelta!=8);
+        }while(true);
 
     }
 
@@ -60,13 +56,13 @@ public class app {
             System.out.println("#-----------------------------MENU-----------------------------#");
             System.out.println("#--------------------------------------------------------------#\n");
             System.out.println("1. Inserisci Corso");
-            System.out.println("2. Inserieci Lezione");
+            System.out.println("2. Inserisci Lezione");
             System.out.println("3. ");
             System.out.println("4. Stampa Corsi");
             System.out.println("5. Stampa Sale");
-            System.out.println("6. Stampa Istuttori");
+            System.out.println("6. Stampa Istruttori");
             System.out.println("7. Riempi Palestra");
-            System.out.println("8. Esci");
+            System.out.println("0. Esci");
             System.out.print("Scelta: ");
             return Integer.parseInt(br.readLine());
         }catch(IOException e){
@@ -75,34 +71,34 @@ public class app {
         }
     }
 
-    public static void sottoscelta(){
+    public static void sottoScelta(){
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        Corso corsoScelto=null;
+        Corso corsoScelto;
         Map<Integer,Corso> corsi =new HashMap<>();
         try{
             stampaCorsi();
             System.out.print("\nScegli un corso, 0 per crearlo:");
-            int scelta =-1;
+            int s = 0;
             do{
-                scelta =Integer.parseInt(br.readLine());
+                int scelta=Integer.parseInt(br.readLine());
                 if (scelta==0){
                     agilegym.inserisciCorso();
                 }
-                else {
+                if(scelta>0 || scelta < agilegym.getElencoCorsi().size()){
                     int i=0;
+                    s=scelta;
                     for (String key: agilegym.getElencoCorsi().keySet()){
                         i++;
                         corsi.put(i,agilegym.getElencoCorsi().get(key));
                     }
-                    corsoScelto=corsi.get(scelta);
+                    corsoScelto=corsi.get(s);
                     agilegym.inserisciLezione(corsoScelto);
                 }
-            }while(scelta==-1);
+            }while(s==0);
+
         }catch(IOException e){
             System.out.println("ERRORE!");
-           System.exit(-20);
-        } catch (inserisciCorsoException e) {
-            e.printStackTrace();
+            System.exit(-10);// NUMERO PIU' ALTO DI EXIT
         }
     }
 
@@ -145,51 +141,53 @@ public class app {
         }
     }
 
-    public static void clearConsole(){
-        System.out.print("\\033[H\\033[2J");
-        System.out.flush();
-        logo(2);
-    }
-
     private static String logo(int scelta) {
-        String s[] = new String[3];
-        s[0]=       "     _              _   _           ____                     \n" +
-                    "    / \\      __ _  (_) | |   ___   / ___|  _   _   _ __ ___  \n" +
-                    "   / _ \\    / _` | | | | |  / _ \\ | |  _  | | | | | '_ ` _ \\ \n" +
-                    "  / ___ \\  | (_| | | | | | |  __/ | |_| | | |_| | | | | | | |\n" +
-                    " /_/   \\_\\  \\__, | |_| |_|  \\___|  \\____|  \\__, | |_| |_| |_|\n" +
-                    "            |___/                          |___/             \n\n\n";
+        String[] s = new String[3];
+        s[0]= """
+                     _              _   _           ____                    \s
+                    / \\      __ _  (_) | |   ___   / ___|  _   _   _ __ ___ \s
+                   / _ \\    / _` | | | | |  / _ \\ | |  _  | | | | | '_ ` _ \\\s
+                  / ___ \\  | (_| | | | | | |  __/ | |_| | | |_| | | | | | | |
+                 /_/   \\_\\  \\__, | |_| |_|  \\___|  \\____|  \\__, | |_| |_| |_|
+                            |___/                          |___/            \s
+
+
+                """;
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------
-        s[1]=       " █████   ██████  ██ ██      ███████  ██████  ██    ██ ███    ███ \n" +
-                    "██   ██ ██       ██ ██      ██      ██        ██  ██  ████  ████ \n" +
-                    "███████ ██   ███ ██ ██      █████   ██   ███   ████   ██ ████ ██ \n" +
-                    "██   ██ ██    ██ ██ ██      ██      ██    ██    ██    ██  ██  ██ \n" +
-                    "██   ██  ██████  ██ ███████ ███████  ██████     ██    ██      ██ \n";
+        s[1]= """
+                 █████   ██████  ██ ██      ███████  ██████  ██    ██ ███    ███\s
+                ██   ██ ██       ██ ██      ██      ██        ██  ██  ████  ████\s
+                ███████ ██   ███ ██ ██      █████   ██   ███   ████   ██ ████ ██\s
+                ██   ██ ██    ██ ██ ██      ██      ██    ██    ██    ██  ██  ██\s
+                ██   ██  ██████  ██ ███████ ███████  ██████     ██    ██      ██\s
+                """;
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------
-        s[2]=   "                                                                                                                                                                   \n" +
-                    "               AAA                                      iiii  lllllll                               GGGGGGGGGGGGG                                                  \n" +
-                    "              A:::A                                    i::::i l:::::l                            GGG::::::::::::G                                                  \n" +
-                    "             A:::::A                                    iiii  l:::::l                          GG:::::::::::::::G                                                  \n" +
-                    "            A:::::::A                                         l:::::l                         G:::::GGGGGGGG::::G                                                  \n" +
-                    "           A:::::::::A              ggggggggg   ggggg  iiiiiii l::::l      eeeeeeeeeeee      G:::::G       GGGGGG yyyyyyy           yyyyyyy   mmmmmmm    mmmmmmm   \n" +
-                    "          A:::::A:::::A            g:::::::::ggg::::g  i:::::i l::::l    ee::::::::::::ee   G:::::G                y:::::y         y:::::y  mm:::::::m  m:::::::mm \n" +
-                    "         A:::::A A:::::A          g:::::::::::::::::g   i::::i l::::l   e::::::eeeee:::::ee G:::::G                 y:::::y       y:::::y  m::::::::::mm::::::::::m\n" +
-                    "        A:::::A   A:::::A        g::::::ggggg::::::gg   i::::i l::::l  e::::::e     e:::::e G:::::G    GGGGGGGGGG    y:::::y     y:::::y   m::::::::::::::::::::::m\n" +
-                    "       A:::::A     A:::::A       g:::::g     g:::::g    i::::i l::::l  e:::::::eeeee::::::e G:::::G    G::::::::G     y:::::y   y:::::y    m:::::mmm::::::mmm:::::m\n" +
-                    "      A:::::AAAAAAAAA:::::A      g:::::g     g:::::g    i::::i l::::l  e:::::::::::::::::e  G:::::G    GGGGG::::G      y:::::y y:::::y     m::::m   m::::m   m::::m\n" +
-                    "     A:::::::::::::::::::::A     g:::::g     g:::::g    i::::i l::::l  e::::::eeeeeeeeeee   G:::::G        G::::G       y:::::y:::::y      m::::m   m::::m   m::::m\n" +
-                    "    A:::::AAAAAAAAAAAAA:::::A    g::::::g    g:::::g    i::::i l::::l  e:::::::e             G:::::G       G::::G        y:::::::::y       m::::m   m::::m   m::::m\n" +
-                    "   A:::::A             A:::::A   g:::::::ggggg:::::g i::::::i l::::::l e::::::::e             G:::::GGGGGGGG::::G         y:::::::y        m::::m   m::::m   m::::m\n" +
-                    "  A:::::A               A:::::A   g::::::::::::::::g i::::::i l::::::l  e::::::::eeeeeeee      GG:::::::::::::::G          y:::::y         m::::m   m::::m   m::::m\n" +
-                    " A:::::A                 A:::::A   gg::::::::::::::g i::::::i l::::::l   ee:::::::::::::e        GGG::::::GGG:::G         y:::::y          m::::m   m::::m   m::::m\n" +
-                    "AAAAAAA                   AAAAAAA    gggggggg::::::g iiiiiiii llllllll     eeeeeeeeeeeeee           GGGGGG   GGGG        y:::::y           mmmmmm   mmmmmm   mmmmmm\n" +
-                    "                                             g:::::g                                                                    y:::::y                                    \n" +
-                    "                                 gggggg      g:::::g                                                                   y:::::y                                     \n" +
-                    "                                 g:::::gg   gg:::::g                                                                  y:::::y                                      \n" +
-                    "                                  g::::::ggg:::::::g                                                                 y:::::y                                       \n" +
-                    "                                   gg:::::::::::::g                                                                 yyyyyyy                                        \n" +
-                    "                                     ggg::::::ggg                                                                                                                  \n" +
-                    "                                        gggggg                                                                                                                     \n";
+        s[2]= """
+                                                                                                                                                                                  \s
+                               AAA                                      iiii  lllllll                               GGGGGGGGGGGGG                                                 \s
+                              A:::A                                    i::::i l:::::l                            GGG::::::::::::G                                                 \s
+                             A:::::A                                    iiii  l:::::l                          GG:::::::::::::::G                                                 \s
+                            A:::::::A                                         l:::::l                         G:::::GGGGGGGG::::G                                                 \s
+                           A:::::::::A              ggggggggg   ggggg  iiiiiii l::::l      eeeeeeeeeeee      G:::::G       GGGGGG yyyyyyy           yyyyyyy   mmmmmmm    mmmmmmm  \s
+                          A:::::A:::::A            g:::::::::ggg::::g  i:::::i l::::l    ee::::::::::::ee   G:::::G                y:::::y         y:::::y  mm:::::::m  m:::::::mm\s
+                         A:::::A A:::::A          g:::::::::::::::::g   i::::i l::::l   e::::::eeeee:::::ee G:::::G                 y:::::y       y:::::y  m::::::::::mm::::::::::m
+                        A:::::A   A:::::A        g::::::ggggg::::::gg   i::::i l::::l  e::::::e     e:::::e G:::::G    GGGGGGGGGG    y:::::y     y:::::y   m::::::::::::::::::::::m
+                       A:::::A     A:::::A       g:::::g     g:::::g    i::::i l::::l  e:::::::eeeee::::::e G:::::G    G::::::::G     y:::::y   y:::::y    m:::::mmm::::::mmm:::::m
+                      A:::::AAAAAAAAA:::::A      g:::::g     g:::::g    i::::i l::::l  e:::::::::::::::::e  G:::::G    GGGGG::::G      y:::::y y:::::y     m::::m   m::::m   m::::m
+                     A:::::::::::::::::::::A     g:::::g     g:::::g    i::::i l::::l  e::::::eeeeeeeeeee   G:::::G        G::::G       y:::::y:::::y      m::::m   m::::m   m::::m
+                    A:::::AAAAAAAAAAAAA:::::A    g::::::g    g:::::g    i::::i l::::l  e:::::::e             G:::::G       G::::G        y:::::::::y       m::::m   m::::m   m::::m
+                   A:::::A             A:::::A   g:::::::ggggg:::::g i::::::i l::::::l e::::::::e             G:::::GGGGGGGG::::G         y:::::::y        m::::m   m::::m   m::::m
+                  A:::::A               A:::::A   g::::::::::::::::g i::::::i l::::::l  e::::::::eeeeeeee      GG:::::::::::::::G          y:::::y         m::::m   m::::m   m::::m
+                 A:::::A                 A:::::A   gg::::::::::::::g i::::::i l::::::l   ee:::::::::::::e        GGG::::::GGG:::G         y:::::y          m::::m   m::::m   m::::m
+                AAAAAAA                   AAAAAAA    gggggggg::::::g iiiiiiii llllllll     eeeeeeeeeeeeee           GGGGGG   GGGG        y:::::y           mmmmmm   mmmmmm   mmmmmm
+                                                             g:::::g                                                                    y:::::y                                   \s
+                                                 gggggg      g:::::g                                                                   y:::::y                                    \s
+                                                 g:::::gg   gg:::::g                                                                  y:::::y                                     \s
+                                                  g::::::ggg:::::::g                                                                 y:::::y                                      \s
+                                                   gg:::::::::::::g                                                                 yyyyyyy                                       \s
+                                                     ggg::::::ggg                                                                                                                 \s
+                                                        gggggg                                                                                                                    \s
+                """;
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
             return s[scelta];

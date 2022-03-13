@@ -1,28 +1,18 @@
 package org.unict.domain;
 
-//caso d'uso di avviamento, caricamento sale, caricamento lista attrezzi, caricamento slot e caricamento istruttori
-
 import java.util.*;
 import java.io.*;
 
 import static java.lang.Math.abs; //rand num
 
 public class Agilegym {
-    //attributes
     static  Agilegym agilegym;
     private Corso corsoCorrente;
-    private Map<String, Corso> elencoCorsi;
-    private Attrezzo attrezzoSelezionato;
-    public Map<String, Attrezzo> elencoAttrezzi;
-    private Sala salaSelezioanta;
-    private Map<String, Sala> elencoSale;
-    private Slot slotSelezionato;
-    private Istruttore istruttoreSelezionato;
-    private Map<String, Istruttore> elencoIstruttori;
+    public  Map<String, Attrezzo> elencoAttrezzi;
+    private final Map<String, Sala> elencoSale;
+    private final Map<String, Corso> elencoCorsi;
+    private final Map<String, Istruttore> elencoIstruttori;
 
-
-
-    //constructor
     private Agilegym() throws IOException {
         this.elencoCorsi = new HashMap<>();
         this.elencoAttrezzi  = new HashMap<>();
@@ -38,30 +28,30 @@ public class Agilegym {
         if (agilegym == null)
             try{
                 agilegym = new Agilegym();
-
             }catch (IOException e){
                 System.out.println("PRIMO ERRORE");
             }
         else
             System.out.println("Instanza già creata");
-
         return agilegym;
     }
 
-    public void inserisciCorso() throws inserisciCorsoException {
+    public void inserisciCorso() {
         String idCorso;
         String nomeCorso;
         String livello;
         String focus;
         String idAttrezzo;
         String s;
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        Attrezzo attrezzoSelezionato;
 
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("-------Inserisci un corso-------\n");
+
         try {
             //System.out.println("Inserisci l'ID del corso: \n");
-            //idCorso = br.readLine();
             idCorso=randId();
+            //idCorso = br.readLine();
             System.out.println("ID CORSO:"+idCorso +" (generato autonomamente)");
             System.out.print("Inserisci il nome del corso: ");
             nomeCorso = br.readLine();
@@ -69,28 +59,25 @@ public class Agilegym {
             livello = br.readLine();
             System.out.print("Inserisci il focus del corso: ");
             focus = br.readLine();
-            //l'amministatore inserisce l'id dell'attrezzo che vuole per quel corso, si cerca se quell'attrezzo
-            //e' presente nella lista degli attrezzi, una volta trovato, si prende quell'attrezzo e lo si inserisce nel corso
-            System.out.print("Attrezzi della palestre:");
-            for (String key: elencoAttrezzi.keySet()){//Serve per non stampare con le graffe e avere solo il valore e non la key, la formattazione e va fatto nel to string del tipo(sala.toString)
-                System.out.print(elencoAttrezzi.get(key).getIdAttrezzo()+",");
+            //L'amministratore inserisce l'id dell'attrezzo che vuole per quel corso, si cerca se quell'attrezzo
+            //è presente nella lista degli attrezzi, una volta trovato, si prende quell'attrezzo e lo si inserisce nel corso
+            System.out.print("Attrezzi della palestre: ");
+            for (String key: elencoAttrezzi.keySet()){
+                System.out.print(elencoAttrezzi.get(key).getIdAttrezzo()+", ");
             }
+            System.out.print("\n");
             do{
-                System.out.print("\nInserisci l'ID dell'attrezzo del corso: ");
+                System.out.print("Inserisci l'ID dell'attrezzo del corso: ");
                 idAttrezzo = br.readLine();
                 attrezzoSelezionato = elencoAttrezzi.get(idAttrezzo);
             }while (attrezzoSelezionato == null);
             //System.out.println(attrezzoSelezionato.toString());
-            if (attrezzoSelezionato == null) {
-                throw new inserisciCorsoException("Errore attrezzo inserito\n");
-            } else {
-                this.corsoCorrente = new Corso(idCorso, nomeCorso, livello, focus, attrezzoSelezionato.getIdAttrezzo());
-                System.out.println("\n--------RIEPILOGO CORSO--------");
-                System.out.println(corsoCorrente+"\n--------------------------------\n");
-            }
+            this.corsoCorrente = new Corso(idCorso, nomeCorso, livello, focus, attrezzoSelezionato.getIdAttrezzo());
+            System.out.println("\n--------RIEPILOGO CORSO--------");
+            System.out.println(corsoCorrente+"\n--------------------------------\n");
             do {
                 s="";
-                System.out.print("Vuoi inserire questo corso? (si/no):");
+                System.out.print("Vuoi inserire questo corso? (si/no): ");
                 String str=br.readLine();
                 if (str.equals("si")){
                     s=str;
@@ -102,103 +89,129 @@ public class Agilegym {
             if (s.equals("si")) {
                 this.elencoCorsi.put(corsoCorrente.getIdCorso(), corsoCorrente);
             }
+            do {
+                s="";
+                System.out.print("Vuoi inserire una lezione per questo corso? (si/no): ");
+                String str=br.readLine();
+                if (str.equals("si")){
+                    s=str;
+                }
+                if (str.equals("no")){
+                    s=str;
+                }
+            }while (s.equals(""));
+            if (s.equals("si")) {
+                inserisciLezione(corsoCorrente);
+            }
         } catch (Exception e) {
-            System.out.println("ERRORE NELLA LETTURA DA TASTIERA:\n" );
-            System.exit(-12);
+            System.out.println("ERRORE NELLA LETTURA DA TASTIERA: "+e.getMessage());
+            System.exit(-7);
         }
-
     }
 
-    public void inserisciLezione(Corso corso)throws inserisciCorsoException{
+    public void inserisciLezione(Corso corso){
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String  idSalaSelezioanta="",
-                idIstruttoreSelezioanto="",
-                idLezione=randId();
-        int dataora=0;
-        corsoCorrente =corso;
+        String  s, idSalaSelezioanta, idIstruttoreSelezioanto, idLezione = randId();
+        int dataOra = 0;
+        Attrezzo attrezzoSelezionato ;
+        Sala salaSelezionata = null;
+        Slot slotSelezionato= null;
+        Istruttore istruttoreSelezionato = null;
+        corsoCorrente = corso;
 
-        do{
-            attrezzoSelezionato = elencoAttrezzi.get(corso.getIdAttrezzo());
-        }while (attrezzoSelezionato == null);
-        if (attrezzoSelezionato == null) {
-            throw new inserisciCorsoException("Errore attrezzo inserito\n");
-        }
-        System.out.println("-------Inserisci una Lezione-------\n");
         try {
-            System.out.println("Elenco degli Sale dispnibili per l'attrezzo ~" +attrezzoSelezionato.getIdAttrezzo()+"~:");
+            attrezzoSelezionato = elencoAttrezzi.get(corso.getIdAttrezzo());
+            System.out.println("-------Inserisci una Lezione-------\n");
+            if (attrezzoSelezionato.getListaSaleDiAttrezzo().size()==1){
+                System.out.println("E' disponibile solo la sala: "+attrezzoSelezionato.getListaSaleDiAttrezzo().get(0));
+                salaSelezionata = elencoSale.get(String.valueOf(attrezzoSelezionato.getListaSaleDiAttrezzo().get(0)));
+            }else {
+            System.out.println("Elenco degli Sale disponibili per l'attrezzo ~" +attrezzoSelezionato.getIdAttrezzo()+"~:");
             System.out.print(attrezzoSelezionato.stampaListaSale());
-            do {
-                salaSelezioanta=null;
-                System.out.print("Inserisci una sala Disponibile: ");
-                idSalaSelezioanta = br.readLine();
-                if(attrezzoSelezionato.getListaSalediAttrezzo().contains(idSalaSelezioanta)){
-                    salaSelezioanta = elencoSale.get(idSalaSelezioanta);
-                }
-            }while (salaSelezioanta==null);
+            //SCELTA DELLA SALA
+                do {
+                    System.out.print("Inserisci una sala Disponibile: ");
+                    idSalaSelezioanta = br.readLine();
+                    if(attrezzoSelezionato.getListaSaleDiAttrezzo().contains(idSalaSelezioanta)){
+                        salaSelezionata = elencoSale.get(idSalaSelezioanta);
+                    }
+                }while (salaSelezionata ==null);
 
-            //STAMPA SLOT DISPONIBILI
-            System.out.println("Elenco degli Slot dispnibili per la sala ~" +salaSelezioanta.getIdSala()+"~:");
-
-            for (Integer key: salaSelezioanta.getSlotDisponibili().keySet()){//Serve per non stampare con le graffe e avere solo il valore e non la key, la formattazione e va fatto nel to string del tipo(sala.toString)
-                System.out.print("\tID-Slot: "+salaSelezioanta.getSlotDisponibili().get(key).getDataora()+"\n");
             }
 
-            do {
-                slotSelezionato=null;
-                System.out.print("Inserisci uno slot Disponibile: ");
-                dataora = Integer.parseInt(br.readLine());
-
-                if(salaSelezioanta.getSlotDisponibili().containsKey(dataora)){
-                    slotSelezionato = salaSelezioanta.getSlotDisponibili().get(dataora);
+            //SCELTA DELLO SLOT
+            if (salaSelezionata.getSlotDisponibili().size()==1){
+                System.out.println("E' disponibile solo lo Slot: "+salaSelezionata.getSlotDisponibili().get(0).getDataora());
+                slotSelezionato = salaSelezionata.getSlotDisponibili().get(Integer.parseInt(salaSelezionata.getSlotDisponibili().get(0).getDataora()));
+            }else{
+                System.out.println("Elenco degli Slot disponibili per la sala ~" + salaSelezionata.getIdSala()+"~:");
+                for (Integer key: salaSelezionata.getSlotDisponibili().keySet()){//Serve per non stampare con le graffe e avere solo il valore e non la key, la formattazione e va fatto nel to string del tipo(sala.toString)
+                    System.out.print("\tID-Slot: "+ salaSelezionata.getSlotDisponibili().get(key).getDataora()+"\n");
                 }
-            }while (slotSelezionato==null);
-            //System.out.println(idSlotSelezionato);
 
-            //STAMPA ISTRUTTORI DISPONIBILI
-            Iterator it = elencoIstruttori.entrySet().iterator();
+                do {
+                    System.out.print("Inserisci uno slot Disponibile: ");
+                    dataOra = Integer.parseInt(br.readLine());
+                    if(salaSelezionata.getSlotDisponibili().containsKey(dataOra)){
+                        slotSelezionato = salaSelezionata.getSlotDisponibili().get(dataOra);
+                    }
+                }while (slotSelezionato ==null);
+                //System.out.println(idSlotSelezionato);
+            }
+            //SCELTA DELL'ISTRUTTORE
+            Iterator<Map.Entry<String, Istruttore>> it = elencoIstruttori.entrySet().iterator();
             Map<String,Istruttore> isDisponibile=new HashMap<>();
-            System.out.println("Elenco degli Istruttori dispnibili per lo Slot ~" +dataora+"~:");
-            while (it.hasNext()) {
-                // Utilizza il nuovo elemento (coppia chiave-valore) dell'hashmap per wcorrete tutti gli istruttori
-                Map.Entry entry = (Map.Entry)it.next();
-                Istruttore i=(Istruttore) entry.getValue();
-                if(i.isIstruttoreDiponibili(dataora)==true){//verifico se disponibile nello solt
-                isDisponibile.put(i.getIdIstruttore(),i);// se disponibile aggiu go listruttore ad una losta di istruttori disponibili
-                }
-            }
-            for (String key: isDisponibile.keySet()){//STAMPA ISTRUTTORI DISPONIBILI
-                System.out.println("\t"+isDisponibile.get(key).getIdIstruttore());
-            }
-            do {
-                istruttoreSelezionato=null;
-                System.out.print("Inserisci una istruttore Disponibile: ");
-                idIstruttoreSelezioanto = br.readLine();
-                if (isDisponibile.containsKey(idIstruttoreSelezioanto)==true) {
-                    istruttoreSelezionato = elencoIstruttori.get(idIstruttoreSelezioanto);
-                }
-            }while (istruttoreSelezionato==null);
-            //System.out.println(idIstruttoreSelezioanto);
-            //System.out.println(istruttoreSelezionato);
 
+            while (it.hasNext()) {
+                Map.Entry<String, Istruttore> entry = it.next();
+                Istruttore i = entry.getValue();
+                if (i.isIstruttoreDiponibili(dataOra)) {
+                    isDisponibile.put(i.getIdIstruttore(), i);
+                }
+            }
+            if (isDisponibile.size()==0){
+                System.out.println("NON SONO DISPONIBILI ISTUTTORI SCEGLI UN ALTRO SLOT");
+                inserisciLezione(corso);
+            }
+            if (isDisponibile.size()==1){
+                for (String key : isDisponibile.keySet()) {//STAMPA ISTRUTTORI DISPONIBILI
+                    System.out.println("E' disponibile solo l'istruttore: " + isDisponibile.get(key).getIdIstruttore());
+                    istruttoreSelezionato = elencoIstruttori.get(isDisponibile.get(key).getIdIstruttore());
+                }
+            }
+            else {
+                System.out.println("Elenco degli Istruttori disponibili per lo Slot ~" + dataOra + "~:");
+                for (String key : isDisponibile.keySet()) {//STAMPA ISTRUTTORI DISPONIBILI
+                    System.out.println("\t" + isDisponibile.get(key).getIdIstruttore());
+                }
+                do {
+                    System.out.print("Inserisci una istruttore Disponibile: ");
+                    idIstruttoreSelezioanto = br.readLine();
+                    if (isDisponibile.containsKey(idIstruttoreSelezioanto)) {
+                        istruttoreSelezionato = elencoIstruttori.get(idIstruttoreSelezioanto);
+                    }
+                } while (istruttoreSelezionato == null);
+                //System.out.println(istruttoreSelezionato);
+            }
             //TUTTE LE SCELTE SONO ANDATE A BUON FINE
             System.out.println("\n------------RIEPILOGO------------");
             System.out.println( "LEZIONE: \n" +
                                 "\tID: " + idLezione + "\n" +
                                 "\tNome Corso: " + corsoCorrente.getNome() + "\n" +
-                                "\tSala: " + salaSelezioanta.getIdSala()+ "\n" +
+                                "\tSala: " + salaSelezionata.getIdSala()+ "\n" +
                                 "\tIstruttore: " + istruttoreSelezionato.getIdIstruttore() + "\n" +
-                                "\tI#D-Slot: " +slotSelezionato.getDataora());
+                                "\tI#D-Slot: " + slotSelezionato.getDataora());
             System.out.println("\n--------------------------------\n");
-            String s;
+
             do {
                 s="";
-                System.out.print("Vuoi inserire questa lezione? (si/no):");
+                System.out.print("Vuoi inserire questa lezione? (si/no): ");
                 String str=br.readLine();
                 if (str.equals("si")){
                     s=str;
-                    corsoCorrente.inserisciLezione(idLezione,slotSelezionato ,corsoCorrente ,salaSelezioanta ,istruttoreSelezionato);
-                    this.salaSelezioanta.setOccupato(slotSelezionato.getDataora());
-                    this.istruttoreSelezionato.setOccupato(slotSelezionato.getDataora());
+                    corsoCorrente.inserisciLezione(idLezione, slotSelezionato,corsoCorrente , salaSelezionata, istruttoreSelezionato);
+                    salaSelezionata.setOccupato(slotSelezionato.getDataora());
+                    istruttoreSelezionato.setOccupato(slotSelezionato.getDataora());
                     System.out.println("\n------------CONFERMA INSERIMENTO LEZIONE-------------\n");
                     System.out.println(corsoCorrente);
                 }
@@ -218,56 +231,47 @@ public class Agilegym {
                 }
             }while (s.equals(""));
             if (s.equals("si")) {
-                inserisciLezione(corso);
+                inserisciLezione(corsoCorrente);
             }
         }catch (Exception e) {
-            System.out.println("ERRORE NELLA LETTURA DA TASTIERA: " +e.getMessage() );
-            System.exit(-12);//CONTROLLA IL NUMERO
+            System.out.println("ERRORE NELLA LETTURA DA TASTIERA:" +e.getMessage());
+            System.exit(-8);
         }
     }
 
     public void loadAttrezzi(){
         String str, idAtrezzo;
+        String [] strings;
         //System.out.println("sono dentro Attrezzi\n\n");
         try{
             BufferedReader br = new BufferedReader(new FileReader("Attrezzi.txt"));
-            String [] strings;
             str = br.readLine();
             while (str != null){
                 strings=str.split("-");
                 idAtrezzo=strings[0];
-                List listaSala=new ArrayList<>();
-                for(int i =1; i<strings.length; i++) {
-                    listaSala.add(strings[i]);
-                }
+                List<String> listaSala = new ArrayList<>(Arrays.asList(strings).subList(1, strings.length));
                 Attrezzo a=new Attrezzo(idAtrezzo,listaSala);
                 this.elencoAttrezzi.put(idAtrezzo,a);
                 str = br.readLine();
             }
         }catch (IOException e) {
             System.out.println("ERRORE NEL CARICAMENTO DEL FILE Attrezzi.txt\n" );
-            System.exit(-10);
+            System.exit(-4);
         }
-        /*System.out.println("Elenco Attezzi:");
-        for (String key: elencoAttrezzi.keySet()){
-            System.out.println(elencoAttrezzi.get(key));
-        }*/
     }
 
     public void loadSale() {
         String str, idSala;
+        String [] strings;
 
         try {
             BufferedReader br = new BufferedReader(new FileReader("sale.txt"));
-            String [] strings;
+
             str = br.readLine();
             while (str != null){
                 strings=str.split("-");
                 idSala=strings[0];
-                List listaAtrezziSala = new ArrayList(); //questa è l'elenco degli atrezzi in una sala, ogni volta che ciclo deve essere ua lista nuova, non la dichiaro fuori
-                for(int i =1; i<strings.length; i++) {
-                    listaAtrezziSala.add(strings[i]);
-                }
+                List<String> listaAtrezziSala = new ArrayList<>(Arrays.asList(strings).subList(1, strings.length));
                 Sala s=new Sala(idSala);
                 s.setListaAttrezzi(listaAtrezziSala);
                 this.elencoSale.put(idSala, s);
@@ -275,13 +279,8 @@ public class Agilegym {
             }
         }catch (IOException e) {
             System.out.println("ERRORE NEL CARICAMENTO DEL FILE Sale.txt\n" );
-            System.exit(-10);
+            System.exit(-5);
         }
-        /*System.out.println("Elenco Sale Disponibili:");
-        for (String key: elencoSale.keySet()){//Serve per non stampare le graffe elas key ma slo il value, la formattazione e va fatto nel to string del tipo(sala.toString)
-            System.out.println(elencoSale.get(key));
-        }*/
-
     }
 
     public void loadIstruttore(){
@@ -297,20 +296,17 @@ public class Agilegym {
             }
         }catch (IOException e){
             System.out.println("ERRORE NEL CARICAMENTO DEL FILE istruttori.txt:\n" );
-            System.exit(-11);
+            System.exit(-6);
         }
-        /*System.out.println("Ecco l'elenco degli istruttori disponibili:");
-        for (String key: elencoIstruttori.keySet()){
-            System.out.println(elencoIstruttori.get(key));
-        }*/
     }
 
     public void riempiPalestra(){
         String str;
+        String [] strings;
         try {
             BufferedReader bcorsi = new BufferedReader(new FileReader("corsi.txt"));
             BufferedReader blezioni = new BufferedReader(new FileReader("lezioni.txt"));
-            String [] strings;
+
             str = bcorsi.readLine();
             while (str != null){
                 strings=str.split("-");
@@ -318,6 +314,7 @@ public class Agilegym {
                 this.elencoCorsi.put(strings[0],c);
                 str = bcorsi.readLine();
             }
+
             str = blezioni.readLine();
             while (str != null){
                 strings=str.split("-");
@@ -334,7 +331,7 @@ public class Agilegym {
             System.out.println("\nI corsi e le lezioni sono stati inseriti con successo\n\n");
         }catch (IOException e) {
             System.out.println("ERRORE NEL CARICAMENTO DEL FILE corsi.txt\n" );
-            System.exit(-10);
+            System.exit(-9);
         }
     }
 
@@ -342,6 +339,7 @@ public class Agilegym {
         return String.valueOf((abs((int) System.currentTimeMillis() + (int)(Math.random()*(1000000000)))/10));
     }
 
+    //GET E SET STANDARD
     public Map<String, Corso> getElencoCorsi() {
         return elencoCorsi;
     }
@@ -354,8 +352,4 @@ public class Agilegym {
         return elencoIstruttori;
     }
 
-
-    public void setCorsoCorrente(Corso corsoCorrente) {
-        this.corsoCorrente = corsoCorrente;
-    }
 }
