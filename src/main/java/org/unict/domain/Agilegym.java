@@ -8,9 +8,9 @@ import static java.lang.Math.abs; //rand num
 public class Agilegym {
     static  Agilegym agilegym;
     private Corso corsoCorrente;
-    private Cliente logged;
-    private Map<String, Attrezzo> elencoAttrezzi;
-    private Map<String, Corso> elencoCorsi;
+    private final Map<String, Cliente> elencoClienti;
+    private final Map<String, Attrezzo> elencoAttrezzi;
+    private final Map<String, Corso> elencoCorsi;
     private final Map<String, Sala> elencoSale;
     private final Map<String, Istruttore> elencoIstruttori;
 
@@ -19,6 +19,7 @@ public class Agilegym {
         this.elencoAttrezzi  = new HashMap<>();
         this.elencoSale = new HashMap<>();
         this.elencoIstruttori = new HashMap<>();
+        this.elencoClienti = new HashMap<>();
 
         loadAttrezzi();
         loadSale();
@@ -267,14 +268,24 @@ public class Agilegym {
     public void nuovaPrenotazione(){
         int i=0;
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        Cliente logged = null;
+        String username;
 
-        for (String key : elencoCorsi.keySet()) {
-            i++;
-            System.out.println("CORSO: "+ i );
-            System.out.println(elencoCorsi.get(key).stampaCorsi());
-        }
-        int scelta = 0;
         try {
+            do {
+            System.out.print("Inserisci username: ");
+                username = br.readLine();
+            if(elencoClienti.containsKey(username)){
+                logged=elencoClienti.get(username);
+            }
+            }while (logged ==null);
+
+            for (String key : elencoCorsi.keySet()) {
+                i++;
+                System.out.println("CORSO: "+ i );
+                System.out.println(elencoCorsi.get(key).stampaCorsi());
+            }
+            int scelta = 0;
             do{
                 System.out.print("Scegli un corso: ");
                 int s=Integer.parseInt(br.readLine());
@@ -330,7 +341,7 @@ public class Agilegym {
                 int s= Integer.parseInt(br.readLine());
                 switch (s) {
                     case 1:
-                        confermaPrenotazione(lezioneCorrente.getIdLezione());
+                        confermaPrenotazione(lezioneCorrente.getIdLezione(), logged);
                         break;
                     case 2:
                         mostraLezione(sceltaCorso,logged);
@@ -347,9 +358,9 @@ public class Agilegym {
         }
     }
 
-    public void confermaPrenotazione(String idLezione){
+    public void confermaPrenotazione(String idLezione, Cliente logged){
         System.out.println("PRENOTAZIONE EFFETTUATA CON SUCCESSO");
-        Prenotazione p = corsoCorrente.confermaPrenotazione(idLezione, logged.getidCliente());
+        Prenotazione p = corsoCorrente.confermaPrenotazione(idLezione, logged.getIdCliente());
         logged.addPrenotazione(p);
     }
 
@@ -450,16 +461,23 @@ public class Agilegym {
             str = bcliente.readLine();
             while (str != null){
                 strings=str.split("-");
-
+                Cliente c=new Cliente(strings[0], strings[1], strings[2], strings[3]);
+                elencoClienti.put(strings[0],c);
                 str = bcliente.readLine();
             }
             str = bprenotazioni.readLine();
             while (str != null){
                 strings=str.split("-");
 
+                for (Map.Entry<String, Corso> entry : elencoCorsi.entrySet()) {
+                    Corso corsoCorrente = entry.getValue();
+                    if (corsoCorrente.getElencoLezioni().containsKey(strings[0])) {
+                        Prenotazione p = corsoCorrente.confermaPrenotazione(strings[0], strings[1]);
+                        elencoClienti.get(strings[1]).addPrenotazione(p);
+                    }
+                }
                 str = bprenotazioni.readLine();
             }
-
 
             System.out.println("\nI corsi e le lezioni sono stati inseriti con successo\n");
         }catch (IOException e) {
@@ -489,4 +507,7 @@ public class Agilegym {
         return elencoIstruttori;
     }
 
+    public Map<String, Cliente> getElencoClienti() {
+        return elencoClienti;
+    }
 }

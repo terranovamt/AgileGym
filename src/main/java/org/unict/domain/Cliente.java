@@ -3,23 +3,29 @@ package org.unict.domain;
 import java.util.HashMap;
 
 public class Cliente {
-    private String idCliente;
-    private String nome;
-    private String cognome;
-    private String dataNascita;
-    private HashMap<String,Prenotazione> elencoPrenotazioni;
+    private final String idCliente;
+    private final String nome;
+    private final String cognome;
+    private final HashMap<String,Prenotazione> elencoPrenotazioni;
 
 
     public  Cliente(String username, String nome, String cognome, String dataNascita){
         this.idCliente = username;
         this.nome=nome;
         this.cognome=cognome;
-        this.dataNascita = dataNascita;
         this.elencoPrenotazioni=new HashMap<>();
     }
 
-    public String getidCliente() {
+    public String getIdCliente() {
         return idCliente;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getCognome() {
+        return cognome;
     }
 
     public void addPrenotazione(Prenotazione p){
@@ -27,5 +33,9 @@ public class Cliente {
     }
     public HashMap<String, Prenotazione> getElencoPrenotazioni() {
         return elencoPrenotazioni;
+    }
+
+    public String toString() {
+        return "\tNome: " + nome + "\n" + "\tCognome:" + cognome;
     }
 }

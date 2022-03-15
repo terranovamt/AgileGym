@@ -1,8 +1,8 @@
 package org.unict.domain;
 
 public class Prenotazione {
-    private String idPrenotazione;
-    private String idCliente;
+    private final String idPrenotazione;
+    private final String idCliente;
 
     public  Prenotazione(String idCliente){
         this.idPrenotazione = Agilegym.randId();
@@ -11,6 +11,10 @@ public class Prenotazione {
 
     public String getIdPrenotazione() {
         return idPrenotazione;
+    }
+
+    public String getIdCliente() {
+        return idCliente;
     }
 
     @Override

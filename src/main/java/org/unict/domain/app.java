@@ -12,44 +12,36 @@ public class app {
 
         Agilegym agilegym = Agilegym.getInstance();
         System.out.println("\n\n");
-        System.out.println(logo(1));
+        System.out.println(logo());
         do{
             scelta = menu();
-            switch(scelta){
-                case 1:
-                    agilegym.inserisciCorso();
-                    break;
-                case 2:
+            switch (scelta) {
+                case 1 -> agilegym.inserisciCorso();
+                case 2 -> {
                     agilegym.riempiPalestra();//IMPORTANTE DA CANCELLARE, MESSO PER FARE LE PROVE PIU VELOCEMENTE
-                    if(agilegym.getElencoCorsi().isEmpty()){
+                    if (agilegym.getElencoCorsi().isEmpty()) {
                         stampaCorsi();
                         break;
                     }
                     sottoScelta();
-                    break;
-                case 3:
+                }
+                case 3 -> {
                     agilegym.riempiPalestra();//IMPORTANTE DA CANCELLARE, MESSO PER FARE LE PROVE PIU VELOCEMENTE
-                    if(agilegym.getElencoCorsi().isEmpty()){
+                    if (agilegym.getElencoCorsi().isEmpty()) {
                         stampaCorsi();
                         break;
                     }
                     agilegym.nuovaPrenotazione();
-                    break;
-                case 4:
-                    stampaCorsi();
-                    break;
-                case 5:
-                    stampaSale();
-                    break;
-                case 6:
-                    stampaIstruttori();
-                    break;
-                case 7:
+                }
+                case 4 -> stampaCorsi();
+                case 5 -> stampaSale();
+                case 6 -> stampaIstruttori();
+                case 7 -> {
                     agilegym.riempiPalestra();
-                    break;
-                case 0:
-                    System.exit(0);
-                    break;
+                    stampaPrenotazioni();
+                }
+                case 8 -> agilegym.riempiPalestra();
+                case 0 -> System.exit(0);
             }
         }while(true);
 
@@ -68,7 +60,8 @@ public class app {
             System.out.println("4. Stampa Corsi");
             System.out.println("5. Stampa Sale");
             System.out.println("6. Stampa Istruttori");
-            System.out.println("7. Riempi Palestra");
+            System.out.println("7. Stampa Prenotazioni");
+            System.out.println("8. Riempi Palestra");
             System.out.println("0. Esci");
             System.out.print("Scelta: ");
             return Integer.parseInt(br.readLine());
@@ -154,7 +147,27 @@ public class app {
         }
     }
 
-    private static String logo(int scelta) {
+    public static void stampaPrenotazioni(){
+        if(agilegym.getElencoClienti().isEmpty()){
+            System.out.print    ("\n#--------------------------------------------------------------#\n");
+            System.out.print    (  "#-----------NON CI SONO CLIENTI, TROVALI !!!------------#");
+            System.out.println  ("\n#--------------------------------------------------------------#\n");
+        }
+        for (String key1 : agilegym.getElencoCorsi().keySet()){
+            for (String key2 : agilegym.getElencoCorsi().get(key1).getElencoLezioni().keySet()){
+                Lezione l = agilegym.getElencoCorsi().get(key1).getElencoLezioni().get(key2);
+                if(l.getElencoPrenotazioni().size()!=0){
+                    System.out.println("\nLezione:\n" + l + "Elenco clienti: ");
+                    for(String key3 : l.getElencoPrenotazioni().keySet()) {
+                        Prenotazione p = l.getElencoPrenotazioni().get(key3);
+                        System.out.println("\t\t---\n" + agilegym.getElencoClienti().get(p.getIdCliente()));
+                    }
+                }
+            }
+        }
+    }
+
+    private static String logo() {
         String[] s = new String[3];
         s[0]= """
                      _              _   _           ____                    \s
@@ -203,7 +216,7 @@ public class app {
                 """;
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-            return s[scelta];
+            return s[1];
     }
 
 }
