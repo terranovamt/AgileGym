@@ -3,8 +3,8 @@ package org.unict.domain;
 import java.util.*;
 
 public class Attrezzo{
-    String idAttrezzo;
-    List<String> listaSaleDiAttrezzo;
+    private String idAttrezzo;
+    private List<String> listaSaleDiAttrezzo;
 
     public Attrezzo(String idAttrezzo, List<String> listaSaleDiAttrezzo){
         this.idAttrezzo = idAttrezzo;

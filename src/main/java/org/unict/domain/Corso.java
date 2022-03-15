@@ -1,5 +1,7 @@
 package org.unict.domain;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.*;
 
 public class Corso {
@@ -24,6 +26,19 @@ public class Corso {
         elencoLezioni.put(idLezione,l);
     }
 
+    public Map<String,Lezione> mostraLezioni(Map<String,Prenotazione> elencoPrenotazioneUtente){
+        Map<String,Lezione> elencoLezioniDisponibili= new HashMap<>();
+
+        for (String key : elencoLezioni.keySet()) {
+            elencoLezioniDisponibili.put(elencoLezioni.get(key).getIdLezione(),elencoLezioni.get(key).lezioneDisponibile(elencoPrenotazioneUtente));
+        }
+        return elencoLezioniDisponibili;
+    }
+
+    public Prenotazione confermaPrenotazione(String idLezione, String idCliente){
+        return this.elencoLezioni.get(idLezione).creaPrenotazione(idCliente);
+    }
+
     //GET E SET STANDARD
     public String getIdCorso() {
         return idCorso;
@@ -37,11 +52,15 @@ public class Corso {
         return idAttrezzo;
     }
 
+    public Map<String, Lezione> getElencoLezioni() {
+        return elencoLezioni;
+    }
+
     //STAMPA
     public String stampaLezione() {
         String str="";
         for (String key: elencoLezioni.keySet()){//STAMPA ISTRUTTORI DISPONIBILI
-            str+= elencoLezioni.get(key).toString();
+            str+= "LEZIONE: \n" + elencoLezioni.get(key).toString();
         }
         return str;
     }
@@ -52,7 +71,7 @@ public class Corso {
                 s =
                     "\tID: " + idCorso + "\n" +
                     "\tNome: " + nomeCorso + "\n" +
-                    "\tLivello:  " + livello+ "\n" +
+                    "\tLivello: " + livello+ "\n" +
                     "\tFocus: " + focus + "\n" +
                     "\tID-Attrezzo: " + idAttrezzo+ "\n\n";
 

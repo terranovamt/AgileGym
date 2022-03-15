@@ -8,9 +8,10 @@ import static java.lang.Math.abs; //rand num
 public class Agilegym {
     static  Agilegym agilegym;
     private Corso corsoCorrente;
-    public  Map<String, Attrezzo> elencoAttrezzi;
+    private Cliente logged = new Cliente("Nome","Cognome", "01/11/12");
+    private  Map<String, Attrezzo> elencoAttrezzi;
     private final Map<String, Sala> elencoSale;
-    private final Map<String, Corso> elencoCorsi;
+    private     Map<String, Corso> elencoCorsi;
     private final Map<String, Istruttore> elencoIstruttori;
 
     private Agilegym() throws IOException {
@@ -55,6 +56,7 @@ public class Agilegym {
             System.out.println("ID CORSO:"+idCorso +" (generato autonomamente)");
             System.out.print("Inserisci il nome del corso: ");
             nomeCorso = br.readLine();
+            if (Objects.equals(nomeCorso, "0"))return;
             System.out.print("Inserisci il livello del corso: ");
             livello = br.readLine();
             System.out.print("Inserisci il focus del corso: ");
@@ -111,7 +113,7 @@ public class Agilegym {
 
     public void inserisciLezione(Corso corso){
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String  s, idSalaSelezioanta, idIstruttoreSelezioanto, idLezione = randId();
+        String  s, idSalaSelezionata, idIstruttoreSelezionato, idLezione = randId();
         int dataOra = 0;
         Attrezzo attrezzoSelezionato ;
         Sala salaSelezionata = null;
@@ -131,9 +133,9 @@ public class Agilegym {
             //SCELTA DELLA SALA
                 do {
                     System.out.print("Inserisci una sala Disponibile: ");
-                    idSalaSelezioanta = br.readLine();
-                    if(attrezzoSelezionato.getListaSaleDiAttrezzo().contains(idSalaSelezioanta)){
-                        salaSelezionata = elencoSale.get(idSalaSelezioanta);
+                    idSalaSelezionata = br.readLine();
+                    if(attrezzoSelezionato.getListaSaleDiAttrezzo().contains(idSalaSelezionata)){
+                        salaSelezionata = elencoSale.get(idSalaSelezionata);
                     }
                 }while (salaSelezionata ==null);
 
@@ -186,9 +188,9 @@ public class Agilegym {
                 }
                 do {
                     System.out.print("Inserisci una istruttore Disponibile: ");
-                    idIstruttoreSelezioanto = br.readLine();
-                    if (isDisponibile.containsKey(idIstruttoreSelezioanto)) {
-                        istruttoreSelezionato = elencoIstruttori.get(idIstruttoreSelezioanto);
+                    idIstruttoreSelezionato = br.readLine();
+                    if (isDisponibile.containsKey(idIstruttoreSelezionato)) {
+                        istruttoreSelezionato = elencoIstruttori.get(idIstruttoreSelezionato);
                     }
                 } while (istruttoreSelezionato == null);
                 //System.out.println(istruttoreSelezionato);
@@ -248,54 +250,84 @@ public class Agilegym {
             System.out.println("CORSO: "+ i );
             System.out.println(elencoCorsi.get(key).stampaCorsi());
         }
-        System.out.println("Scegli un corso: ");
         int scelta = 0;
         try {
             do{
+                System.out.print("Scegli un corso: ");
                 int s=Integer.parseInt(br.readLine());
-                if(s>0 || s < getElencoCorsi().size()){
-                    mostraLezione(scelta);
+                if(s>0 && s < elencoCorsi.size()){
+                    scelta=s;
+                    mostraLezione(scelta,logged);
                 }
-            }while(true);
+            }while(scelta==0);
         }catch (Exception e) {
             System.out.println("ERRORE NELLA LETTURA DA TASTIERA:" +e.getMessage());
-            System.exit(-10);
+            System.exit(-11);
         }
     }
 
-    public void mostraLezione(int scelta){
+    public void mostraLezione(int sceltaCorso,Cliente logged){
         int i=0;
         Map<Integer,Corso> corsi =new HashMap<>();
+        Map<Integer,Lezione> lezioniDisponibili =new HashMap<>();
+        Map<String,Prenotazione> elencoPrenotazioneUtente;
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        Lezione lezioneCorrente;
+
+        elencoPrenotazioneUtente=logged.getElencoPrenotazioni();
 
         for (String key : elencoCorsi.keySet()) {
             i++;
             corsi.put(i,getElencoCorsi().get(key));
         }
-        corsoCorrente=corsi.get(scelta);
-        //
-        //
-        // DEVO FARE LA SCELTA DELLA LEZIONE
-        //
-        //
-        for (String key : elencoCorsi.keySet()) {
+        corsoCorrente=corsi.get(sceltaCorso);
+
+        i=0;
+        for (String key : corsoCorrente.mostraLezioni(elencoPrenotazioneUtente).keySet()) {
             i++;
-            System.out.println("CORSO: "+ i );
-            System.out.println(elencoCorsi.get(key).stampaCorsi());
+            System.out.println("LEZIONE: "+ i );
+            System.out.println(corsoCorrente.mostraLezioni(elencoPrenotazioneUtente).get(key));
+            lezioniDisponibili.put(i,corsoCorrente.mostraLezioni(elencoPrenotazioneUtente).get(key));
         }
-        System.out.println("Scegli un corso: ");
-        int s = 0;
+        System.out.print("Scegli una lezione: ");
+        int scelta = 0;
         try {
             do{
-                int scelta=Integer.parseInt(br.readLine());
-                if(scelta>0 || scelta < getElencoCorsi().size()){
-                    corsoCorrente=elencoCorsi.get(s);
+                int s=Integer.parseInt(br.readLine());
+                if(s>0 || s < corsoCorrente.mostraLezioni(elencoPrenotazioneUtente).size()){
+                    scelta=s;
                 }
-            }while(s==0);
+            }while(scelta==0);
+            lezioneCorrente=lezioniDisponibili.get(scelta);
+
+            System.out.println("LEZIONE SCELTA: " + scelta + "\n" + lezioneCorrente);
+
+
+                System.out.print("-------MENU-------\n 1. Conferma la scelta\n 2. Cambia Lezione\n 3. Cambia Corso\n 0.Menu principale\nScelta:");
+                int s= Integer.parseInt(br.readLine());
+                switch (s) {
+                    case 1:
+                        confermaPrenotazione(lezioneCorrente.getIdLezione());
+                        break;
+                    case 2:
+                        mostraLezione(sceltaCorso,logged);
+                        break;
+                    case 3:
+                        nuovaPrenotazione();
+                        break;
+                    case 0:
+                        break;
+                }
         }catch (Exception e) {
             System.out.println("ERRORE NELLA LETTURA DA TASTIERA:" +e.getMessage());
-            System.exit(-10);
+            System.exit(-12);
         }
+    }
+
+    public void confermaPrenotazione(String idLezione){
+        System.out.println("PRENOTAZIONE EFFETTUATA CON SUCCESSO");
+        Prenotazione p = corsoCorrente.confermaPrenotazione(idLezione, logged.getidCliente());
+        logged.addPrenotazione(p);
     }
 
     public void loadAttrezzi(){
@@ -387,7 +419,7 @@ public class Agilegym {
                 i.setOccupato(slot.getDataora());
                 str = blezioni.readLine();
             }
-            System.out.println("\nI corsi e le lezioni sono stati inseriti con successo\n\n");
+            System.out.println("\nI corsi e le lezioni sono stati inseriti con successo\n");
         }catch (IOException e) {
             System.out.println("ERRORE NEL CARICAMENTO DEL FILE corsi.txt\n" );
             System.exit(-9);
@@ -399,6 +431,12 @@ public class Agilegym {
     }
 
     //GET E SET STANDARD
+
+
+    public Map<String, Attrezzo> getElencoAttrezzi() {
+        return elencoAttrezzi;
+    }
+
     public Map<String, Corso> getElencoCorsi() {
         return elencoCorsi;
     }

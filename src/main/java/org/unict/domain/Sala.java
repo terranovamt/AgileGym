@@ -17,19 +17,19 @@ public class Sala {
     //Caricamento degli slot da file
     public Map<Integer, Slot>  loadSlot(){
         Map<Integer, Slot> map=new HashMap<>();
-        String dataora;
+        String dataOra;
         boolean disponibilita=true;
         Slot s;
         try {
             //System.out.println("sono dentro loadSlot");
             BufferedReader br1 = new BufferedReader(new FileReader("slot.txt"));
-            dataora = br1.readLine();
-            while (dataora != null) {
-                s = new Slot(dataora, disponibilita);
-                s.setDataOra(dataora);
+            dataOra = br1.readLine();
+            while (dataOra != null) {
+                s = new Slot(dataOra, disponibilita);
+                s.setDataOra(dataOra);
                 s.setDisponibile(disponibilita);
                 map.put(Integer.parseInt(s.getDataora()), s);
-                dataora = br1.readLine();
+                dataOra = br1.readLine();
             }
         }catch (IOException e) {
             System.out.println("ERRORE CARICAMENTO FILE slot.txt IN SALA\n" );

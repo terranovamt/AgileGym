@@ -49,8 +49,8 @@ public class MainFrame extends JFrame{
 
         idCorsoValue.setText(agilegym.randId());
         attrezzoValue.addItem(null);
-        for (String key: agilegym.elencoAttrezzi.keySet()){//Serve per non stampare con le graffe e avere solo il valore e non la key, la formattazione e va fatto nel to string del tipo(sala.toString)
-            attrezzoValue.addItem(agilegym.elencoAttrezzi.get(key).getIdAttrezzo());
+        for (String key: agilegym.getElencoAttrezzi().keySet()){//Serve per non stampare con le graffe e avere solo il valore e non la key, la formattazione e va fatto nel to string del tipo(sala.toString)
+            attrezzoValue.addItem(agilegym.getElencoAttrezzi().get(key).getIdAttrezzo());
         }
         nuovoCorso.addActionListener(new ActionListener() {
             @Override

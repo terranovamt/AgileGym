@@ -26,6 +26,29 @@ public class Lezione {
         return s.getNumAttrezzi(idAttrezzo);
     }
 
+    public Map<String, Prenotazione> getElencoPrenotazioni() {
+        return elencoPrenotazioni;
+    }
+
+    public Lezione lezioneDisponibile(Map<String,Prenotazione> elencoPrenotazioniUtente){
+        for (String key : elencoPrenotazioniUtente.keySet()) {
+            if(this.elencoPrenotazioni.containsKey(elencoPrenotazioniUtente.get(key).getIdPrenotazione())){
+                return null;
+            }
+        }
+        return this;
+    }
+
+    public String getIdLezione() {
+        return idLezione;
+    }
+
+    public Prenotazione creaPrenotazione(String idCliente){
+        Prenotazione p=new Prenotazione(idCliente);
+        elencoPrenotazioni.put(p.getIdPrenotazione(),p);
+        return p;
+    }
+
     //STAMPA
     private String stampaData(){
         String str="", giorno, ora;
@@ -46,8 +69,7 @@ public class Lezione {
 
     @Override
     public String toString(){
-        return "LEZIONE: \n" +
-                "\tID: " + idLezione + "\n" +
+        return  "\tID: " + idLezione + "\n" +
                 "\tNome Corso: " + c.getNome() + "\n" +
                 "\tSala: " + s.getIdSala()+ "\n" +
                 "\tIstruttore: " + i.getIdIstruttore() + "\n" +

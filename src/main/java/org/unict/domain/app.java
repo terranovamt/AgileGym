@@ -20,6 +20,7 @@ public class app {
                     agilegym.inserisciCorso();
                     break;
                 case 2:
+                    agilegym.riempiPalestra();//IMPORTANTE DA CANCELLARE, MESSO PER FARE LE PROVE PIU VELOCEMENTE
                     if(agilegym.getElencoCorsi().isEmpty()){
                         stampaCorsi();
                         break;
@@ -27,6 +28,11 @@ public class app {
                     sottoScelta();
                     break;
                 case 3:
+                    agilegym.riempiPalestra();//IMPORTANTE DA CANCELLARE, MESSO PER FARE LE PROVE PIU VELOCEMENTE
+                    if(agilegym.getElencoCorsi().isEmpty()){
+                        stampaCorsi();
+                        break;
+                    }
                     agilegym.nuovaPrenotazione();
                     break;
                 case 4:
@@ -58,7 +64,7 @@ public class app {
             System.out.println("1. Inserisci Corso");
             System.out.println("2. Inserisci Lezione");
             System.out.println("3. Nuova Prenotazione");
-            System.out.print    ("\n#--------------------------------------------------------------#\n");
+            System.out.println("#--------------------------------------------------------------#");
             System.out.println("4. Stampa Corsi");
             System.out.println("5. Stampa Sale");
             System.out.println("6. Stampa Istruttori");
@@ -68,7 +74,7 @@ public class app {
             return Integer.parseInt(br.readLine());
         }catch(IOException e){
             System.out.println("ERRORE!");
-            return -1;
+            return -13;// NUMERO PIU' ALTO DI EXIT
         }
     }
 
@@ -77,16 +83,22 @@ public class app {
         Corso corsoScelto;
         Map<Integer,Corso> corsi =new HashMap<>();
         try{
-            stampaCorsi();
-            System.out.print("\nScegli un corso, 0 per crearlo:");
+            int i=0;
+            for (String key : agilegym.getElencoCorsi().keySet()) {
+                i++;
+                System.out.println("CORSO: "+ i );
+                System.out.println(agilegym.getElencoCorsi().get(key).stampaCorsi());
+            }
+            System.out.print("\n");
             int s = 0;
             do{
+                System.out.print("Scegli un corso, 0 per tornare a MENU:");
                 int scelta=Integer.parseInt(br.readLine());
                 if (scelta==0){
-                    agilegym.inserisciCorso();
+                    return;
                 }
-                if(scelta>0 || scelta < agilegym.getElencoCorsi().size()){
-                    int i=0;
+                if(scelta>0 && scelta < agilegym.getElencoCorsi().size()){
+                    i=0;
                     s=scelta;
                     for (String key: agilegym.getElencoCorsi().keySet()){
                         i++;
@@ -99,7 +111,7 @@ public class app {
 
         }catch(IOException e){
             System.out.println("ERRORE!");
-            System.exit(-11);// NUMERO PIU' ALTO DI EXIT
+            System.exit(-1);
         }
     }
 
