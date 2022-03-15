@@ -6,16 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="6a5b2f05-9589-4439-bd70-8ff067af0e69" name="Changes" comment="MTTcommit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/unict/Agilegym.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/unict/Agilegym.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/unict/Istruttore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/unict/Istruttore.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/unict/Sala.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/unict/Sala.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/file.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/unict/Agilegym.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/unict/Agilegym.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/unict/Attrezzo.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/unict/Attrezzo.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/unict/Corso.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/unict/Corso.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/unict/Istruttore.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/unict/Istruttore.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/unict/Lezione.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/unict/Lezione.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/unict/Slot.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/unict/Slot.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/unict/UI/MainFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/unict/UI/MainFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/unict/domain/Agilegym.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/unict/domain/Agilegym.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/unict/domain/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/unict/domain/Cliente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/unict/domain/Corso.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/unict/domain/Corso.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/unict/domain/Lezione.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/unict/domain/Lezione.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +35,13 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/main/java/org/unict/UI/MainFrame.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/org/unict/domain/app.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/org/unict/UI/AppUI.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/org/unict/domain/Agilegym.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/org/unict/domain/Slot.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -57,7 +59,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Downloads/metropol" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/Universita/Tesi/vhdl/Error" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -73,7 +75,20 @@
       <recent name="org.unict" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.app">
+    <configuration name="AppUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.unict.UI.AppUI" />
+      <module name="AgileGym" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.unict.UI.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.unict.app" />
       <module name="AgileGym" />
@@ -81,6 +96,25 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="app" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.unict.domain.app" />
+      <module name="AgileGym" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.unict.domain.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.app" />
+        <item itemvalue="Application.AppUI" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -106,6 +140,10 @@
       <workItem from="1646469876584" duration="25883000" />
       <workItem from="1646512526978" duration="4497000" />
       <workItem from="1646590780847" duration="5894000" />
+      <workItem from="1647267313762" duration="5306000" />
+      <workItem from="1647336029096" duration="302000" />
+      <workItem from="1647336496856" duration="9842000" />
+      <workItem from="1647364093373" duration="4014000" />
     </task>
     <task id="LOCAL-00001" summary="firs commit">
       <created>1640797810569</created>
@@ -191,7 +229,14 @@
       <option name="project" value="LOCAL" />
       <updated>1646587635197</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="MTTcommit">
+      <created>1647349610198</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1647349610198</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -231,12 +276,17 @@
           <line>273</line>
           <option name="timeStamp" value="16" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/unict/domain/app.java</url>
+          <line>16</line>
+          <option name="timeStamp" value="38" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
-    <watches-manager>
-      <configuration name="Application">
-        <watch expression="idSlot" />
-      </configuration>
-    </watches-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="org.unict.domain.Lezione" memberName="elencoPrenotazioni" />
+      </pinned-members>
+    </pin-to-top-manager>
   </component>
 </project>
