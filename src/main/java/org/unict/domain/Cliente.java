@@ -1,6 +1,5 @@
 package org.unict.domain;
 
-import java.util.Date;
 import java.util.HashMap;
 
 public class Cliente {
@@ -11,8 +10,8 @@ public class Cliente {
     private HashMap<String,Prenotazione> elencoPrenotazioni;
 
 
-    public  Cliente(String nome, String cognome, String dataNascita){
-        this.idCliente = Agilegym.randId();
+    public  Cliente(String username, String nome, String cognome, String dataNascita){
+        this.idCliente = username;
         this.nome=nome;
         this.cognome=cognome;
         this.dataNascita = dataNascita;
@@ -22,6 +21,7 @@ public class Cliente {
     public String getidCliente() {
         return idCliente;
     }
+
     public void addPrenotazione(Prenotazione p){
         elencoPrenotazioni.put(p.getIdPrenotazione(),p);
     }

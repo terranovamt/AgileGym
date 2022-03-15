@@ -1,7 +1,5 @@
 package org.unict.domain;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.*;
 
 public class Corso {
@@ -9,15 +7,15 @@ public class Corso {
     private String nomeCorso;
     private String livello;
     private String focus;
-    private String idAttrezzo;
+    private Attrezzo attrezzo;
     private final Map<String, Lezione> elencoLezioni;
 
-    public Corso(String idCorso, String nomeCorso, String livello, String focus, String idAttrezzo){
+    public Corso(String idCorso, String nomeCorso, String livello, String focus, Attrezzo attrezzo){
         this.idCorso =idCorso;
         this.nomeCorso=nomeCorso;
         this.livello=livello;
         this.focus=focus;
-        this.idAttrezzo = idAttrezzo;
+        this.attrezzo = attrezzo;
         this.elencoLezioni=new HashMap<>();
     }
 
@@ -48,8 +46,8 @@ public class Corso {
         return nomeCorso;
     }
 
-    public String  getIdAttrezzo() {
-        return idAttrezzo;
+    public Attrezzo getAttrezzo() {
+        return attrezzo;
     }
 
     public Map<String, Lezione> getElencoLezioni() {
@@ -73,7 +71,7 @@ public class Corso {
                     "\tNome: " + nomeCorso + "\n" +
                     "\tLivello: " + livello+ "\n" +
                     "\tFocus: " + focus + "\n" +
-                    "\tID-Attrezzo: " + idAttrezzo+ "\n\n";
+                    "\tID-Attrezzo: " + attrezzo.getIdAttrezzo()+ "\n\n";
 
         if (l.length()!=0){
             s+="Lista delle lezioni: \n"+l;

@@ -73,9 +73,9 @@ public class MainFrame extends JFrame{
 
                 }
                 else{
+                    Attrezzo a=agilegym.getElencoAttrezzi().get(attrezzoValue.getActionCommand());
                     Corso c=new Corso(idCorsoValue.getText(), nomeCorsoValue.getText(),
-                        livelloValue.getActionCommand(), focusValue.getText(),
-                        attrezzoValue.getActionCommand());
+                        livelloValue.getActionCommand(), focusValue.getText(),a);
                     agilegym.getElencoCorsi().put(idCorsoValue.getText(), c);
                     gohome();
                 }

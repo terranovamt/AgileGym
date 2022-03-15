@@ -8,10 +8,10 @@ import static java.lang.Math.abs; //rand num
 public class Agilegym {
     static  Agilegym agilegym;
     private Corso corsoCorrente;
-    private Cliente logged = new Cliente("Nome","Cognome", "01/11/12");
-    private  Map<String, Attrezzo> elencoAttrezzi;
+    private Cliente logged;
+    private Map<String, Attrezzo> elencoAttrezzi;
+    private Map<String, Corso> elencoCorsi;
     private final Map<String, Sala> elencoSale;
-    private     Map<String, Corso> elencoCorsi;
     private final Map<String, Istruttore> elencoIstruttori;
 
     private Agilegym() throws IOException {
@@ -36,14 +36,13 @@ public class Agilegym {
             System.out.println("Instanza già creata");
         return agilegym;
     }
-
+    //UC1
     public void inserisciCorso() {
         String idCorso;
         String nomeCorso;
         String livello;
         String focus;
         String idAttrezzo;
-        String s;
         Attrezzo attrezzoSelezionato;
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -74,9 +73,21 @@ public class Agilegym {
                 attrezzoSelezionato = elencoAttrezzi.get(idAttrezzo);
             }while (attrezzoSelezionato == null);
             //System.out.println(attrezzoSelezionato.toString());
-            this.corsoCorrente = new Corso(idCorso, nomeCorso, livello, focus, attrezzoSelezionato.getIdAttrezzo());
-            System.out.println("\n--------RIEPILOGO CORSO--------");
-            System.out.println(corsoCorrente+"\n--------------------------------\n");
+            confermaCorso(idCorso,nomeCorso,livello,focus,attrezzoSelezionato);
+        } catch (Exception e) {
+            System.out.println("ERRORE NELLA LETTURA DA TASTIERA: "+e.getMessage());
+            System.exit(-7);
+        }
+    }
+
+    public void confermaCorso(String idCorso, String nomeCorso, String livello, String focus, Attrezzo idAttrezzo){
+        String s;
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        this.corsoCorrente = new Corso(idCorso, nomeCorso, livello, focus, idAttrezzo);
+        System.out.println("\n--------RIEPILOGO CORSO--------");
+        System.out.println(corsoCorrente+"\n--------------------------------\n");
+        try{
             do {
                 s="";
                 System.out.print("Vuoi inserire questo corso? (si/no): ");
@@ -87,20 +98,20 @@ public class Agilegym {
                 if (str.equals("no")){
                     s=str;
                 }
-            }while (s.equals(""));
-            if (s.equals("si")) {
-                this.elencoCorsi.put(corsoCorrente.getIdCorso(), corsoCorrente);
-            }
-            do {
-                s="";
-                System.out.print("Vuoi inserire una lezione per questo corso? (si/no): ");
-                String str=br.readLine();
-                if (str.equals("si")){
-                    s=str;
+                }while (s.equals(""));
+                if (s.equals("si")) {
+                    this.elencoCorsi.put(corsoCorrente.getIdCorso(), corsoCorrente);
                 }
-                if (str.equals("no")){
-                    s=str;
-                }
+                do {
+                    s="";
+                    System.out.print("Vuoi inserire una lezione per questo corso? (si/no): ");
+                    String str=br.readLine();
+                    if (str.equals("si")){
+                        s=str;
+                    }
+                    if (str.equals("no")){
+                        s=str;
+                    }
             }while (s.equals(""));
             if (s.equals("si")) {
                 inserisciLezione(corsoCorrente);
@@ -122,7 +133,7 @@ public class Agilegym {
         corsoCorrente = corso;
 
         try {
-            attrezzoSelezionato = elencoAttrezzi.get(corso.getIdAttrezzo());
+            attrezzoSelezionato = elencoAttrezzi.get(corso.getAttrezzo().getIdAttrezzo());
             System.out.println("-------Inserisci una Lezione-------\n");
             if (attrezzoSelezionato.getListaSaleDiAttrezzo().size()==1){
                 System.out.println("E' disponibile solo la sala: "+attrezzoSelezionato.getListaSaleDiAttrezzo().get(0));
@@ -205,22 +216,8 @@ public class Agilegym {
                                 "\tI#D-Slot: " + slotSelezionato.getDataora());
             System.out.println("\n--------------------------------\n");
 
-            do {
-                s="";
-                System.out.print("Vuoi inserire questa lezione? (si/no): ");
-                String str=br.readLine();
-                if (str.equals("si")){
-                    s=str;
-                    corsoCorrente.inserisciLezione(idLezione, slotSelezionato,corsoCorrente , salaSelezionata, istruttoreSelezionato);
-                    salaSelezionata.setOccupato(slotSelezionato.getDataora());
-                    istruttoreSelezionato.setOccupato(slotSelezionato.getDataora());
-                    System.out.println("\n------------CONFERMA INSERIMENTO LEZIONE-------------\n");
-                    System.out.println(corsoCorrente);
-                }
-                if (str.equals("no")){
-                    s=str;
-                }
-            }while (s.equals(""));
+            confermaLezione(slotSelezionato,salaSelezionata,istruttoreSelezionato);
+
             do {
                 s="";
             System.out.print("Vuoi inserire un altra lezione per questo corso? (si/no):");
@@ -241,6 +238,32 @@ public class Agilegym {
         }
     }
 
+    public void confermaLezione(Slot slotSelezionato, Sala salaSelezionata, Istruttore istruttoreSelezionato){
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String  s, idLezione = randId();
+        try {
+            do {
+                s="";
+                System.out.print("Vuoi inserire questa lezione? (si/no): ");
+                String str=br.readLine();
+                if (str.equals("si")){
+                    s=str;
+                    corsoCorrente.inserisciLezione(idLezione, slotSelezionato, corsoCorrente , salaSelezionata, istruttoreSelezionato);
+                    salaSelezionata.setOccupato(slotSelezionato.getDataora());
+                    istruttoreSelezionato.setOccupato(slotSelezionato.getDataora());
+                    System.out.println("\n------------CONFERMA INSERIMENTO LEZIONE-------------\n");
+                    System.out.println(corsoCorrente);
+                }
+                if (str.equals("no")){
+                    s=str;
+                }
+            }while (s.equals(""));
+        }catch (Exception e) {
+            System.out.println("ERRORE NELLA LETTURA DA TASTIERA:" +e.getMessage());
+            System.exit(-8);
+        }
+    }
+    //UC2
     public void nuovaPrenotazione(){
         int i=0;
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -330,6 +353,8 @@ public class Agilegym {
         logged.addPrenotazione(p);
     }
 
+
+    //CASO DUSO DI AVVIAMENTO
     public void loadAttrezzi(){
         String str, idAtrezzo;
         String [] strings;
@@ -397,11 +422,14 @@ public class Agilegym {
         try {
             BufferedReader bcorsi = new BufferedReader(new FileReader("corsi.txt"));
             BufferedReader blezioni = new BufferedReader(new FileReader("lezioni.txt"));
+            BufferedReader bcliente = new BufferedReader(new FileReader("clienti.txt"));
+            BufferedReader bprenotazioni= new BufferedReader(new FileReader("prenotazioni.txt"));
 
             str = bcorsi.readLine();
             while (str != null){
                 strings=str.split("-");
-                Corso c= new Corso(strings[0], strings[1], strings[2], strings[3], (strings[4]));
+                Attrezzo a=elencoAttrezzi.get((strings[4]));
+                Corso c= new Corso(strings[0], strings[1], strings[2], strings[3],a);
                 this.elencoCorsi.put(strings[0],c);
                 str = bcorsi.readLine();
             }
@@ -419,9 +447,23 @@ public class Agilegym {
                 i.setOccupato(slot.getDataora());
                 str = blezioni.readLine();
             }
+            str = bcliente.readLine();
+            while (str != null){
+                strings=str.split("-");
+
+                str = bcliente.readLine();
+            }
+            str = bprenotazioni.readLine();
+            while (str != null){
+                strings=str.split("-");
+
+                str = bprenotazioni.readLine();
+            }
+
+
             System.out.println("\nI corsi e le lezioni sono stati inseriti con successo\n");
         }catch (IOException e) {
-            System.out.println("ERRORE NEL CARICAMENTO DEL FILE corsi.txt\n" );
+            System.out.println("ERRORE NEL CARICAMENTO DELLA PALESTRA\n" );
             System.exit(-9);
         }
     }
@@ -431,8 +473,6 @@ public class Agilegym {
     }
 
     //GET E SET STANDARD
-
-
     public Map<String, Attrezzo> getElencoAttrezzi() {
         return elencoAttrezzi;
     }

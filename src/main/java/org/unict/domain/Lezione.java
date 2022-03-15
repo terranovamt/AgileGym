@@ -22,7 +22,7 @@ public class Lezione {
     }
 
     public int postiDisponibili(){
-        String idAttrezzo = c.getIdAttrezzo();
+        String idAttrezzo = c.getAttrezzo().getIdAttrezzo();
         return s.getNumAttrezzi(idAttrezzo);
     }
 
