@@ -1,11 +1,10 @@
 package org.unict.domain;
 
-import javax.swing.*;
 import java.util.*;
 import java.io.*;
 
 import static java.lang.Math.abs; //rand num
-import static java.lang.Math.log;
+
 
 public class Agilegym {
     static  Agilegym agilegym;
@@ -181,7 +180,7 @@ public class Agilegym {
             while (it.hasNext()) {
                 Map.Entry<String, Istruttore> entry = it.next();
                 Istruttore i = entry.getValue();
-                if (i.isIstruttoreDiponibili(dataOra)) {
+                if (i.isIstruttoreDisponibili(dataOra)) {
                     isDisponibile.put(i.getIdIstruttore(), i);
                 }
             }
@@ -266,22 +265,15 @@ public class Agilegym {
             System.exit(-8);
         }
     }
+
     //UC2
-    public void nuovaPrenotazione(){
+    public void nuovaPrenotazione(String username){
         int i=0;
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        Cliente logged = null;
-        String username;
+        Cliente logged = elencoClienti.get(username);
 
         try {
-            do {
-            System.out.print("Inserisci username: ");
-                username = br.readLine();
-            if(elencoClienti.containsKey(username)){
-                logged=elencoClienti.get(username);
-            }
-            }while (logged ==null);
-            System.out.println();
+
             for (String key : elencoCorsi.keySet()) {
                 i++;
                 System.out.println("CORSO: "+ i );
@@ -353,7 +345,7 @@ public class Agilegym {
                         mostraLezione(sceltaCorso, logged);
                         break;
                     case 3:
-                        nuovaPrenotazione();
+                        nuovaPrenotazione(logged.getIdCliente());
                         break;
                     case 0:
                         break;
@@ -377,7 +369,7 @@ public class Agilegym {
             }
         }else{
             System.out.println("\nNON CI SONO LEZIONI ATTUALEMTEN PRENOTABILI");
-            nuovaPrenotazione();
+            nuovaPrenotazione(logged.getIdCliente());
         }
     }
 
@@ -421,7 +413,6 @@ public class Agilegym {
             logged.addPrenotazione(p);
         }*/
     }
-
 
     //CASO DUSO DI AVVIAMENTO
     public void loadAttrezzi(){
@@ -551,6 +542,28 @@ public class Agilegym {
         }catch (IOException e) {
             System.out.println("ERRORE NEL CARICAMENTO DELLA PALESTRA\n" );
             System.exit(-9);
+        }
+    }
+
+    //FUNZIONI DI UTILITY
+    public void scegliCliente(){
+        int i=0;
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        Cliente logged = null;
+        String username;
+
+        try {
+            do {
+                System.out.print("Inserisci username: ");
+                username = br.readLine();
+                if(elencoClienti.containsKey(username)){
+                    logged=elencoClienti.get(username);
+                }
+            }while (logged ==null);
+            nuovaPrenotazione(logged.getIdCliente());
+        }catch (Exception e) {
+            System.out.println("ERRORE NELLA LETTURA DA TASTIERA:" +e.getMessage());
+            System.exit(-11);
         }
     }
 

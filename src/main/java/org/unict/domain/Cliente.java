@@ -16,6 +16,12 @@ public class Cliente {
         this.elencoPrenotazioni=new HashMap<>();
     }
 
+    //UC2
+    public void addPrenotazione(Prenotazione p){
+        elencoPrenotazioni.put(p.getIdPrenotazione(),p);
+    }
+
+    //GET E SET STANDARD
     public String getIdCliente() {
         return idCliente;
     }
@@ -24,17 +30,12 @@ public class Cliente {
         return nome;
     }
 
-    public String getCognome() {
-        return cognome;
-    }
-
-    public void addPrenotazione(Prenotazione p){
-        elencoPrenotazioni.put(p.getIdPrenotazione(),p);
-    }
     public HashMap<String, Prenotazione> getElencoPrenotazioni() {
         return elencoPrenotazioni;
     }
 
+    //STAMPA
+    @Override
     public String toString() {
         return "\tNome: " + nome + "\n" + "\tCognome:" + cognome;
     }

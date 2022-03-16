@@ -11,6 +11,7 @@ public class Prenotazione {
         this.slot=slot;
     }
 
+    //GET E SET STANDARD
     public String getIdPrenotazione() {
         return idPrenotazione;
     }
@@ -23,6 +24,7 @@ public class Prenotazione {
         return slot;
     }
 
+    //STAMPA
     @Override
     public String toString(){
         return "ID PRENOTAZIONE: " + idPrenotazione + slot;

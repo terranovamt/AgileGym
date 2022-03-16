@@ -23,29 +23,7 @@ public class Lezione {
         this.elencoPrenotazioni= new HashMap<>();
     }
 
-    public int postiDisponibili(){
-        String idAttrezzo = c.getAttrezzo().getIdAttrezzo();
-        return s.getNumAttrezzi(idAttrezzo);
-    }
-
-    public Map<String, Prenotazione> getElencoPrenotazioni() {
-        return elencoPrenotazioni;
-    }
-
-    public String getIdLezione() {
-        return idLezione;
-    }
-
-    public Slot getSlot() {
-        return slot;
-    }
-
-    public Prenotazione creaPrenotazione(String idCliente){
-        Prenotazione p=new Prenotazione(idCliente,this.getSlot());
-        elencoPrenotazioni.put(p.getIdPrenotazione(),p);
-        return p;
-    }
-
+    //UC2
     public boolean isDisponibile(Map<String,Prenotazione> elencoPrenotazioneUtente){
         List<String> slotUtente= new ArrayList<>();
         for (String key : elencoPrenotazioneUtente.keySet()) {
@@ -67,6 +45,30 @@ public class Lezione {
         return false;
     }
 
+    public int postiDisponibili(){
+        String idAttrezzo = c.getAttrezzo().getIdAttrezzo();
+        return s.getNumAttrezzi(idAttrezzo);
+    }
+
+    public Prenotazione creaPrenotazione(String idCliente){
+        Prenotazione p=new Prenotazione(idCliente,this.getSlot());
+        elencoPrenotazioni.put(p.getIdPrenotazione(),p);
+        return p;
+    }
+
+    //GET E SET STANDARD
+
+    public String getIdLezione() {
+        return idLezione;
+    }
+
+    public Slot getSlot() {
+        return slot;
+    }
+
+    public Map<String, Prenotazione> getElencoPrenotazioni() {
+        return elencoPrenotazioni;
+    }
     //STAMPA
     private String stampaData(){
         String str="", giorno, ora;

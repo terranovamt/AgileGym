@@ -12,6 +12,7 @@ public class Istruttore {
          this.listaSlot = loadSlot();
     }
 
+    //CASO D'USO DI AVVIEMENTO
     public Map<Integer, Slot>  loadSlot(){
         Map<Integer, Slot> map=new HashMap<>();
         String dataOra;
@@ -35,10 +36,11 @@ public class Istruttore {
         return map;
     }
 
-    public boolean isIstruttoreDiponibili(int dataora){
-        for (Map.Entry<Integer, Slot> entry : listaSlot.entrySet()) { //scorre gli slot per l'istuttore corrente
-            if (Integer.parseInt(entry.getValue().getDataora())==dataora) {// seleziona l'id slot gisuto
-                if (entry.getValue().isDisponibile()) return true;// se disponibile torna vero
+    //UC1
+    public boolean isIstruttoreDisponibili(int dataOra){
+        for (Map.Entry<Integer, Slot> entry : listaSlot.entrySet()) { //scorre gli slot per l'istruttore corrente
+            if (Integer.parseInt(entry.getValue().getDataora())==dataOra) {// seleziona l'id slot giusto
+                if (entry.getValue().getDisponibile()) return true;// se disponibile torna vero
             }
         }
         return false;

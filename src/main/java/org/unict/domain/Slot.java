@@ -10,21 +10,22 @@ public class Slot {
         this.disponibile = disponibile;
     }
 
-    public boolean isDisponibile() {
-        return disponibile;
+    //GET E SET STANDARD
+
+    public String getDataora() {
+        return dataOra;
     }
 
-    //GET E SET STANDARD
     public void setDataOra(String data) {
         this.dataOra = data;
     }
 
-    public void setDisponibile(boolean disponibile) {
-        this.disponibile = disponibile;
+    public boolean getDisponibile() {
+        return disponibile;
     }
 
-    public String getDataora() {
-        return dataOra;
+    public void setDisponibile(boolean disponibile) {
+        this.disponibile = disponibile;
     }
 
     //STAMPA

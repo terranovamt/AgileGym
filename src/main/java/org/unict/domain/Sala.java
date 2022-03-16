@@ -14,6 +14,7 @@ public class Sala {
         this.listaAttrezzi = new ArrayList<>();
     }
 
+    //CASO D'USO DI AVVIMENTO
     //Caricamento degli slot da file
     public Map<Integer, Slot>  loadSlot(){
         Map<Integer, Slot> map=new HashMap<>();
@@ -38,12 +39,13 @@ public class Sala {
         return map;
     }
 
+    //UC1
     //Ricerca nella listaSlot se l'attributo disponibilità è settato su falso
     public  Map<Integer, Slot> getSlotDisponibili(){
         Map<Integer, Slot> s=new HashMap<>();
 
         for (Map.Entry<Integer, Slot> entry : this.mapSlot.entrySet()) {
-            if (entry.getValue().isDisponibile()) {
+            if (entry.getValue().getDisponibile()) {
                 s.put(Integer.parseInt(entry.getValue().getDataora()), entry.getValue());
             }
         }
@@ -54,10 +56,11 @@ public class Sala {
         this.mapSlot.get(Integer.parseInt(s)).setDisponibile(false);
     }
 
-    public int getNumAttrezzi(String idAtrezzo){
+    //UC2
+    public int getNumAttrezzi(String idAttrezzo){
         int count=0;
         for (String s :listaAttrezzi){
-            if(s.equals(idAtrezzo)){
+            if(s.equals(idAttrezzo)){
                 count++;
             }
         }
