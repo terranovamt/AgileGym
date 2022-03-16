@@ -19,6 +19,10 @@ public class Corso {
         this.elencoLezioni=new HashMap<>();
     }
     //UC1
+    public List <String> getSaleAttrezzate(){
+        return this.getAttrezzo().getSale();
+    }
+
     public void inserisciLezione(String idLezione, Slot slot, Corso c, Sala s, Istruttore i ){
         Lezione l  = new Lezione(idLezione, slot, c, s, i);
         elencoLezioni.put(idLezione,l);

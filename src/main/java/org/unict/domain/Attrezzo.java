@@ -12,7 +12,7 @@ public class Attrezzo{
     }
 
     //GET E SET STANDARD
-    public List<String> getListaSaleDiAttrezzo() {
+    public List<String> getSale() {
         return listaSaleDiAttrezzo;
     }
 

@@ -41,12 +41,12 @@ public class Sala {
 
     //UC1
     //Ricerca nella listaSlot se l'attributo disponibilità è settato su falso
-    public  Map<Integer, Slot> getSlotDisponibili(){
-        Map<Integer, Slot> s=new HashMap<>();
+    public  Map<String, Slot> getSlotDisponibili(){
+        Map<String, Slot> s=new HashMap<>();
 
         for (Map.Entry<Integer, Slot> entry : this.mapSlot.entrySet()) {
             if (entry.getValue().getDisponibile()) {
-                s.put(Integer.parseInt(entry.getValue().getDataora()), entry.getValue());
+                s.put(entry.getValue().getDataora(), entry.getValue());
             }
         }
         return s;

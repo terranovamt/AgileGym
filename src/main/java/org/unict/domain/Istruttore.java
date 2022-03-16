@@ -37,9 +37,9 @@ public class Istruttore {
     }
 
     //UC1
-    public boolean isIstruttoreDisponibili(int dataOra){
+    public boolean isDisponibile(String dataOra){
         for (Map.Entry<Integer, Slot> entry : listaSlot.entrySet()) { //scorre gli slot per l'istruttore corrente
-            if (Integer.parseInt(entry.getValue().getDataora())==dataOra) {// seleziona l'id slot giusto
+            if (entry.getValue().getDataora().equals(dataOra)) {// seleziona l'id slot giusto
                 if (entry.getValue().getDisponibile()) return true;// se disponibile torna vero
             }
         }
