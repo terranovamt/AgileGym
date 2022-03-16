@@ -100,7 +100,7 @@ public class Lezione {
         return  "\tID: " + idLezione + "\n" +
                 "\tNome Corso: " + c.getNomeCorso() + "\n" +
                 "\tSala: " + s.getIdSala()+ "\n" +
-                "\tPosti Disponibili: " + postiDisponibili()+ "\n" +
+                "\tPosti Disponibili: " + (postiDisponibili() - this.elencoPrenotazioni.size())+ "\n" +
                 "\tIstruttore: " + i.getIdIstruttore() + "\n" +
                 "\tData: " +stampaData();
     }

@@ -283,7 +283,7 @@ public class Agilegym {
             do{
                 System.out.print("Scegli un corso: ");
                 int s=Integer.parseInt(br.readLine());
-                if(s>0 && s < elencoCorsi.size()){
+                if(s>=0 && s <= elencoCorsi.size()){
                     scelta=s;
                     mostraLezione(scelta,logged);
                 }
@@ -322,12 +322,12 @@ public class Agilegym {
                 System.out.println(lezioniDisponibili.get(key));
             }
 
-            System.out.print("Scegli una lezione: ");
             int scelta = 0;
             try {
                 do {
+                    System.out.print("Scegli una lezione: ");
                     int s1 = Integer.parseInt(br.readLine());
-                    if (s1 > 0 || s1 < lezioniDisponibili.size()) {
+                    if (s1 > 0 && s1 <= lezioniDisponibili.size()) {
                         scelta = s1;
                     }
                 } while (scelta == 0);
@@ -352,7 +352,7 @@ public class Agilegym {
                 }
                 do {
                     s = "";
-                    System.out.print("Vuoi iscriversi ad un altra lezione?: ");
+                    System.out.print("Vuoi iscriverti ad un altra lezione?: ");
                     String str = br.readLine();
                     if (str.equals("si")) {
                         s = str;
@@ -360,6 +360,7 @@ public class Agilegym {
                     }
                     if (str.equals("no")) {
                         s = str;
+                        nuovaPrenotazione(logged.getIdCliente());
                     }
                 } while (s.equals(""));
 
