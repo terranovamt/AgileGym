@@ -1,9 +1,11 @@
 package org.unict.domain;
 
+import javax.swing.*;
 import java.util.*;
 import java.io.*;
 
 import static java.lang.Math.abs; //rand num
+import static java.lang.Math.log;
 
 public class Agilegym {
     static  Agilegym agilegym;
@@ -211,7 +213,7 @@ public class Agilegym {
             System.out.println("\n------------RIEPILOGO------------");
             System.out.println( "LEZIONE: \n" +
                                 "\tID: " + idLezione + "\n" +
-                                "\tNome Corso: " + corsoCorrente.getNome() + "\n" +
+                                "\tNome Corso: " + corsoCorrente.getNomeCorso() + "\n" +
                                 "\tSala: " + salaSelezionata.getIdSala()+ "\n" +
                                 "\tIstruttore: " + istruttoreSelezionato.getIdIstruttore() + "\n" +
                                 "\tI#D-Slot: " + slotSelezionato.getDataora());
@@ -279,7 +281,7 @@ public class Agilegym {
                 logged=elencoClienti.get(username);
             }
             }while (logged ==null);
-
+            System.out.println();
             for (String key : elencoCorsi.keySet()) {
                 i++;
                 System.out.println("CORSO: "+ i );
@@ -303,8 +305,10 @@ public class Agilegym {
     public void mostraLezione(int sceltaCorso,Cliente logged){
         int i=0;
         Map<Integer,Corso> corsi =new HashMap<>();
-        Map<Integer,Lezione> lezioniDisponibili =new HashMap<>();
+        Map<String,Lezione> lezioniDisponibili;
+        Map<Integer,Lezione> sceltaLezioni =new HashMap<>();
         Map<String,Prenotazione> elencoPrenotazioneUtente;
+        String s;
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         Lezione lezioneCorrente;
 
@@ -315,36 +319,38 @@ public class Agilegym {
             corsi.put(i,getElencoCorsi().get(key));
         }
         corsoCorrente=corsi.get(sceltaCorso);
+        System.out.println();
+        lezioniDisponibili=corsoCorrente.mostraLezioni(elencoPrenotazioneUtente);
+        if (lezioniDisponibili.size()!=0) {
+            i = 0;
+            for (String key : lezioniDisponibili.keySet()) {
+                i++;
+                System.out.println("LEZIONE: " + i);
+                sceltaLezioni.put(i, lezioniDisponibili.get(key));
+                System.out.println(lezioniDisponibili.get(key));
+            }
 
-        i=0;
-        for (String key : corsoCorrente.mostraLezioni(elencoPrenotazioneUtente).keySet()) {
-            i++;
-            System.out.println("LEZIONE: "+ i );
-            System.out.println(corsoCorrente.mostraLezioni(elencoPrenotazioneUtente).get(key));
-            lezioniDisponibili.put(i,corsoCorrente.mostraLezioni(elencoPrenotazioneUtente).get(key));
-        }
-        System.out.print("Scegli una lezione: ");
-        int scelta = 0;
-        try {
-            do{
-                int s=Integer.parseInt(br.readLine());
-                if(s>0 || s < corsoCorrente.mostraLezioni(elencoPrenotazioneUtente).size()){
-                    scelta=s;
-                }
-            }while(scelta==0);
-            lezioneCorrente=lezioniDisponibili.get(scelta);
+            System.out.print("Scegli una lezione: ");
+            int scelta = 0;
+            try {
+                do {
+                    int s1 = Integer.parseInt(br.readLine());
+                    if (s1 > 0 || s1 < lezioniDisponibili.size()) {
+                        scelta = s1;
+                    }
+                } while (scelta == 0);
+                lezioneCorrente = sceltaLezioni.get(scelta);
 
-            System.out.println("LEZIONE SCELTA: " + scelta + "\n" + lezioneCorrente);
-
+                System.out.println("\nLEZIONE SCELTA: " + scelta + "\n" + lezioneCorrente.stampaRiepilogo());
 
                 System.out.print("-------MENU-------\n 1. Conferma la scelta\n 2. Cambia Lezione\n 3. Cambia Corso\n 0.Menu principale\nScelta:");
-                int s= Integer.parseInt(br.readLine());
-                switch (s) {
+                int menu = Integer.parseInt(br.readLine());
+                switch (menu) {
                     case 1:
                         confermaPrenotazione(lezioneCorrente.getIdLezione(), logged);
                         break;
                     case 2:
-                        mostraLezione(sceltaCorso,logged);
+                        mostraLezione(sceltaCorso, logged);
                         break;
                     case 3:
                         nuovaPrenotazione();
@@ -352,16 +358,68 @@ public class Agilegym {
                     case 0:
                         break;
                 }
-        }catch (Exception e) {
-            System.out.println("ERRORE NELLA LETTURA DA TASTIERA:" +e.getMessage());
-            System.exit(-12);
+                do {
+                    s = "";
+                    System.out.print("Vuoi iscriversi ad un altra lezione?: ");
+                    String str = br.readLine();
+                    if (str.equals("si")) {
+                        s = str;
+                        mostraLezione(sceltaCorso, logged);
+                    }
+                    if (str.equals("no")) {
+                        s = str;
+                    }
+                } while (s.equals(""));
+
+            } catch (Exception e) {
+                System.out.println("ERRORE NELLA LETTURA DA TASTIERA:" + e.getMessage());
+                System.exit(-12);
+            }
+        }else{
+            System.out.println("\nNON CI SONO LEZIONI ATTUALEMTEN PRENOTABILI");
+            nuovaPrenotazione();
         }
     }
 
     public void confermaPrenotazione(String idLezione, Cliente logged){
-        System.out.println("PRENOTAZIONE EFFETTUATA CON SUCCESSO");
-        Prenotazione p = corsoCorrente.confermaPrenotazione(idLezione, logged.getIdCliente());
-        logged.addPrenotazione(p);
+        List<String> slotPrenotati = new ArrayList<>();
+        Lezione lezioneSelezionata=corsoCorrente.getElencoLezioni().get(idLezione);
+        for (String key : logged.getElencoPrenotazioni().keySet()) {
+            slotPrenotati.add(logged.getElencoPrenotazioni().get(key).getSlot().getDataora());
+        }
+        if((lezioneSelezionata.postiDisponibili()-lezioneSelezionata.getElencoPrenotazioni().size())!=0){
+            if(!slotPrenotati.contains(lezioneSelezionata.getSlot().getDataora())){
+                Prenotazione p = corsoCorrente.confermaPrenotazione(idLezione, logged.getIdCliente());
+                logged.addPrenotazione(p);
+             }else System.out.println("Hai gia una lezione prenotata coincidente ");
+        }else System.out.println("Posti per la lezione pieni");
+       /* if (!logged.getElencoPrenotazioni().isEmpty()){
+
+
+            int flag=0;
+            for (String key : logged.getElencoPrenotazioni().keySet()) {
+                Prenotazione pLogged= logged.getElencoPrenotazioni().get(key);
+                String slotCliente=pLogged.getSlot().getDataora();
+                String SlotLezione= corsoCorrente.getElencoLezioni().get(idLezione).getSlot().getDataora();
+                if(slotCliente.equals(SlotLezione)) {
+                    flag=0;
+                    break;
+                }else {
+                    flag=1;
+                }
+            }
+            if (flag==1){
+                System.out.println("PRENOTAZIONE EFFETTUATA CON SUCCESSO");
+                Prenotazione p = corsoCorrente.confermaPrenotazione(idLezione, logged.getIdCliente());
+                logged.addPrenotazione(p);
+            }if(flag==0) {
+                System.out.println("HAI GIA UNA PRENOTAZIONE");
+            }
+        }else {
+            System.out.println("PRIMA PRENOTAZIONE EFFETTUATA CON SUCCESSO");
+            Prenotazione p = corsoCorrente.confermaPrenotazione(idLezione, logged.getIdCliente());
+            logged.addPrenotazione(p);
+        }*/
     }
 
 
@@ -468,14 +526,24 @@ public class Agilegym {
             str = bprenotazioni.readLine();
             while (str != null){
                 strings=str.split("-");
-
-                for (Map.Entry<String, Corso> entry : elencoCorsi.entrySet()) {
-                    Corso corsoCorrente = entry.getValue();
-                    if (corsoCorrente.getElencoLezioni().containsKey(strings[0])) {
-                        Prenotazione p = corsoCorrente.confermaPrenotazione(strings[0], strings[1]);
-                        elencoClienti.get(strings[1]).addPrenotazione(p);
+                List<String> slotPrenotati = new ArrayList<>();
+                for(String key : elencoCorsi.keySet()){
+                    if(elencoCorsi.get(key).getElencoLezioni().containsKey(strings[0])){
+                        corsoCorrente=elencoCorsi.get(key);
+                        break;
                     }
                 }
+                Cliente logged=elencoClienti.get(strings[1]);
+                Lezione lezioneSelezionata=corsoCorrente.getElencoLezioni().get(strings[0]);
+                for (String key : logged.getElencoPrenotazioni().keySet()) {
+                    slotPrenotati.add(logged.getElencoPrenotazioni().get(key).getSlot().getDataora());
+                }
+                if((lezioneSelezionata.postiDisponibili()-lezioneSelezionata.getElencoPrenotazioni().size())!=0){
+                    if(!slotPrenotati.contains(lezioneSelezionata.getSlot().getDataora())){
+                        Prenotazione p = corsoCorrente.confermaPrenotazione(strings[0], logged.getIdCliente());
+                        logged.addPrenotazione(p);
+                    }else System.out.println("Hai gia una lezione prenotata coincidente ");
+                }else System.out.println("Posti per la lezione pieni");
                 str = bprenotazioni.readLine();
             }
 

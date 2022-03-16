@@ -18,7 +18,6 @@ public class app {
             switch (scelta) {
                 case 1 -> agilegym.inserisciCorso();
                 case 2 -> {
-                    agilegym.riempiPalestra();//IMPORTANTE DA CANCELLARE, MESSO PER FARE LE PROVE PIU VELOCEMENTE
                     if (agilegym.getElencoCorsi().isEmpty()) {
                         stampaCorsi();
                         break;
@@ -26,7 +25,6 @@ public class app {
                     sottoScelta();
                 }
                 case 3 -> {
-                    agilegym.riempiPalestra();//IMPORTANTE DA CANCELLARE, MESSO PER FARE LE PROVE PIU VELOCEMENTE
                     if (agilegym.getElencoCorsi().isEmpty()) {
                         stampaCorsi();
                         break;
@@ -36,10 +34,7 @@ public class app {
                 case 4 -> stampaCorsi();
                 case 5 -> stampaSale();
                 case 6 -> stampaIstruttori();
-                case 7 -> {
-                    agilegym.riempiPalestra();
-                    stampaPrenotazioni();
-                }
+                case 7 -> stampaPrenotazioni();
                 case 8 -> agilegym.riempiPalestra();
                 case 0 -> System.exit(0);
             }

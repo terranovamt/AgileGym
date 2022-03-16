@@ -1,6 +1,8 @@
 package org.unict.domain;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Lezione {
@@ -30,23 +32,39 @@ public class Lezione {
         return elencoPrenotazioni;
     }
 
-    public Lezione lezioneDisponibile(Map<String,Prenotazione> elencoPrenotazioniUtente){
-        for (String key : elencoPrenotazioniUtente.keySet()) {
-            if(this.elencoPrenotazioni.containsKey(elencoPrenotazioniUtente.get(key).getIdPrenotazione())){
-                return null;
-            }
-        }
-        return this;
-    }
-
     public String getIdLezione() {
         return idLezione;
     }
 
+    public Slot getSlot() {
+        return slot;
+    }
+
     public Prenotazione creaPrenotazione(String idCliente){
-        Prenotazione p=new Prenotazione(idCliente);
+        Prenotazione p=new Prenotazione(idCliente,this.getSlot());
         elencoPrenotazioni.put(p.getIdPrenotazione(),p);
         return p;
+    }
+
+    public boolean isDisponibile(Map<String,Prenotazione> elencoPrenotazioneUtente){
+        List<String> slotUtente= new ArrayList<>();
+        for (String key : elencoPrenotazioneUtente.keySet()) {
+            slotUtente.add(elencoPrenotazioneUtente.get(key).getSlot().getDataora());
+        }
+
+        if((this.postiDisponibili()-this.elencoPrenotazioni.size())!=0) {
+            if(!slotUtente.contains(this.slot.getDataora())){
+                return true;
+            }
+            else   {
+                //System.out.println("Sovrapposizione di orario");
+                //qui inseriamo la stampa della lezione che si sovrappone cosi portiamo
+                // a conoscenza l'utente che esiste quella lezione
+            }
+        }else {
+            //System.out.println("Lezione gia piena");
+        }
+        return false;
     }
 
     //STAMPA
@@ -67,11 +85,20 @@ public class Lezione {
         return str;
     }
 
+    public String stampaRiepilogo(){
+        return  "\tNome Corso: " + c.getNomeCorso() + "\n" +
+                "\tLivello Corso: " + c.getLivello() + "\n" +
+                "\tFocus Corso: " + c.getFocus() + "\n" +
+                "\tSala: " + s.getIdSala()+ "\n" +
+                "\tIstruttore: " + i.getIdIstruttore() + "\n" +
+                "\tData: " +stampaData();
+    }
     @Override
     public String toString(){
         return  "\tID: " + idLezione + "\n" +
-                "\tNome Corso: " + c.getNome() + "\n" +
+                "\tNome Corso: " + c.getNomeCorso() + "\n" +
                 "\tSala: " + s.getIdSala()+ "\n" +
+                "\tPosti Disponibili: " + postiDisponibili()+ "\n" +
                 "\tIstruttore: " + i.getIdIstruttore() + "\n" +
                 "\tData: " +stampaData();
     }

@@ -18,17 +18,19 @@ public class Corso {
         this.attrezzo = attrezzo;
         this.elencoLezioni=new HashMap<>();
     }
-
+    //UC1
     public void inserisciLezione(String idLezione, Slot slot, Corso c, Sala s, Istruttore i ){
         Lezione l  = new Lezione(idLezione, slot, c, s, i);
         elencoLezioni.put(idLezione,l);
     }
-
+    //UC2
     public Map<String,Lezione> mostraLezioni(Map<String,Prenotazione> elencoPrenotazioneUtente){
         Map<String,Lezione> elencoLezioniDisponibili= new HashMap<>();
 
-        for (String key : elencoLezioni.keySet()) {
-            elencoLezioniDisponibili.put(elencoLezioni.get(key).getIdLezione(),elencoLezioni.get(key).lezioneDisponibile(elencoPrenotazioneUtente));
+        for (String key : elencoLezioni.keySet()){
+            if(elencoLezioni.get(key).isDisponibile(elencoPrenotazioneUtente)){
+                elencoLezioniDisponibili.put(elencoLezioni.get(key).getIdLezione(),elencoLezioni.get(key));
+            }
         }
         return elencoLezioniDisponibili;
     }
@@ -42,12 +44,20 @@ public class Corso {
         return idCorso;
     }
 
-    public String getNome() {
+    public String getNomeCorso() {
         return nomeCorso;
     }
 
     public Attrezzo getAttrezzo() {
         return attrezzo;
+    }
+
+    public String getLivello() {
+        return livello;
+    }
+
+    public String getFocus() {
+        return focus;
     }
 
     public Map<String, Lezione> getElencoLezioni() {
