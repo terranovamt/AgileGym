@@ -16,11 +16,11 @@ public class Agilegym {
     private final Map<String, Istruttore> elencoIstruttori;
 
     private Agilegym() throws IOException {
-        this.elencoCorsi = new HashMap<>();
-        this.elencoAttrezzi  = new HashMap<>();
-        this.elencoSale = new HashMap<>();
-        this.elencoIstruttori = new HashMap<>();
-        this.elencoClienti = new HashMap<>();
+        this.elencoCorsi = new TreeMap<>();
+        this.elencoAttrezzi  = new TreeMap<>();
+        this.elencoSale = new TreeMap<>();
+        this.elencoIstruttori = new TreeMap<>();
+        this.elencoClienti = new TreeMap<>();
         loadAttrezzi();
         loadSale();
         loadIstruttore();
@@ -173,7 +173,7 @@ public class Agilegym {
             }
             //SCELTA DELL'ISTRUTTORE
             Iterator<Map.Entry<String, Istruttore>> it = elencoIstruttori.entrySet().iterator();
-            Map<String,Istruttore> isDisponibile=new HashMap<>();
+            Map<String,Istruttore> isDisponibile=new TreeMap<>();
 
             while (it.hasNext()) {
                 Map.Entry<String, Istruttore> entry = it.next();
@@ -294,9 +294,9 @@ public class Agilegym {
 
     public void mostraLezione(int sceltaCorso,Cliente logged){
         int i=0;
-        Map<Integer,Corso> corsi =new HashMap<>();
+        Map<Integer,Corso> corsi =new TreeMap<>();
         Map<String,Lezione> lezioniDisponibili;
-        Map<Integer,Lezione> sceltaLezioni =new HashMap<>();
+        Map<Integer,Lezione> sceltaLezioni =new TreeMap<>();
         Map<String,Prenotazione> elencoPrenotazioneUtente;
         String s;
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -510,7 +510,7 @@ public class Agilegym {
                 str = bprenotazioni.readLine();
             }
 
-            System.out.println("\nI corsi e le lezioni sono stati inseriti con successo\n");
+            System.out.println("\nI corsi e le lezioni sono stati inseriti con successo");
         }catch (IOException e) {
             System.out.println("ERRORE NEL CARICAMENTO DELLA PALESTRA\n" );
             System.exit(-9);

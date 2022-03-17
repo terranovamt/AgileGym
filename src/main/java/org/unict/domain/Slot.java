@@ -5,7 +5,6 @@ public class Slot {
     private boolean disponibile;
 
     public Slot(String dataora, boolean disponibile){
-        //String idSlot = Agilegym.randId();
         this.dataOra=dataora;
         this.disponibile = disponibile;
     }

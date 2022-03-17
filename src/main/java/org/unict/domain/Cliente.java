@@ -1,19 +1,19 @@
 package org.unict.domain;
 
-import java.util.HashMap;
+import java.util.*;
 
 public class Cliente {
     private final String idCliente;
     private final String nome;
     private final String cognome;
-    private final HashMap<String,Prenotazione> elencoPrenotazioni;
+    private final Map<String,Prenotazione> elencoPrenotazioni;
 
 
     public  Cliente(String username, String nome, String cognome, String dataNascita){
         this.idCliente = username;
         this.nome=nome;
         this.cognome=cognome;
-        this.elencoPrenotazioni=new HashMap<>();
+        this.elencoPrenotazioni=new TreeMap<>();
     }
 
     //UC2
@@ -30,7 +30,7 @@ public class Cliente {
         return nome;
     }
 
-    public HashMap<String, Prenotazione> getElencoPrenotazioni() {
+    public Map<String, Prenotazione> getElencoPrenotazioni() {
         return elencoPrenotazioni;
     }
 

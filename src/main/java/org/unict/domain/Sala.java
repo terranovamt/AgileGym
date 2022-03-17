@@ -17,7 +17,6 @@ public class Sala {
     //CASO D'USO DI AVVIMENTO
     //Caricamento degli slot da file
     public Map<Integer, Slot>  loadSlot(){
-        //Map<Integer, Slot> map=new HashMap<>();
         Map<Integer, Slot> map=new TreeMap<>();
         String dataOra;
         boolean disponibilita=true;

@@ -145,7 +145,7 @@ public class app {
                 if (scelta==0){
                     return;
                 }
-                if(scelta>0 && scelta < agilegym.getElencoCorsi().size()){
+                if(scelta>0 && scelta <= agilegym.getElencoCorsi().size()){
                     i=0;
                     s=scelta;
                     for (String key: agilegym.getElencoCorsi().keySet()){

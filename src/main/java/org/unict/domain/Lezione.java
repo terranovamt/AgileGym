@@ -1,9 +1,7 @@
 package org.unict.domain;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 
 public class Lezione {
 
@@ -20,7 +18,7 @@ public class Lezione {
         this.c=c;
         this.s=s;
         this.i=i;
-        this.elencoPrenotazioni= new HashMap<>();
+        this.elencoPrenotazioni= new TreeMap<>();
     }
 
     //UC2
