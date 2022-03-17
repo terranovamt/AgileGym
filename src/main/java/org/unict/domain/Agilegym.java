@@ -21,7 +21,6 @@ public class Agilegym {
         this.elencoSale = new HashMap<>();
         this.elencoIstruttori = new HashMap<>();
         this.elencoClienti = new HashMap<>();
-
         loadAttrezzi();
         loadSale();
         loadIstruttore();
@@ -385,33 +384,6 @@ public class Agilegym {
                 logged.addPrenotazione(p);
              }else System.out.println("Hai gia una lezione prenotata coincidente ");
         }else System.out.println("Posti per la lezione pieni");
-       /* if (!logged.getElencoPrenotazioni().isEmpty()){
-
-
-            int flag=0;
-            for (String key : logged.getElencoPrenotazioni().keySet()) {
-                Prenotazione pLogged= logged.getElencoPrenotazioni().get(key);
-                String slotCliente=pLogged.getSlot().getDataora();
-                String SlotLezione= corsoCorrente.getElencoLezioni().get(idLezione).getSlot().getDataora();
-                if(slotCliente.equals(SlotLezione)) {
-                    flag=0;
-                    break;
-                }else {
-                    flag=1;
-                }
-            }
-            if (flag==1){
-                System.out.println("PRENOTAZIONE EFFETTUATA CON SUCCESSO");
-                Prenotazione p = corsoCorrente.confermaPrenotazione(idLezione, logged.getIdCliente());
-                logged.addPrenotazione(p);
-            }if(flag==0) {
-                System.out.println("HAI GIA UNA PRENOTAZIONE");
-            }
-        }else {
-            System.out.println("PRIMA PRENOTAZIONE EFFETTUATA CON SUCCESSO");
-            Prenotazione p = corsoCorrente.confermaPrenotazione(idLezione, logged.getIdCliente());
-            logged.addPrenotazione(p);
-        }*/
     }
 
     //CASO DUSO DI AVVIAMENTO

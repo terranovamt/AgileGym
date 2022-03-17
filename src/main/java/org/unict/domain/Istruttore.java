@@ -14,7 +14,8 @@ public class Istruttore {
 
     //CASO D'USO DI AVVIEMENTO
     public Map<Integer, Slot>  loadSlot(){
-        Map<Integer, Slot> map=new HashMap<>();
+        //Map<Integer, Slot> map=new HashMap<>();
+        Map<Integer, Slot> map=new TreeMap<>();
         String dataOra;
         boolean disponibilita=true;
         Slot s;
