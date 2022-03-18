@@ -205,7 +205,7 @@ public class app {
     public static void stampaPrenotazioni(){
         if(agilegym.getElencoClienti().isEmpty()){
             System.out.print    ("\n#--------------------------------------------------------------#\n");
-            System.out.print    (  "#-----------NON CI SONO CLIENTI, TROVALI !!!------------#");
+            System.out.print    (  "#---------------NON CI SONO CLIENTI, TROVALI !!!---------------#");
             System.out.println  ("\n#--------------------------------------------------------------#\n");
         }
         for (String key1 : agilegym.getElencoCorsi().keySet()){

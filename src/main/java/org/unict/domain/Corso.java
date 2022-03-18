@@ -8,7 +8,7 @@ public class Corso {
     private String livello;
     private String focus;
     private Attrezzo attrezzo;
-    private final Map<String, Lezione> elencoLezioni;
+    private  Map<String, Lezione> elencoLezioni;
 
     public Corso(String idCorso, String nomeCorso, String livello, String focus, Attrezzo attrezzo){
         this.idCorso =idCorso;
@@ -23,8 +23,8 @@ public class Corso {
         return this.getAttrezzo().getSale();
     }
 
-    public void inserisciLezione(String idLezione, Slot slot, Corso c, Sala s, Istruttore i ){
-        Lezione l  = new Lezione(idLezione, slot, c, s, i);
+    public void inserisciLezione(String idLezione, String idSlot, Corso c, Sala s, Istruttore i ){
+        Lezione l  = new Lezione(idLezione, idSlot, c, s, i);
         elencoLezioni.put(idLezione,l);
     }
     //UC2
@@ -98,7 +98,7 @@ public class Corso {
 
     public String stampaCorsi(){
         return  "\tNome: " + nomeCorso + "\n" +
-                "\tLivello:  " + livello+ "\n" +
+                "\tLivello: " + livello+ "\n" +
                 "\tFocus: " + focus ;
     }
 }

@@ -4,65 +4,80 @@ import java.io.*;
 import java.util.*;
 
 public class Istruttore {
-    private final String idIstruttore;
-    private final Map<String, Slot> listaSlot; //primo numero giorno della settimana e i successivi due indicano l'ora. N.B. 209= martedi' ore 9 am
+    private  String idIstruttore;
+    private  Map<String, Boolean> mapSlot; //primo numero giorno della settimana e i successivi due indicano l'ora. N.B. 209= martedi' ore 9 am
 
     public Istruttore(String idIstruttore){
          this.idIstruttore = idIstruttore;
-         this.listaSlot = loadSlot();
+         this.mapSlot = loadSlot();
     }
 
     //CASO D'USO DI AVVIEMENTO
-    public Map<String, Slot>  loadSlot(){
-        Map<String, Slot> map=new TreeMap<>();
+    //CASO D'USO DI AVVIMENTO
+    //Caricamento degli slot da file
+    public Map<String, Boolean>  loadSlot(){
+        Map<String, Boolean> map=new TreeMap<>();
         String idSlot;
-        boolean disponibilita=true;
-        Slot s;
         try {
-            //System.out.println("sono dentro loadSlot");
             BufferedReader br1 = new BufferedReader(new FileReader("slot.txt"));
             idSlot = br1.readLine();
             while (idSlot != null) {
-                s = new Slot(idSlot, disponibilita);
-                s.setIdSlot(idSlot);
-                s.setDisponibile(disponibilita);
-                map.put(idSlot, s);
+                map.put(idSlot, true);
                 idSlot = br1.readLine();
             }
         }catch (IOException e) {
-            System.out.println("ERRORE CARICAMENTO FILE slot.txt DI ISTRUTTORE\n" );
-            System.exit(-2);
+            System.out.println("ERRORE CARICAMENTO FILE slot.txt IN SALA\n" );
+            System.exit(-1);
         }
         return map;
     }
 
     //UC1
-    public boolean isDisponibile(String idSlot){
-        for (Map.Entry<String, Slot> entry : listaSlot.entrySet()) { //scorre gli slot per l'istruttore corrente
-            if (entry.getValue().getIdSlot().equals(idSlot)) {// seleziona l'id slot giusto
-                if (entry.getValue().getDisponibile()) return true;// se disponibile torna vero
+    //Ricerca nella listaSlot se l'attributo disponibilità è settato su falso
+    public  boolean isDisponibile(){
+        for (Map.Entry<String, Boolean> entry : this.mapSlot.entrySet()) {
+            if (entry.getValue()) {
+               return true;
             }
         }
         return false;
     }
 
     public void setOccupato(String idSlot){
-        this.listaSlot.get(idSlot).setDisponibile(false);
+        this.mapSlot.replace(idSlot,false);
     }
-
     //GET E SET STANDARD
     public String getIdIstruttore() {
         return idIstruttore;
     }
 
     //STAMPA
+    private String stampaData(String slot){
+        String str = "", giorno, ora;
+        giorno = switch (Integer.parseInt(String.valueOf(slot.charAt(0)))) {
+            case 1 -> "LUNEDI' ore ";
+            case 2 -> "MARTEDI' ore ";
+            case 3 -> "MERCOLEDI' ore ";
+            case 4 -> "GIOVEDI ore ";
+            case 5 -> "VENERDI ore ";
+            case 6 -> "SABATO ore ";
+            default -> "";
+        };
+        ora= slot.charAt(1)+String.valueOf((slot.charAt(2)));
+        str+=giorno+ora+":00";
+        return str;
+    }
+
     public String stampaListaSlot(){
-        StringBuilder s= new StringBuilder();
-        for (String key: listaSlot.keySet()){
-            s.append("\t").append(listaSlot.get(key));
+        String dis;
+        StringBuilder s = new StringBuilder();
+        for (String key: mapSlot.keySet()){
+            if (mapSlot.get(key))dis="  Disponibile";else dis="  Occupato";
+            s.append("\t").append(stampaData(key)).append(dis).append("\n");
         }
         return s.toString();
     }
+
     @Override
     public String toString(){
         return "ID-Istruttore:\t" + idIstruttore + "\n" + "\tLista Slot Orari:\n" + stampaListaSlot();

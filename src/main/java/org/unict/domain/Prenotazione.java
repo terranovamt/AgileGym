@@ -1,14 +1,14 @@
 package org.unict.domain;
 
 public class Prenotazione {
-    private final String idPrenotazione;
-    private final String idCliente;
-    private final Slot slot;
+    private  String idPrenotazione;
+    private  String idCliente;
+    private  String idSlot;
 
-    public  Prenotazione(String idCliente, Slot slot){
+    public  Prenotazione(String idCliente, String  idSlot){
         this.idPrenotazione = Agilegym.randId();
         this.idCliente=idCliente;
-        this.slot=slot;
+        this.idSlot=idSlot;
     }
 
     //GET E SET STANDARD
@@ -20,13 +20,13 @@ public class Prenotazione {
         return idCliente;
     }
 
-    public Slot getSlot() {
-        return slot;
+    public String getIdSlot() {
+        return idSlot;
     }
 
     //STAMPA
     @Override
     public String toString(){
-        return "ID PRENOTAZIONE: " + idPrenotazione + slot;
+        return "ID PRENOTAZIONE: " + idPrenotazione + idSlot;
     }
 }

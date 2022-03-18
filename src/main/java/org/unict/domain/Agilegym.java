@@ -9,11 +9,11 @@ import static java.lang.Math.abs; //rand num
 public class Agilegym {
     static  Agilegym agilegym;
     private Corso corsoCorrente;
-    private final Map<String, Cliente> elencoClienti;
-    private final Map<String, Attrezzo> elencoAttrezzi;
-    private final Map<String, Corso> elencoCorsi;
-    private final Map<String, Sala> elencoSale;
-    private final Map<String, Istruttore> elencoIstruttori;
+    private  Map<String, Cliente> elencoClienti;
+    private  Map<String, Attrezzo> elencoAttrezzi;
+    private  Map<String, Corso> elencoCorsi;
+    private  Map<String, Sala> elencoSale;
+    private  Map<String, Istruttore> elencoIstruttori;
 
     private Agilegym() throws IOException {
         this.elencoCorsi = new TreeMap<>();
@@ -124,10 +124,9 @@ public class Agilegym {
 
     public void inserisciLezione(Corso corsoCorrente){
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String  s, idSalaSelezionata, idIstruttoreSelezionato, idLezione = randId();
-        String idSlot = "";
+        String  s, idSalaSelezionata, idIstruttoreSelezionato,idSlotSelezionato = "", idLezione ="";
+        String idSlot;
         Sala salaSelezionata = null;
-        Slot slotSelezionato= null;
         Istruttore istruttoreSelezionato = null;
         this.corsoCorrente = corsoCorrente;
 
@@ -153,22 +152,22 @@ public class Agilegym {
 
             //SCELTA DELLO SLOT
             if (salaSelezionata.getSlotDisponibili().size()==1){
-                System.out.println("E' disponibile solo lo Slot: "+salaSelezionata.getSlotDisponibili().get(0).getIdSlot());
-                slotSelezionato = salaSelezionata.getSlotDisponibili().get(salaSelezionata.getSlotDisponibili().get(0).getIdSlot());
+                idSlot = salaSelezionata.getSlotDisponibili().get(0);
+                System.out.println("E' disponibile solo lo Slot: "+idSlot);
+                idSlot = salaSelezionata.getSlotDisponibili().get(0);
             }else{
                 System.out.println("Elenco degli Slot disponibili per la sala ~" + salaSelezionata.getIdSala()+"~:");
-                for (String key: salaSelezionata.getSlotDisponibili().keySet()){//Serve per non stampare con le graffe e avere solo il valore e non la key, la formattazione e va fatto nel to string del tipo(sala.toString)
-                    System.out.print("\tID-Slot: "+ salaSelezionata.getSlotDisponibili().get(key).getIdSlot()+"\n");
+                for (String slot:salaSelezionata.getSlotDisponibili()) {
+                    System.out.print("\tID-Slot: "+ slot +"\n");
                 }
 
                 do {
                     System.out.print("Inserisci uno slot Disponibile: ");
                     idSlot = br.readLine();
-                    if(salaSelezionata.getSlotDisponibili().containsKey(idSlot)){
-                        slotSelezionato = salaSelezionata.getSlotDisponibili().get(idSlot);
+                    if(salaSelezionata.getSlotDisponibili().contains(idSlot)){
+                        idSlotSelezionato = idSlot;
                     }
-                }while (slotSelezionato ==null);
-                //System.out.println(idSlotSelezionato);
+                }while (idSlotSelezionato.equals(""));
             }
             //SCELTA DELL'ISTRUTTORE
             Iterator<Map.Entry<String, Istruttore>> it = elencoIstruttori.entrySet().iterator();
@@ -177,7 +176,7 @@ public class Agilegym {
             while (it.hasNext()) {
                 Map.Entry<String, Istruttore> entry = it.next();
                 Istruttore i = entry.getValue();
-                if (i.isDisponibile(idSlot)) {
+                if (i.isDisponibile()) {
                     elencoIstruttoriDisponibili.put(i.getIdIstruttore(), i);
                 }
             }
@@ -206,16 +205,17 @@ public class Agilegym {
                 //System.out.println(istruttoreSelezionato);
             }
             //TUTTE LE SCELTE SONO ANDATE A BUON FINE
+            idLezione+=corsoCorrente.getIdCorso()+salaSelezionata.getIdSala()+idSlot;
             System.out.println("\n------------RIEPILOGO------------");
             System.out.println( "LEZIONE: \n" +
                                 "\tID: " + idLezione + "\n" +
                                 "\tNome Corso: " + corsoCorrente.getNomeCorso() + "\n" +
                                 "\tSala: " + salaSelezionata.getIdSala()+ "\n" +
                                 "\tIstruttore: " + istruttoreSelezionato.getIdIstruttore() + "\n" +
-                                "\tI#D-Slot: " + slotSelezionato.getIdSlot());
+                                "\tI#D-Slot: " + idSlot);
             System.out.println("\n--------------------------------\n");
 
-            confermaLezione(slotSelezionato,salaSelezionata,istruttoreSelezionato);
+            confermaLezione(idSlot,salaSelezionata,istruttoreSelezionato);
 
             do {
                 s="";
@@ -237,7 +237,7 @@ public class Agilegym {
         }
     }
 
-    public void confermaLezione(Slot slotSelezionato, Sala salaSelezionata, Istruttore istruttoreSelezionato){
+    public void confermaLezione(String idSlot, Sala salaSelezionata, Istruttore istruttoreSelezionato){
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String  s, idLezione = randId();
         try {
@@ -247,9 +247,9 @@ public class Agilegym {
                 String str=br.readLine();
                 if (str.equals("si")){
                     s=str;
-                    corsoCorrente.inserisciLezione(idLezione, slotSelezionato, corsoCorrente , salaSelezionata, istruttoreSelezionato);
-                    salaSelezionata.setOccupato(slotSelezionato.getIdSlot());
-                    istruttoreSelezionato.setOccupato(slotSelezionato.getIdSlot());
+                    corsoCorrente.inserisciLezione(idLezione, idSlot, corsoCorrente , salaSelezionata, istruttoreSelezionato);
+                    salaSelezionata.setOccupato(idSlot);
+                    istruttoreSelezionato.setOccupato(idSlot);
                     System.out.println("\n------------CONFERMA INSERIMENTO LEZIONE-------------\n");
                     System.out.println(corsoCorrente);
                 }
@@ -276,15 +276,18 @@ public class Agilegym {
                 System.out.println("CORSO: "+ i );
                 System.out.println(elencoCorsi.get(key).stampaCorsi());
             }
-            int scelta = 0;
+            int scelta = -1;
             do{
                 System.out.print("Scegli un corso: ");
                 int s=Integer.parseInt(br.readLine());
-                if(s>=0 && s <= elencoCorsi.size()){
+                if (s==0){
+                    return;
+                }
+                if(s>0 && s <= elencoCorsi.size()){
                     scelta=s;
                     mostraLezione(scelta,logged);
                 }
-            }while(scelta==0);
+            }while(scelta==-1);
         }catch (Exception e) {
             System.out.println("ERRORE NELLA LETTURA DA TASTIERA:" +e.getMessage());
             System.exit(-11);
@@ -319,15 +322,18 @@ public class Agilegym {
                 System.out.println(lezioniDisponibili.get(key));
             }
 
-            int scelta = 0;
+            int scelta = -1;
             try {
                 do {
                     System.out.print("Scegli una lezione: ");
                     int s1 = Integer.parseInt(br.readLine());
+                    if (s1==0){
+                        return;
+                    }
                     if (s1 > 0 && s1 <= lezioniDisponibili.size()) {
                         scelta = s1;
                     }
-                } while (scelta == 0);
+                } while (scelta == -1);
                 lezioneCorrente = sceltaLezioni.get(scelta);
 
                 System.out.println("\nLEZIONE SCELTA: " + scelta + "\n" + lezioneCorrente.stampaRiepilogo());
@@ -375,10 +381,10 @@ public class Agilegym {
         List<String> slotPrenotati = new ArrayList<>();
         Lezione lezioneSelezionata=corsoCorrente.getElencoLezioni().get(idLezione);
         for (String key : logged.getElencoPrenotazioni().keySet()) {
-            slotPrenotati.add(logged.getElencoPrenotazioni().get(key).getSlot().getIdSlot());
+            slotPrenotati.add(logged.getElencoPrenotazioni().get(key).getIdSlot());
         }
         if((lezioneSelezionata.postiDisponibili()-lezioneSelezionata.getElencoPrenotazioni().size())!=0){
-            if(!slotPrenotati.contains(lezioneSelezionata.getSlot().getIdSlot())){
+            if(!slotPrenotati.contains(lezioneSelezionata.getIdSlot())){
                 Prenotazione p = corsoCorrente.confermaPrenotazione(idLezione, logged.getIdCliente());
                 logged.addPrenotazione(p);
              }else System.out.println("Hai gia una lezione prenotata coincidente ");
@@ -451,41 +457,41 @@ public class Agilegym {
         String str;
         String [] strings;
         try {
-            BufferedReader bcorsi = new BufferedReader(new FileReader("corsi.txt"));
-            BufferedReader blezioni = new BufferedReader(new FileReader("lezioni.txt"));
-            BufferedReader bcliente = new BufferedReader(new FileReader("clienti.txt"));
-            BufferedReader bprenotazioni= new BufferedReader(new FileReader("prenotazioni.txt"));
+            BufferedReader bCorsi = new BufferedReader(new FileReader("corsi.txt"));
+            BufferedReader bLezioni = new BufferedReader(new FileReader("lezioni.txt"));
+            BufferedReader bCliente = new BufferedReader(new FileReader("clienti.txt"));
+            BufferedReader bPrenotazioni= new BufferedReader(new FileReader("prenotazioni.txt"));
 
-            str = bcorsi.readLine();
+            str = bCorsi.readLine();
             while (str != null){
                 strings=str.split("-");
                 Attrezzo a=elencoAttrezzi.get((strings[4]));
                 Corso c= new Corso(strings[0], strings[1], strings[2], strings[3],a);
                 this.elencoCorsi.put(strings[0],c);
-                str = bcorsi.readLine();
+                str = bCorsi.readLine();
             }
 
-            str = blezioni.readLine();
+            str = bLezioni.readLine();
             while (str != null){
                 strings=str.split("-");
                 Corso c=elencoCorsi.get(strings[1]);
                 String idLezione=strings[0];
                 Sala s=elencoSale.get(strings[2]);
                 Istruttore i=elencoIstruttori.get(strings[3]);
-                Slot slot=s.getListaSlot().get(strings[4]);
-                c.inserisciLezione(idLezione,slot ,c,s,i);
-                s.setOccupato(slot.getIdSlot());
-                i.setOccupato(slot.getIdSlot());
-                str = blezioni.readLine();
+                String idSlot=strings[4];
+                c.inserisciLezione(idLezione,idSlot ,c,s,i);
+                s.setOccupato(idSlot);
+                i.setOccupato(idSlot);
+                str = bLezioni.readLine();
             }
-            str = bcliente.readLine();
+            str = bCliente.readLine();
             while (str != null){
                 strings=str.split("-");
                 Cliente c=new Cliente(strings[0], strings[1], strings[2], strings[3]);
                 elencoClienti.put(strings[0],c);
-                str = bcliente.readLine();
+                str = bCliente.readLine();
             }
-            str = bprenotazioni.readLine();
+            str = bPrenotazioni.readLine();
             while (str != null){
                 strings=str.split("-");
                 List<String> slotPrenotati = new ArrayList<>();
@@ -498,15 +504,15 @@ public class Agilegym {
                 Cliente logged=elencoClienti.get(strings[1]);
                 Lezione lezioneSelezionata=corsoCorrente.getElencoLezioni().get(strings[0]);
                 for (String key : logged.getElencoPrenotazioni().keySet()) {
-                    slotPrenotati.add(logged.getElencoPrenotazioni().get(key).getSlot().getIdSlot());
+                    slotPrenotati.add(logged.getElencoPrenotazioni().get(key).getIdSlot());
                 }
                 if((lezioneSelezionata.postiDisponibili()-lezioneSelezionata.getElencoPrenotazioni().size())!=0){
-                    if(!slotPrenotati.contains(lezioneSelezionata.getSlot().getIdSlot())){
+                    if(!slotPrenotati.contains(lezioneSelezionata.getIdSlot())){
                         Prenotazione p = corsoCorrente.confermaPrenotazione(strings[0], logged.getIdCliente());
                         logged.addPrenotazione(p);
                     }else System.out.println("Hai gia una lezione prenotata coincidente ");
                 }else System.out.println("Posti per la lezione pieni");
-                str = bprenotazioni.readLine();
+                str = bPrenotazioni.readLine();
             }
 
             System.out.println("\nI corsi e le lezioni sono stati inseriti con successo");
@@ -518,11 +524,9 @@ public class Agilegym {
 
     //FUNZIONI DI UTILITY
     public void scegliCliente(){
-        int i=0;
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         Cliente logged = null;
         String username;
-
         try {
             do {
                 System.out.print("Inserisci username: ");
@@ -539,7 +543,8 @@ public class Agilegym {
     }
 
     public static String randId(){
-        return String.valueOf((abs((int) System.currentTimeMillis() + (int)(Math.random()*(1000000000)))/10));
+        String s=String.valueOf((abs((int) System.currentTimeMillis() + (int)(Math.random()*(1000000000)))/10));
+        return s.substring(3,7);
     }
 
     //GET E SET STANDARD
