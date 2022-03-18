@@ -5,16 +5,16 @@ import java.util.*;
 
 public class Lezione {
 
-    private final String idLezione;
-    private final Slot slot;
-    private final Sala sala;
-    private final Istruttore istruttore;
-    private final Corso c;
-    private final Map<String, Prenotazione> elencoPrenotazioni;
+    private  String idLezione;
+    private  String idSlot;
+    private  Sala sala;
+    private  Istruttore istruttore;
+    private  Corso c;
+    private  Map<String, Prenotazione> elencoPrenotazioni;
 
-    public Lezione(String idLezione, Slot slot, Corso c, Sala s, Istruttore i){
+    public Lezione(String idLezione, String idSlot, Corso c, Sala s, Istruttore i){
         this.idLezione = idLezione;
-        this.slot = slot;
+        this.idSlot = idSlot;
         this.c=c;
         this.sala =s;
         this.istruttore =i;
@@ -25,11 +25,11 @@ public class Lezione {
     public boolean isDisponibile(Map<String,Prenotazione> elencoPrenotazioneUtente){
         List<String> slotUtente= new ArrayList<>();
         for (String key : elencoPrenotazioneUtente.keySet()) {
-            slotUtente.add(elencoPrenotazioneUtente.get(key).getSlot().getIdSlot());
+            slotUtente.add(elencoPrenotazioneUtente.get(key).getIdSlot());
         }
 
         if((this.postiDisponibili()-this.elencoPrenotazioni.size())!=0) {
-            if(!slotUtente.contains(this.slot.getIdSlot())){
+            if(!slotUtente.contains(this.idSlot)){
                 return true;
             }
             else   {
@@ -49,7 +49,7 @@ public class Lezione {
     }
 
     public Prenotazione creaPrenotazione(String idCliente){
-        Prenotazione p=new Prenotazione(idCliente,this.getSlot());
+        Prenotazione p=new Prenotazione(idCliente,this.idSlot);
         elencoPrenotazioni.put(p.getIdPrenotazione(),p);
         return p;
     }
@@ -60,28 +60,28 @@ public class Lezione {
         return idLezione;
     }
 
-    public Slot getSlot() {
-        return slot;
+    public String  getIdSlot() {
+        return idSlot;
     }
+
 
     public Map<String, Prenotazione> getElencoPrenotazioni() {
         return elencoPrenotazioni;
     }
     //STAMPA
-    private String stampaData(){
-        String str="", giorno, ora;
-
-            switch (Integer.parseInt(String.valueOf(String.valueOf(slot.getIdSlot()).charAt(0)))){
-                case 1: giorno="LUNEDI' ore ";     break;
-                case 2: giorno="MARTEDI' ore ";    break;
-                case 3: giorno="MERCOLEDI' ore ";  break;
-                case 4: giorno="GIOVEDI ore ";     break;
-                case 5: giorno="VENERDI ore ";     break;
-                case 6: giorno="SABATO ore ";      break;
-                default:giorno="";
-            }
-            ora= slot.getIdSlot().charAt(1)+String.valueOf((slot.getIdSlot().charAt(2)));
-            str+=giorno+ora+":00\n";
+    private String stampaData(String slot){
+        String str = "", giorno, ora;
+        giorno = switch (Integer.parseInt(String.valueOf(slot.charAt(0)))) {
+            case 1 -> "LUNEDI' ore ";
+            case 2 -> "MARTEDI' ore ";
+            case 3 -> "MERCOLEDI' ore ";
+            case 4 -> "GIOVEDI ore ";
+            case 5 -> "VENERDI ore ";
+            case 6 -> "SABATO ore ";
+            default -> "";
+        };
+        ora= slot.charAt(1)+String.valueOf((slot.charAt(2)));
+        str+=giorno+ora+":00";
         return str;
     }
 
@@ -91,7 +91,7 @@ public class Lezione {
                 "\tFocus Corso: " + c.getFocus() + "\n" +
                 "\tSala: " + sala.getIdSala()+ "\n" +
                 "\tIstruttore: " + istruttore.getIdIstruttore() + "\n" +
-                "\tData: " +stampaData();
+                "\tData: " +stampaData(idSlot)+ "\n";
     }
     @Override
     public String toString(){
@@ -100,6 +100,6 @@ public class Lezione {
                 "\tSala: " + sala.getIdSala()+ "\n" +
                 "\tPosti Disponibili: " + (postiDisponibili() - this.elencoPrenotazioni.size())+ "\n" +
                 "\tIstruttore: " + istruttore.getIdIstruttore() + "\n" +
-                "\tData: " +stampaData();
+                "\tData: " +stampaData(idSlot)+ "\n";
     }
 }
