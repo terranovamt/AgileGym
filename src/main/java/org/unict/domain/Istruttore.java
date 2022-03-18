@@ -12,8 +12,7 @@ public class Istruttore {
          this.mapSlot = loadSlot();
     }
 
-    //CASO D'USO DI AVVIEMENTO
-    //CASO D'USO DI AVVIMENTO
+    //CASO D'USO DI AVVIAMENTO
     //Caricamento degli slot da file
     public Map<String, Boolean>  loadSlot(){
         Map<String, Boolean> map=new TreeMap<>();
@@ -49,6 +48,10 @@ public class Istruttore {
     //GET E SET STANDARD
     public String getIdIstruttore() {
         return idIstruttore;
+    }
+
+    public Map<String, Boolean> getMapSlot() {
+        return mapSlot;
     }
 
     //STAMPA

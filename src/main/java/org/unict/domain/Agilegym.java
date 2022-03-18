@@ -1,5 +1,7 @@
 package org.unict.domain;
 
+import org.unict.domain.exception.*;
+
 import java.util.*;
 import java.io.*;
 
@@ -231,7 +233,7 @@ public class Agilegym {
             if (s.equals("si")) {
                 inserisciLezione(corsoCorrente);
             }
-        }catch (Exception e) {
+        }catch (IOException e) {
             System.out.println("ERRORE NELLA LETTURA DA TASTIERA:" +e.getMessage());
             System.exit(-8);
         }
@@ -312,8 +314,10 @@ public class Agilegym {
         }
         corsoCorrente=corsi.get(sceltaCorso);
         System.out.println();
-        lezioniDisponibili=corsoCorrente.mostraLezioni(elencoPrenotazioneUtente);
-        if (lezioniDisponibili.size()!=0) {
+        try {
+            lezioniDisponibili=corsoCorrente.mostraLezioni(elencoPrenotazioneUtente);
+
+            if (lezioniDisponibili.size()!=0) {
             i = 0;
             for (String key : lezioniDisponibili.keySet()) {
                 i++;
@@ -323,7 +327,7 @@ public class Agilegym {
             }
 
             int scelta = -1;
-            try {
+
                 do {
                     System.out.print("Scegli una lezione: ");
                     int s1 = Integer.parseInt(br.readLine());
@@ -366,18 +370,20 @@ public class Agilegym {
                         nuovaPrenotazione(logged.getIdCliente());
                     }
                 } while (s.equals(""));
-
-            } catch (Exception e) {
-                System.out.println("ERRORE NELLA LETTURA DA TASTIERA:" + e.getMessage());
-                System.exit(-12);
+            }else{
+                System.out.println("\nNON CI SONO LEZIONI ATTUALEMTE PRENOTABILI");
+                nuovaPrenotazione(logged.getIdCliente());
             }
-        }else{
-            System.out.println("\nNON CI SONO LEZIONI ATTUALEMTE PRENOTABILI");
-            nuovaPrenotazione(logged.getIdCliente());
+        } catch (IOException e) {
+            System.out.println("ERRORE NELLA LETTURA DA TASTIERA:" + e.getMessage());
+            System.exit(-12);
+        } catch (SalaPienaException | ClienteOccupatoException | PrenotazionePresenteException | LezioneNonPresente e) {
+            e.printStackTrace();
         }
+
     }
 
-    public void confermaPrenotazione(String idLezione, Cliente logged){
+    public void confermaPrenotazione(String idLezione, Cliente logged) throws PrenotazionePresenteException, LezioneNonPresente {
         List<String> slotPrenotati = new ArrayList<>();
         Lezione lezioneSelezionata=corsoCorrente.getElencoLezioni().get(idLezione);
         for (String key : logged.getElencoPrenotazioni().keySet()) {
@@ -519,6 +525,8 @@ public class Agilegym {
         }catch (IOException e) {
             System.out.println("ERRORE NEL CARICAMENTO DELLA PALESTRA\n" );
             System.exit(-9);
+        } catch (CorsoException | PrenotazionePresenteException | LezioneNonPresente e) {
+            e.printStackTrace();
         }
     }
 

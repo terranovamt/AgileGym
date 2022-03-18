@@ -1,5 +1,8 @@
 package org.unict.domain;
 
+import org.unict.domain.exception.ClienteOccupatoException;
+import org.unict.domain.exception.SalaPienaException;
+
 import java.util.*;
 
 
@@ -22,25 +25,23 @@ public class Lezione {
     }
 
     //UC2
-    public boolean isDisponibile(Map<String,Prenotazione> elencoPrenotazioneUtente){
-        List<String> slotUtente= new ArrayList<>();
+    public boolean isDisponibile(Map<String,Prenotazione> elencoPrenotazioneUtente) throws ClienteOccupatoException , SalaPienaException {
+        List<String> slotUtentePrenotato= new ArrayList<>();
         for (String key : elencoPrenotazioneUtente.keySet()) {
-            slotUtente.add(elencoPrenotazioneUtente.get(key).getIdSlot());
+            slotUtentePrenotato.add(elencoPrenotazioneUtente.get(key).getIdSlot());
         }
 
         if((this.postiDisponibili()-this.elencoPrenotazioni.size())!=0) {
-            if(!slotUtente.contains(this.idSlot)){
+            if(!slotUtentePrenotato.contains(this.idSlot)){
                 return true;
             }
             else   {
-                //System.out.println("Sovrapposizione di orario");
-                //qui inseriamo la stampa della lezione che si sovrappone cosi portiamo
+                throw new ClienteOccupatoException("Hai giá una prenotazione in questo orario");//qui inseriamo la stampa della lezione che si sovrappone cosi portiamo
                 // a conoscenza l'utente che esiste quella lezione
             }
         }else {
-            //System.out.println("Lezione gia piena");
+            throw new SalaPienaException("Non ci sono piú posti prenotabili in questa lezione");
         }
-        return false;
     }
 
     public int postiDisponibili(){

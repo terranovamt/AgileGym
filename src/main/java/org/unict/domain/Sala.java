@@ -70,6 +70,10 @@ public class Sala {
         this.listaAttrezzi = listaAttrezzi;
     }
 
+    public List<String> getListaAttrezzi() {
+        return listaAttrezzi;
+    }
+
     //STAMPA
     private String stampaData(String slot){
         String str = "", giorno, ora;

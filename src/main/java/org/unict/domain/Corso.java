@@ -1,5 +1,6 @@
 package org.unict.domain;
 
+import org.unict.domain.exception.*;
 import java.util.*;
 
 public class Corso {
@@ -18,17 +19,24 @@ public class Corso {
         this.attrezzo = attrezzo;
         this.elencoLezioni=new TreeMap<>();
     }
+
     //UC1
-    public List <String> getIdSaleAttrezzate(){
+    public List <String> getIdSaleAttrezzate() {
         return this.getAttrezzo().getSale();
     }
 
-    public void inserisciLezione(String idLezione, String idSlot, Corso c, Sala s, Istruttore i ){
-        Lezione l  = new Lezione(idLezione, idSlot, c, s, i);
-        elencoLezioni.put(idLezione,l);
+    public void inserisciLezione (String idLezione, String idSlot, Corso c, Sala s, Istruttore i ) throws CorsoException {
+        if(attrezzo.getSale().contains(s.getIdSala()) && s.getListaAttrezzi().contains(attrezzo.getIdAttrezzo()) && s.getSlotDisponibili().contains(idSlot) && i.getMapSlot().get(idSlot)) {
+            Lezione l = new Lezione(idLezione, idSlot, c, s, i);
+            elencoLezioni.put(idLezione, l);
+        }
+        else {
+            throw new CorsoException("Errore Inserimento lezione");
+        }
     }
+
     //UC2
-    public Map<String,Lezione> mostraLezioni(Map<String,Prenotazione> elencoPrenotazioneUtente){
+    public Map<String,Lezione> mostraLezioni(Map<String,Prenotazione> elencoPrenotazioneUtente) throws SalaPienaException, ClienteOccupatoException {
         Map<String,Lezione> elencoLezioniDisponibili= new HashMap<>();
 
         for (String key : elencoLezioni.keySet()){
@@ -39,8 +47,11 @@ public class Corso {
         return elencoLezioniDisponibili;
     }
 
-    public Prenotazione confermaPrenotazione(String idLezione, String idCliente){
+    public Prenotazione confermaPrenotazione(String idLezione, String idCliente) throws LezioneNonPresente{
+        if(elencoLezioni.containsKey(idLezione)){
         return this.elencoLezioni.get(idLezione).creaPrenotazione(idCliente);
+        }
+        else throw new LezioneNonPresente("Non ci sono lezioni con questo ID");
     }
 
     //GET E SET STANDARD

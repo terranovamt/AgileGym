@@ -1,5 +1,7 @@
 package org.unict.domain;
 
+import org.unict.domain.exception.PrenotazionePresenteException;
+
 import java.util.*;
 
 public class Cliente {
@@ -17,8 +19,11 @@ public class Cliente {
     }
 
     //UC2
-    public void addPrenotazione(Prenotazione p){
+    public void addPrenotazione(Prenotazione p)throws PrenotazionePresenteException {
+        if(!elencoPrenotazioni.containsKey(p.getIdPrenotazione())){
         elencoPrenotazioni.put(p.getIdPrenotazione(),p);
+        }
+        else throw new PrenotazionePresenteException("Esiste giá una prenotazione per questo cliente");
     }
 
     //GET E SET STANDARD
