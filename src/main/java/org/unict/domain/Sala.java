@@ -5,19 +5,19 @@ import java.util.*;
 
 public class Sala {
     private final String idSala;
-    private final Map<Integer, Slot> mapSlot;
+    private final Map<String, Slot> mapSlot;
     private List<String> listaAttrezzi;
 
     public Sala(String idSala){
         this.idSala = idSala;
         this.mapSlot = loadSlot();
-        this.listaAttrezzi = new ArrayList<>();
+        this.listaAttrezzi = new LinkedList<>();
     }
 
     //CASO D'USO DI AVVIMENTO
     //Caricamento degli slot da file
-    public Map<Integer, Slot>  loadSlot(){
-        Map<Integer, Slot> map=new TreeMap<>();
+    public Map<String, Slot>  loadSlot(){
+        Map<String, Slot> map=new TreeMap<>();
         String dataOra;
         boolean disponibilita=true;
         Slot s;
@@ -29,7 +29,7 @@ public class Sala {
                 s = new Slot(dataOra, disponibilita);
                 s.setDataOra(dataOra);
                 s.setDisponibile(disponibilita);
-                map.put(Integer.parseInt(s.getDataora()), s);
+                map.put(s.getIdSlot(), s);
                 dataOra = br1.readLine();
             }
         }catch (IOException e) {
@@ -44,16 +44,16 @@ public class Sala {
     public  Map<String, Slot> getSlotDisponibili(){
         Map<String, Slot> s=new HashMap<>();
 
-        for (Map.Entry<Integer, Slot> entry : this.mapSlot.entrySet()) {
+        for (Map.Entry<String, Slot> entry : this.mapSlot.entrySet()) {
             if (entry.getValue().getDisponibile()) {
-                s.put(entry.getValue().getDataora(), entry.getValue());
+                s.put(entry.getValue().getIdSlot(), entry.getValue());
             }
         }
         return s;
     }
 
-    public void setOccupato(String s){
-        this.mapSlot.get(Integer.parseInt(s)).setDisponibile(false);
+    public void setOccupato(String idSlot){
+        this.mapSlot.get(idSlot).setDisponibile(false);
     }
 
     //UC2
@@ -72,7 +72,7 @@ public class Sala {
         return idSala;
     }
 
-    public Map<Integer, Slot> getListaSlot() {
+    public Map<String, Slot> getListaSlot() {
         return mapSlot;
     }
 
@@ -84,7 +84,7 @@ public class Sala {
     public String stampaListaSlot () {
         StringBuilder s = new StringBuilder();
 
-        for (Integer key : mapSlot.keySet()) {
+        for (String key : mapSlot.keySet()) {
             s.append("\t").append(mapSlot.get(key));
         }
         return s.toString();

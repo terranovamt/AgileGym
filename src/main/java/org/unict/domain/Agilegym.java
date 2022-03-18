@@ -74,18 +74,17 @@ public class Agilegym {
                 attrezzoSelezionato = elencoAttrezzi.get(idAttrezzo);
             }while (attrezzoSelezionato == null);
             //System.out.println(attrezzoSelezionato.toString());
-            confermaCorso(idCorso,nomeCorso,livello,focus,attrezzoSelezionato);
+            this.corsoCorrente = new Corso(idCorso, nomeCorso, livello, focus, attrezzoSelezionato);
+            confermaCorso(this.corsoCorrente);
         } catch (Exception e) {
             System.out.println("ERRORE NELLA LETTURA DA TASTIERA: "+e.getMessage());
             System.exit(-7);
         }
     }
 
-    public void confermaCorso(String idCorso, String nomeCorso, String livello, String focus, Attrezzo idAttrezzo){
+    public void confermaCorso(Corso corsoCorrente){
         String s;
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-        this.corsoCorrente = new Corso(idCorso, nomeCorso, livello, focus, idAttrezzo);
         System.out.println("\n--------RIEPILOGO CORSO--------");
         System.out.println(corsoCorrente+"\n--------------------------------\n");
         try{
@@ -123,21 +122,21 @@ public class Agilegym {
         }
     }
 
-    public void inserisciLezione(Corso corso){
+    public void inserisciLezione(Corso corsoCorrente){
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String  s, idSalaSelezionata, idIstruttoreSelezionato, idLezione = randId();
-        String dataOra = "";
+        String idSlot = "";
         Sala salaSelezionata = null;
         Slot slotSelezionato= null;
         Istruttore istruttoreSelezionato = null;
-        corsoCorrente = corso;
+        this.corsoCorrente = corsoCorrente;
 
         try {
 
             System.out.println("-------Inserisci una Lezione-------\n");
-            if (corsoCorrente.getSaleAttrezzate().size()==1){
-                System.out.println("E' disponibile solo la sala: "+corsoCorrente.getSaleAttrezzate().get(0));
-                salaSelezionata = elencoSale.get(String.valueOf(corsoCorrente.getSaleAttrezzate().get(0)));
+            if (corsoCorrente.getIdSaleAttrezzate().size()==1){
+                System.out.println("E' disponibile solo la sala: "+corsoCorrente.getIdSaleAttrezzate().get(0));
+                salaSelezionata = elencoSale.get(String.valueOf(corsoCorrente.getIdSaleAttrezzate().get(0)));
             }else {
             System.out.println("Elenco degli Sale disponibili per l'attrezzo ~" +corsoCorrente.getAttrezzo().getIdAttrezzo()+"~:");
             System.out.print(corsoCorrente.getAttrezzo().stampaListaSale());
@@ -145,7 +144,7 @@ public class Agilegym {
                 do {
                     System.out.print("Inserisci una sala Disponibile: ");
                     idSalaSelezionata = br.readLine();
-                    if(corsoCorrente.getSaleAttrezzate().contains(idSalaSelezionata)){
+                    if(corsoCorrente.getIdSaleAttrezzate().contains(idSalaSelezionata)){
                         salaSelezionata = elencoSale.get(idSalaSelezionata);
                     }
                 }while (salaSelezionata ==null);
@@ -154,53 +153,53 @@ public class Agilegym {
 
             //SCELTA DELLO SLOT
             if (salaSelezionata.getSlotDisponibili().size()==1){
-                System.out.println("E' disponibile solo lo Slot: "+salaSelezionata.getSlotDisponibili().get(0).getDataora());
-                slotSelezionato = salaSelezionata.getSlotDisponibili().get(Integer.parseInt(salaSelezionata.getSlotDisponibili().get(0).getDataora()));
+                System.out.println("E' disponibile solo lo Slot: "+salaSelezionata.getSlotDisponibili().get(0).getIdSlot());
+                slotSelezionato = salaSelezionata.getSlotDisponibili().get(salaSelezionata.getSlotDisponibili().get(0).getIdSlot());
             }else{
                 System.out.println("Elenco degli Slot disponibili per la sala ~" + salaSelezionata.getIdSala()+"~:");
                 for (String key: salaSelezionata.getSlotDisponibili().keySet()){//Serve per non stampare con le graffe e avere solo il valore e non la key, la formattazione e va fatto nel to string del tipo(sala.toString)
-                    System.out.print("\tID-Slot: "+ salaSelezionata.getSlotDisponibili().get(key).getDataora()+"\n");
+                    System.out.print("\tID-Slot: "+ salaSelezionata.getSlotDisponibili().get(key).getIdSlot()+"\n");
                 }
 
                 do {
                     System.out.print("Inserisci uno slot Disponibile: ");
-                    dataOra = br.readLine();
-                    if(salaSelezionata.getSlotDisponibili().containsKey(dataOra)){
-                        slotSelezionato = salaSelezionata.getSlotDisponibili().get(dataOra);
+                    idSlot = br.readLine();
+                    if(salaSelezionata.getSlotDisponibili().containsKey(idSlot)){
+                        slotSelezionato = salaSelezionata.getSlotDisponibili().get(idSlot);
                     }
                 }while (slotSelezionato ==null);
                 //System.out.println(idSlotSelezionato);
             }
             //SCELTA DELL'ISTRUTTORE
             Iterator<Map.Entry<String, Istruttore>> it = elencoIstruttori.entrySet().iterator();
-            Map<String,Istruttore> isDisponibile=new TreeMap<>();
+            Map<String,Istruttore> elencoIstruttoriDisponibili=new TreeMap<>();
 
             while (it.hasNext()) {
                 Map.Entry<String, Istruttore> entry = it.next();
                 Istruttore i = entry.getValue();
-                if (i.isDisponibile(dataOra)) {
-                    isDisponibile.put(i.getIdIstruttore(), i);
+                if (i.isDisponibile(idSlot)) {
+                    elencoIstruttoriDisponibili.put(i.getIdIstruttore(), i);
                 }
             }
-            if (isDisponibile.size()==0){
+            if (elencoIstruttoriDisponibili.size()==0){
                 System.out.println("NON SONO DISPONIBILI ISTUTTORI SCEGLI UN ALTRO SLOT");
-                inserisciLezione(corso);
+                inserisciLezione(corsoCorrente);
             }
-            if (isDisponibile.size()==1){
-                for (String key : isDisponibile.keySet()) {//STAMPA ISTRUTTORI DISPONIBILI
-                    System.out.println("E' disponibile solo l'istruttore: " + isDisponibile.get(key).getIdIstruttore());
-                    istruttoreSelezionato = elencoIstruttori.get(isDisponibile.get(key).getIdIstruttore());
+            if (elencoIstruttoriDisponibili.size()==1){
+                for (String key : elencoIstruttoriDisponibili.keySet()) {//STAMPA ISTRUTTORI DISPONIBILI
+                    System.out.println("E' disponibile solo l'istruttore: " + elencoIstruttoriDisponibili.get(key).getIdIstruttore());
+                    istruttoreSelezionato = elencoIstruttori.get(elencoIstruttoriDisponibili.get(key).getIdIstruttore());
                 }
             }
             else {
-                System.out.println("Elenco degli Istruttori disponibili per lo Slot ~" + dataOra + "~:");
-                for (String key : isDisponibile.keySet()) {//STAMPA ISTRUTTORI DISPONIBILI
-                    System.out.println("\t" + isDisponibile.get(key).getIdIstruttore());
+                System.out.println("Elenco degli Istruttori disponibili per lo Slot ~" + idSlot + "~:");
+                for (String key : elencoIstruttoriDisponibili.keySet()) {//STAMPA ISTRUTTORI DISPONIBILI
+                    System.out.println("\t" + elencoIstruttoriDisponibili.get(key).getIdIstruttore());
                 }
                 do {
                     System.out.print("Inserisci una istruttore Disponibile: ");
                     idIstruttoreSelezionato = br.readLine();
-                    if (isDisponibile.containsKey(idIstruttoreSelezionato)) {
+                    if (elencoIstruttoriDisponibili.containsKey(idIstruttoreSelezionato)) {
                         istruttoreSelezionato = elencoIstruttori.get(idIstruttoreSelezionato);
                     }
                 } while (istruttoreSelezionato == null);
@@ -213,7 +212,7 @@ public class Agilegym {
                                 "\tNome Corso: " + corsoCorrente.getNomeCorso() + "\n" +
                                 "\tSala: " + salaSelezionata.getIdSala()+ "\n" +
                                 "\tIstruttore: " + istruttoreSelezionato.getIdIstruttore() + "\n" +
-                                "\tI#D-Slot: " + slotSelezionato.getDataora());
+                                "\tI#D-Slot: " + slotSelezionato.getIdSlot());
             System.out.println("\n--------------------------------\n");
 
             confermaLezione(slotSelezionato,salaSelezionata,istruttoreSelezionato);
@@ -249,8 +248,8 @@ public class Agilegym {
                 if (str.equals("si")){
                     s=str;
                     corsoCorrente.inserisciLezione(idLezione, slotSelezionato, corsoCorrente , salaSelezionata, istruttoreSelezionato);
-                    salaSelezionata.setOccupato(slotSelezionato.getDataora());
-                    istruttoreSelezionato.setOccupato(slotSelezionato.getDataora());
+                    salaSelezionata.setOccupato(slotSelezionato.getIdSlot());
+                    istruttoreSelezionato.setOccupato(slotSelezionato.getIdSlot());
                     System.out.println("\n------------CONFERMA INSERIMENTO LEZIONE-------------\n");
                     System.out.println(corsoCorrente);
                 }
@@ -376,10 +375,10 @@ public class Agilegym {
         List<String> slotPrenotati = new ArrayList<>();
         Lezione lezioneSelezionata=corsoCorrente.getElencoLezioni().get(idLezione);
         for (String key : logged.getElencoPrenotazioni().keySet()) {
-            slotPrenotati.add(logged.getElencoPrenotazioni().get(key).getSlot().getDataora());
+            slotPrenotati.add(logged.getElencoPrenotazioni().get(key).getSlot().getIdSlot());
         }
         if((lezioneSelezionata.postiDisponibili()-lezioneSelezionata.getElencoPrenotazioni().size())!=0){
-            if(!slotPrenotati.contains(lezioneSelezionata.getSlot().getDataora())){
+            if(!slotPrenotati.contains(lezioneSelezionata.getSlot().getIdSlot())){
                 Prenotazione p = corsoCorrente.confermaPrenotazione(idLezione, logged.getIdCliente());
                 logged.addPrenotazione(p);
              }else System.out.println("Hai gia una lezione prenotata coincidente ");
@@ -475,8 +474,8 @@ public class Agilegym {
                 Istruttore i=elencoIstruttori.get(strings[3]);
                 Slot slot=s.getListaSlot().get(Integer.parseInt(strings[4]));
                 c.inserisciLezione(idLezione,slot ,c,s,i);
-                s.setOccupato(slot.getDataora());
-                i.setOccupato(slot.getDataora());
+                s.setOccupato(slot.getIdSlot());
+                i.setOccupato(slot.getIdSlot());
                 str = blezioni.readLine();
             }
             str = bcliente.readLine();
@@ -499,10 +498,10 @@ public class Agilegym {
                 Cliente logged=elencoClienti.get(strings[1]);
                 Lezione lezioneSelezionata=corsoCorrente.getElencoLezioni().get(strings[0]);
                 for (String key : logged.getElencoPrenotazioni().keySet()) {
-                    slotPrenotati.add(logged.getElencoPrenotazioni().get(key).getSlot().getDataora());
+                    slotPrenotati.add(logged.getElencoPrenotazioni().get(key).getSlot().getIdSlot());
                 }
                 if((lezioneSelezionata.postiDisponibili()-lezioneSelezionata.getElencoPrenotazioni().size())!=0){
-                    if(!slotPrenotati.contains(lezioneSelezionata.getSlot().getDataora())){
+                    if(!slotPrenotati.contains(lezioneSelezionata.getSlot().getIdSlot())){
                         Prenotazione p = corsoCorrente.confermaPrenotazione(strings[0], logged.getIdCliente());
                         logged.addPrenotazione(p);
                     }else System.out.println("Hai gia una lezione prenotata coincidente ");

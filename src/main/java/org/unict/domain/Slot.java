@@ -1,22 +1,22 @@
 package org.unict.domain;
 
 public class Slot {
-    private String dataOra; //il primo numero indica il giono della settimana i successivi due indicano l'ora N.B. 208 == Martedí 8AM
+    private String idSlot; //il primo numero indica il giono della settimana i successivi due indicano l'ora N.B. 208 == Martedí 8AM
     private boolean disponibile;
 
     public Slot(String dataora, boolean disponibile){
-        this.dataOra=dataora;
+        this.idSlot=dataora;
         this.disponibile = disponibile;
     }
 
     //GET E SET STANDARD
 
-    public String getDataora() {
-        return dataOra;
+    public String getIdSlot() {
+        return idSlot;
     }
 
     public void setDataOra(String data) {
-        this.dataOra = data;
+        this.idSlot = data;
     }
 
     public boolean getDisponibile() {
@@ -28,7 +28,7 @@ public class Slot {
     }
 
     //STAMPA
-    private String stampadata(String slot){
+    private String stampaData(String slot){
         String str = "", giorno, ora;
 
         giorno = switch (Integer.parseInt(String.valueOf(slot.charAt(0)))) {
@@ -48,7 +48,7 @@ public class Slot {
     @Override
     public String toString(){
         String dis;
-        if (disponibile)dis="  Disponibile";else dis="  Occupato";
-        return "\tSlot: " + stampadata(dataOra)  + dis +"\n";
+        if (disponibile)dis="  Disponibile"; else dis="  Occupato";
+        return "\tSlot: " + stampaData(idSlot)  + dis +"\n";
     }
 }

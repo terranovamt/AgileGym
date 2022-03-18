@@ -7,8 +7,8 @@ public class Lezione {
 
     private final String idLezione;
     private final Slot slot;
-    private final Sala s;
-    private final Istruttore i;
+    private final Sala sala;
+    private final Istruttore istruttore;
     private final Corso c;
     private final Map<String, Prenotazione> elencoPrenotazioni;
 
@@ -16,8 +16,8 @@ public class Lezione {
         this.idLezione = idLezione;
         this.slot = slot;
         this.c=c;
-        this.s=s;
-        this.i=i;
+        this.sala =s;
+        this.istruttore =i;
         this.elencoPrenotazioni= new TreeMap<>();
     }
 
@@ -25,11 +25,11 @@ public class Lezione {
     public boolean isDisponibile(Map<String,Prenotazione> elencoPrenotazioneUtente){
         List<String> slotUtente= new ArrayList<>();
         for (String key : elencoPrenotazioneUtente.keySet()) {
-            slotUtente.add(elencoPrenotazioneUtente.get(key).getSlot().getDataora());
+            slotUtente.add(elencoPrenotazioneUtente.get(key).getSlot().getIdSlot());
         }
 
         if((this.postiDisponibili()-this.elencoPrenotazioni.size())!=0) {
-            if(!slotUtente.contains(this.slot.getDataora())){
+            if(!slotUtente.contains(this.slot.getIdSlot())){
                 return true;
             }
             else   {
@@ -45,7 +45,7 @@ public class Lezione {
 
     public int postiDisponibili(){
         String idAttrezzo = c.getAttrezzo().getIdAttrezzo();
-        return s.getNumAttrezzi(idAttrezzo);
+        return sala.getNumAttrezzi(idAttrezzo);
     }
 
     public Prenotazione creaPrenotazione(String idCliente){
@@ -71,7 +71,7 @@ public class Lezione {
     private String stampaData(){
         String str="", giorno, ora;
 
-            switch (Integer.parseInt(String.valueOf(String.valueOf(slot.getDataora()).charAt(0)))){
+            switch (Integer.parseInt(String.valueOf(String.valueOf(slot.getIdSlot()).charAt(0)))){
                 case 1: giorno="LUNEDI' ore ";     break;
                 case 2: giorno="MARTEDI' ore ";    break;
                 case 3: giorno="MERCOLEDI' ore ";  break;
@@ -80,7 +80,7 @@ public class Lezione {
                 case 6: giorno="SABATO ore ";      break;
                 default:giorno="";
             }
-            ora= slot.getDataora().charAt(1)+String.valueOf((slot.getDataora().charAt(2)));
+            ora= slot.getIdSlot().charAt(1)+String.valueOf((slot.getIdSlot().charAt(2)));
             str+=giorno+ora+":00\n";
         return str;
     }
@@ -89,17 +89,17 @@ public class Lezione {
         return  "\tNome Corso: " + c.getNomeCorso() + "\n" +
                 "\tLivello Corso: " + c.getLivello() + "\n" +
                 "\tFocus Corso: " + c.getFocus() + "\n" +
-                "\tSala: " + s.getIdSala()+ "\n" +
-                "\tIstruttore: " + i.getIdIstruttore() + "\n" +
+                "\tSala: " + sala.getIdSala()+ "\n" +
+                "\tIstruttore: " + istruttore.getIdIstruttore() + "\n" +
                 "\tData: " +stampaData();
     }
     @Override
     public String toString(){
         return  "\tID: " + idLezione + "\n" +
                 "\tNome Corso: " + c.getNomeCorso() + "\n" +
-                "\tSala: " + s.getIdSala()+ "\n" +
+                "\tSala: " + sala.getIdSala()+ "\n" +
                 "\tPosti Disponibili: " + (postiDisponibili() - this.elencoPrenotazioni.size())+ "\n" +
-                "\tIstruttore: " + i.getIdIstruttore() + "\n" +
+                "\tIstruttore: " + istruttore.getIdIstruttore() + "\n" +
                 "\tData: " +stampaData();
     }
 }

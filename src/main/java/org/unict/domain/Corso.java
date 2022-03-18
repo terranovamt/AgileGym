@@ -16,10 +16,10 @@ public class Corso {
         this.livello=livello;
         this.focus=focus;
         this.attrezzo = attrezzo;
-        this.elencoLezioni=new HashMap<>();
+        this.elencoLezioni=new TreeMap<>();
     }
     //UC1
-    public List <String> getSaleAttrezzate(){
+    public List <String> getIdSaleAttrezzate(){
         return this.getAttrezzo().getSale();
     }
 
