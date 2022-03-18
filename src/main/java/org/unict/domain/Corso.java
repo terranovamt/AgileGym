@@ -40,7 +40,7 @@ public class Corso {
         Map<String,Lezione> elencoLezioniDisponibili= new HashMap<>();
 
         for (String key : elencoLezioni.keySet()){
-            if(elencoLezioni.get(key).isDisponibile(elencoPrenotazioneUtente)){
+            if(elencoLezioni.get(key).isPrenotabile(elencoPrenotazioneUtente)){
                 elencoLezioniDisponibili.put(elencoLezioni.get(key).getIdLezione(),elencoLezioni.get(key));
             }
         }

@@ -266,16 +266,17 @@ public class Agilegym {
     }
 
     //UC2
-    public void nuovaPrenotazione(String username){
+    public void nuovaPrenotazione(String idCliente){
         int i=0;
+        Map<Integer,Corso> corsi =new TreeMap<>();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        Cliente logged = elencoClienti.get(username);
+        Cliente logged = elencoClienti.get(idCliente);
 
         try {
 
             for (String key : elencoCorsi.keySet()) {
                 i++;
-                System.out.println("CORSO: "+ i );
+                corsi.put(i,getElencoCorsi().get(key));
                 System.out.println(elencoCorsi.get(key).stampaCorsi());
             }
             int scelta = -1;
@@ -287,7 +288,8 @@ public class Agilegym {
                 }
                 if(s>0 && s <= elencoCorsi.size()){
                     scelta=s;
-                    mostraLezione(scelta,logged);
+                    corsoCorrente =elencoCorsi.get(corsi.get(scelta).getIdCorso());
+                    mostraLezione(logged);
                 }
             }while(scelta==-1);
         }catch (Exception e) {
@@ -296,27 +298,20 @@ public class Agilegym {
         }
     }
 
-    public void mostraLezione(int sceltaCorso,Cliente logged){
-        int i=0;
-        Map<Integer,Corso> corsi =new TreeMap<>();
+    public void mostraLezione(Cliente logged){
+        int i;
+
         Map<String,Lezione> lezioniDisponibili;
         Map<Integer,Lezione> sceltaLezioni =new TreeMap<>();
-        Map<String,Prenotazione> elencoPrenotazioneUtente;
+        Map<String,Prenotazione> elencoPrenotazioneCliente;
         String s;
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         Lezione lezioneCorrente;
 
-        elencoPrenotazioneUtente=logged.getElencoPrenotazioni();
-
-        for (String key : elencoCorsi.keySet()) {
-            i++;
-            corsi.put(i,getElencoCorsi().get(key));
-        }
-        corsoCorrente=corsi.get(sceltaCorso);
+        elencoPrenotazioneCliente=logged.getElencoPrenotazioni();
         System.out.println();
         try {
-            lezioniDisponibili=corsoCorrente.mostraLezioni(elencoPrenotazioneUtente);
-
+            lezioniDisponibili=corsoCorrente.mostraLezioni(elencoPrenotazioneCliente);
             if (lezioniDisponibili.size()!=0) {
             i = 0;
             for (String key : lezioniDisponibili.keySet()) {
@@ -349,7 +344,7 @@ public class Agilegym {
                         confermaPrenotazione(lezioneCorrente.getIdLezione(), logged);
                         break;
                     case 2:
-                        mostraLezione(sceltaCorso, logged);
+                        mostraLezione(logged);
                         break;
                     case 3:
                         nuovaPrenotazione(logged.getIdCliente());
@@ -363,7 +358,7 @@ public class Agilegym {
                     String str = br.readLine();
                     if (str.equals("si")) {
                         s = str;
-                        mostraLezione(sceltaCorso, logged);
+                        mostraLezione(logged);
                     }
                     if (str.equals("no")) {
                         s = str;
