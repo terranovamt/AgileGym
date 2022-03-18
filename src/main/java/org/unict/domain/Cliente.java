@@ -23,7 +23,7 @@ public class Cliente {
         if(!elencoPrenotazioni.containsKey(p.getIdPrenotazione())){
         elencoPrenotazioni.put(p.getIdPrenotazione(),p);
         }
-        else throw new PrenotazionePresenteException("Esiste giá una prenotazione per questo cliente");
+        else throw new PrenotazionePresenteException("Esiste giá una prenotazione per questa Lezione");
     }
 
     //GET E SET STANDARD

@@ -1,6 +1,7 @@
 package org.unict.domain;
 
 import org.unict.domain.exception.ClienteOccupatoException;
+import org.unict.domain.exception.PrenotazionePresenteException;
 import org.unict.domain.exception.SalaPienaException;
 
 import java.util.*;
@@ -49,9 +50,15 @@ public class Lezione {
         return sala.getNumAttrezzi(idAttrezzo);
     }
 
-    public Prenotazione creaPrenotazione(String idCliente){
-        Prenotazione p=new Prenotazione(idCliente,this.idSlot);
-        elencoPrenotazioni.put(p.getIdPrenotazione(),p);
+    public Prenotazione creaPrenotazione(String idCliente) throws PrenotazionePresenteException{
+        Prenotazione p=null;
+        for (String key: elencoPrenotazioni.keySet()) {
+            if(!elencoPrenotazioni.get(key).getIdCliente().equals(idCliente)){
+                p = new Prenotazione(idCliente, this.idSlot);
+                elencoPrenotazioni.put(p.getIdPrenotazione(), p);
+            }
+            else throw new PrenotazionePresenteException("Esiste giá una prenotazione per questo cliente");
+        }
         return p;
     }
 

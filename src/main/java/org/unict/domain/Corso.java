@@ -47,9 +47,9 @@ public class Corso {
         return elencoLezioniDisponibili;
     }
 
-    public Prenotazione confermaPrenotazione(String idLezione, String idCliente) throws LezioneNonPresente{
+    public Prenotazione confermaPrenotazione(String idLezione, String idCliente) throws LezioneNonPresente, PrenotazionePresenteException {
         if(elencoLezioni.containsKey(idLezione)){
-        return this.elencoLezioni.get(idLezione).creaPrenotazione(idCliente);
+            return this.elencoLezioni.get(idLezione).creaPrenotazione(idCliente);
         }
         else throw new LezioneNonPresente("Non ci sono lezioni con questo ID");
     }
