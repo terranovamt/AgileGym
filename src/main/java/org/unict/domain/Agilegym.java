@@ -472,7 +472,7 @@ public class Agilegym {
                 String idLezione=strings[0];
                 Sala s=elencoSale.get(strings[2]);
                 Istruttore i=elencoIstruttori.get(strings[3]);
-                Slot slot=s.getListaSlot().get(Integer.parseInt(strings[4]));
+                Slot slot=s.getListaSlot().get(strings[4]);
                 c.inserisciLezione(idLezione,slot ,c,s,i);
                 s.setOccupato(slot.getIdSlot());
                 i.setOccupato(slot.getIdSlot());
