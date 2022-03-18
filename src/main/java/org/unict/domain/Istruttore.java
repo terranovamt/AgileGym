@@ -24,7 +24,7 @@ public class Istruttore {
             idSlot = br1.readLine();
             while (idSlot != null) {
                 s = new Slot(idSlot, disponibilita);
-                s.setDataOra(idSlot);
+                s.setIdSlot(idSlot);
                 s.setDisponibile(disponibilita);
                 map.put(idSlot, s);
                 idSlot = br1.readLine();

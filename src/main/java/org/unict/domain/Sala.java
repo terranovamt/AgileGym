@@ -27,7 +27,7 @@ public class Sala {
             dataOra = br1.readLine();
             while (dataOra != null) {
                 s = new Slot(dataOra, disponibilita);
-                s.setDataOra(dataOra);
+                s.setIdSlot(dataOra);
                 s.setDisponibile(disponibilita);
                 map.put(s.getIdSlot(), s);
                 dataOra = br1.readLine();

@@ -15,8 +15,8 @@ public class Slot {
         return idSlot;
     }
 
-    public void setDataOra(String data) {
-        this.idSlot = data;
+    public void setIdSlot(String idSlot) {
+        this.idSlot = idSlot;
     }
 
     public boolean getDisponibile() {
