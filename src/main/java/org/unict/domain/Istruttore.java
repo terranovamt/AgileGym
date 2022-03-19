@@ -33,13 +33,9 @@ public class Istruttore {
 
     //UC1
     //Ricerca nella listaSlot se l'attributo disponibilità è settato su falso
-    public  boolean isDisponibile(){
-        for (Map.Entry<String, Boolean> entry : this.mapSlot.entrySet()) {
-            if (entry.getValue()) {
-               return true;
-            }
-        }
-        return false;
+    public  boolean isDisponibile(String idSlot){
+        return this.mapSlot.get(idSlot);
+
     }
 
     public void setOccupato(String idSlot){

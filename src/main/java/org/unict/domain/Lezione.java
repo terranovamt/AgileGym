@@ -1,6 +1,7 @@
 package org.unict.domain;
 
 import org.unict.domain.exception.ClienteOccupatoException;
+import org.unict.domain.exception.PrenotazioneNonPresenteException;
 import org.unict.domain.exception.PrenotazionePresenteException;
 import org.unict.domain.exception.SalaPienaException;
 
@@ -26,13 +27,13 @@ public class Lezione {
     }
 
     //UC2
-    public boolean isDisponibile(Map<String,Prenotazione> elencoPrenotazioneUtente) throws ClienteOccupatoException , SalaPienaException {
+    public boolean isPrenotabile(Map<String,Prenotazione> elencoPrenotazioneCliente) throws ClienteOccupatoException , SalaPienaException {
         List<String> slotUtentePrenotato= new ArrayList<>();
-        for (String key : elencoPrenotazioneUtente.keySet()) {
-            slotUtentePrenotato.add(elencoPrenotazioneUtente.get(key).getIdSlot());
+        for (String key : elencoPrenotazioneCliente.keySet()) {
+            slotUtentePrenotato.add(elencoPrenotazioneCliente.get(key).getIdSlot());
         }
 
-        if((this.postiDisponibili()-this.elencoPrenotazioni.size())!=0) {
+        if((this.postiDisponibili())!=0) {
             if(!slotUtentePrenotato.contains(this.idSlot)){
                 return true;
             }
@@ -47,20 +48,29 @@ public class Lezione {
 
     public int postiDisponibili(){
         String idAttrezzo = c.getAttrezzo().getIdAttrezzo();
-        return sala.getNumAttrezzi(idAttrezzo);
+        return sala.getNumAttrezzi(idAttrezzo)-this.elencoPrenotazioni.size();
     }
 
     public Prenotazione creaPrenotazione(String idCliente) throws PrenotazionePresenteException{
-        Prenotazione p=null;
-        for (String key: elencoPrenotazioni.keySet()) {
-            if(!elencoPrenotazioni.get(key).getIdCliente().equals(idCliente)){
-                p = new Prenotazione(idCliente, this.idSlot);
-                elencoPrenotazioni.put(p.getIdPrenotazione(), p);
-            }
-            else throw new PrenotazionePresenteException("Esiste giá una prenotazione per questo cliente");
+        if(elencoPrenotazioni.size() == 0){
+            Prenotazione p = new Prenotazione(idCliente, this.idSlot);
+            elencoPrenotazioni.put(p.getIdPrenotazione(), p);
+            return p;
         }
-        return p;
+        else{
+            for (String key: elencoPrenotazioni.keySet()) {
+                if(!elencoPrenotazioni.get(key).getIdCliente().equals(idCliente)){
+                    Prenotazione p = new Prenotazione(idCliente, this.idSlot);
+                    elencoPrenotazioni.put(p.getIdPrenotazione(), p);
+                    return p;
+                }
+                else throw new PrenotazionePresenteException("Esiste giá una prenotazione per questo cliente");
+            }
+        }
+        return null;
     }
+
+
 
     //GET E SET STANDARD
 

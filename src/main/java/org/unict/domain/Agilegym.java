@@ -178,7 +178,7 @@ public class Agilegym {
             while (it.hasNext()) {
                 Map.Entry<String, Istruttore> entry = it.next();
                 Istruttore i = entry.getValue();
-                if (i.isDisponibile()) {
+                if (i.isDisponibile(idSlotSelezionato)) {
                     elencoIstruttoriDisponibili.put(i.getIdIstruttore(), i);
                 }
             }
@@ -266,16 +266,17 @@ public class Agilegym {
     }
 
     //UC2
-    public void nuovaPrenotazione(String username){
+    public void nuovaPrenotazione(String idCliente){
         int i=0;
+        Map<Integer,Corso> corsi =new TreeMap<>();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        Cliente logged = elencoClienti.get(username);
+        Cliente logged = elencoClienti.get(idCliente);
 
         try {
 
             for (String key : elencoCorsi.keySet()) {
                 i++;
-                System.out.println("CORSO: "+ i );
+                corsi.put(i,getElencoCorsi().get(key));
                 System.out.println(elencoCorsi.get(key).stampaCorsi());
             }
             int scelta = -1;
@@ -287,7 +288,8 @@ public class Agilegym {
                 }
                 if(s>0 && s <= elencoCorsi.size()){
                     scelta=s;
-                    mostraLezione(scelta,logged);
+                    corsoCorrente =elencoCorsi.get(corsi.get(scelta).getIdCorso());
+                    mostraLezione(logged);
                 }
             }while(scelta==-1);
         }catch (Exception e) {
@@ -296,27 +298,26 @@ public class Agilegym {
         }
     }
 
-    public void mostraLezione(int sceltaCorso,Cliente logged){
-        int i=0;
-        Map<Integer,Corso> corsi =new TreeMap<>();
+    /*public void modificaPrenotazione(String idCliente) throws PrenotazioneNonPresenteException {
+        if(elencoPrenotazioni.containsKey(p.getIdPrenotazione())){
+
+        }
+    }*/
+
+    public void mostraLezione(Cliente logged){
+        int i;
+
         Map<String,Lezione> lezioniDisponibili;
         Map<Integer,Lezione> sceltaLezioni =new TreeMap<>();
-        Map<String,Prenotazione> elencoPrenotazioneUtente;
+        Map<String,Prenotazione> elencoPrenotazioneCliente;
         String s;
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         Lezione lezioneCorrente;
 
-        elencoPrenotazioneUtente=logged.getElencoPrenotazioni();
-
-        for (String key : elencoCorsi.keySet()) {
-            i++;
-            corsi.put(i,getElencoCorsi().get(key));
-        }
-        corsoCorrente=corsi.get(sceltaCorso);
+        elencoPrenotazioneCliente=logged.getElencoPrenotazioni();
         System.out.println();
         try {
-            lezioniDisponibili=corsoCorrente.mostraLezioni(elencoPrenotazioneUtente);
-
+            lezioniDisponibili=corsoCorrente.mostraLezioni(elencoPrenotazioneCliente);
             if (lezioniDisponibili.size()!=0) {
             i = 0;
             for (String key : lezioniDisponibili.keySet()) {
@@ -349,7 +350,7 @@ public class Agilegym {
                         confermaPrenotazione(lezioneCorrente.getIdLezione(), logged);
                         break;
                     case 2:
-                        mostraLezione(sceltaCorso, logged);
+                        mostraLezione(logged);
                         break;
                     case 3:
                         nuovaPrenotazione(logged.getIdCliente());
@@ -363,7 +364,7 @@ public class Agilegym {
                     String str = br.readLine();
                     if (str.equals("si")) {
                         s = str;
-                        mostraLezione(sceltaCorso, logged);
+                        mostraLezione(logged);
                     }
                     if (str.equals("no")) {
                         s = str;
@@ -396,6 +397,8 @@ public class Agilegym {
              }else System.out.println("Hai gia una lezione prenotata coincidente ");
         }else System.out.println("Posti per la lezione pieni");
     }
+
+
 
     //CASO DUSO DI AVVIAMENTO
     public void loadAttrezzi(){
@@ -462,6 +465,7 @@ public class Agilegym {
     public void riempiPalestra(){
         String str;
         String [] strings;
+        Prenotazione p = null;
         try {
             BufferedReader bCorsi = new BufferedReader(new FileReader("corsi.txt"));
             BufferedReader bLezioni = new BufferedReader(new FileReader("lezioni.txt"));
@@ -501,7 +505,11 @@ public class Agilegym {
             while (str != null){
                 strings=str.split("-");
                 List<String> slotPrenotati = new ArrayList<>();
+
                 for(String key : elencoCorsi.keySet()){
+                    System.out.println(strings[0]);
+                    System.out.println(elencoCorsi.get(key).getElencoLezioni());
+
                     if(elencoCorsi.get(key).getElencoLezioni().containsKey(strings[0])){
                         corsoCorrente=elencoCorsi.get(key);
                         break;
@@ -514,7 +522,8 @@ public class Agilegym {
                 }
                 if((lezioneSelezionata.postiDisponibili()-lezioneSelezionata.getElencoPrenotazioni().size())!=0){
                     if(!slotPrenotati.contains(lezioneSelezionata.getIdSlot())){
-                        Prenotazione p = corsoCorrente.confermaPrenotazione(strings[0], logged.getIdCliente());
+                        p = corsoCorrente.confermaPrenotazione(strings[0], logged.getIdCliente());
+                        //System.out.println(p.toString());
                         logged.addPrenotazione(p);
                     }else System.out.println("Hai gia una lezione prenotata coincidente ");
                 }else System.out.println("Posti per la lezione pieni");

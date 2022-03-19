@@ -56,6 +56,7 @@ public class app {
                             agilegym.nuovaPrenotazione(logged);
                         }
                         case 2 -> stampaPrenotazioniCliente(logged);
+                        //case 3 -> agilegym.modificaPrenotazione(logged);
                         case 0 -> logged=login();
                     }
                 } while (!logged.equals("ADMIN"));
@@ -117,6 +118,8 @@ public class app {
             System.out.println("Benvenuto " + agilegym.getElencoClienti().get(username).getNome() + "\n");
             System.out.println("1. Nuova Prenotazione");
             System.out.println("2. Stampa Prenotazioni");
+            System.out.println("3. Modifica Prenotazione");
+
             System.out.println("0. LOGOUT");
             System.out.print("Scelta: ");
             return Integer.parseInt(br.readLine());
