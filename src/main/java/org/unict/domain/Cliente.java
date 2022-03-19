@@ -1,5 +1,6 @@
 package org.unict.domain;
 
+import org.unict.domain.exception.PrenotazioneNonPresenteException;
 import org.unict.domain.exception.PrenotazionePresenteException;
 
 import java.util.*;
@@ -25,6 +26,10 @@ public class Cliente {
         }
         else throw new PrenotazionePresenteException("Esiste giá una prenotazione per questa Lezione");
     }
+
+    //UC3
+
+
 
     //GET E SET STANDARD
     public String getIdCliente() {

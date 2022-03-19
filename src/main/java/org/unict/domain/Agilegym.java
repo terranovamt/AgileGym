@@ -178,7 +178,7 @@ public class Agilegym {
             while (it.hasNext()) {
                 Map.Entry<String, Istruttore> entry = it.next();
                 Istruttore i = entry.getValue();
-                if (i.isDisponibile()) {
+                if (i.isDisponibile(idSlotSelezionato)) {
                     elencoIstruttoriDisponibili.put(i.getIdIstruttore(), i);
                 }
             }
@@ -298,6 +298,12 @@ public class Agilegym {
         }
     }
 
+    /*public void modificaPrenotazione(String idCliente) throws PrenotazioneNonPresenteException {
+        if(elencoPrenotazioni.containsKey(p.getIdPrenotazione())){
+
+        }
+    }*/
+
     public void mostraLezione(Cliente logged){
         int i;
 
@@ -392,6 +398,8 @@ public class Agilegym {
         }else System.out.println("Posti per la lezione pieni");
     }
 
+
+
     //CASO DUSO DI AVVIAMENTO
     public void loadAttrezzi(){
         String str, idAtrezzo;
@@ -457,6 +465,7 @@ public class Agilegym {
     public void riempiPalestra(){
         String str;
         String [] strings;
+        Prenotazione p = null;
         try {
             BufferedReader bCorsi = new BufferedReader(new FileReader("corsi.txt"));
             BufferedReader bLezioni = new BufferedReader(new FileReader("lezioni.txt"));
@@ -496,7 +505,11 @@ public class Agilegym {
             while (str != null){
                 strings=str.split("-");
                 List<String> slotPrenotati = new ArrayList<>();
+
                 for(String key : elencoCorsi.keySet()){
+                    System.out.println(strings[0]);
+                    System.out.println(elencoCorsi.get(key).getElencoLezioni());
+
                     if(elencoCorsi.get(key).getElencoLezioni().containsKey(strings[0])){
                         corsoCorrente=elencoCorsi.get(key);
                         break;
@@ -509,7 +522,8 @@ public class Agilegym {
                 }
                 if((lezioneSelezionata.postiDisponibili()-lezioneSelezionata.getElencoPrenotazioni().size())!=0){
                     if(!slotPrenotati.contains(lezioneSelezionata.getIdSlot())){
-                        Prenotazione p = corsoCorrente.confermaPrenotazione(strings[0], logged.getIdCliente());
+                        p = corsoCorrente.confermaPrenotazione(strings[0], logged.getIdCliente());
+                        //System.out.println(p.toString());
                         logged.addPrenotazione(p);
                     }else System.out.println("Hai gia una lezione prenotata coincidente ");
                 }else System.out.println("Posti per la lezione pieni");

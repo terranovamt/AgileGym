@@ -1,6 +1,7 @@
 package org.unict.domain;
 
 import org.unict.domain.exception.ClienteOccupatoException;
+import org.unict.domain.exception.PrenotazioneNonPresenteException;
 import org.unict.domain.exception.PrenotazionePresenteException;
 import org.unict.domain.exception.SalaPienaException;
 
@@ -51,16 +52,25 @@ public class Lezione {
     }
 
     public Prenotazione creaPrenotazione(String idCliente) throws PrenotazionePresenteException{
-        Prenotazione p=null;
-        for (String key: elencoPrenotazioni.keySet()) {
-            if(!elencoPrenotazioni.get(key).getIdCliente().equals(idCliente)){
-                p = new Prenotazione(idCliente, this.idSlot);
-                elencoPrenotazioni.put(p.getIdPrenotazione(), p);
-            }
-            else throw new PrenotazionePresenteException("Esiste giá una prenotazione per questo cliente");
+        if(elencoPrenotazioni.size() == 0){
+            Prenotazione p = new Prenotazione(idCliente, this.idSlot);
+            elencoPrenotazioni.put(p.getIdPrenotazione(), p);
+            return p;
         }
-        return p;
+        else{
+            for (String key: elencoPrenotazioni.keySet()) {
+                if(!elencoPrenotazioni.get(key).getIdCliente().equals(idCliente)){
+                    Prenotazione p = new Prenotazione(idCliente, this.idSlot);
+                    elencoPrenotazioni.put(p.getIdPrenotazione(), p);
+                    return p;
+                }
+                else throw new PrenotazionePresenteException("Esiste giá una prenotazione per questo cliente");
+            }
+        }
+        return null;
     }
+
+
 
     //GET E SET STANDARD
 
