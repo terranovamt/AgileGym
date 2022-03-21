@@ -19,12 +19,13 @@ public class IstruttoreTest {
     }
 
     @Test
-    public void loadTest_mapSlotLoaded_returnTrue() {
+    public void loadSlot_mapSlotLoaded_returnTrue() {
         Assert.assertFalse(i.getMapSlot().isEmpty());
     }
 
     @Test
     public void idDisponibileTest(){
-
+        i.setOccupato("501");
+        Assert.assertFalse(i.isDisponibile("501"));
     }
 }
