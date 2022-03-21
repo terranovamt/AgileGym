@@ -7,7 +7,6 @@ import java.io.*;
 
 import static java.lang.Math.abs; //rand num
 
-
 public class Agilegym {
     static  Agilegym agilegym;
     private Corso corsoCorrente;
@@ -40,286 +39,74 @@ public class Agilegym {
         return agilegym;
     }
     //UC1
-    public void inserisciCorso() {
-        String idCorso;
-        String nomeCorso;
-        String livello;
-        String focus;
-        String idAttrezzo;
-        Attrezzo attrezzoSelezionato;
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("-------Inserisci un corso-------\n");
-
-        try {
-            //System.out.println("Inserisci l'ID del corso: \n");
-            idCorso=randId();
-            //idCorso = br.readLine();
-            System.out.println("ID CORSO:"+idCorso +" (generato autonomamente)");
-            System.out.print("Inserisci il nome del corso: ");
-            nomeCorso = br.readLine();
-            if (Objects.equals(nomeCorso, "0"))return;
-            System.out.print("Inserisci il livello del corso: ");
-            livello = br.readLine();
-            System.out.print("Inserisci il focus del corso: ");
-            focus = br.readLine();
-            //L'amministratore inserisce l'id dell'attrezzo che vuole per quel corso, si cerca se quell'attrezzo
-            //è presente nella lista degli attrezzi, una volta trovato, si prende quell'attrezzo e lo si inserisce nel corso
-            System.out.print("Attrezzi della palestre: ");
-            for (String key: elencoAttrezzi.keySet()){
-                System.out.print(elencoAttrezzi.get(key).getIdAttrezzo()+", ");
-            }
-            System.out.print("\n");
-            do{
-                System.out.print("Inserisci l'ID dell'attrezzo del corso: ");
-                idAttrezzo = br.readLine();
-                attrezzoSelezionato = elencoAttrezzi.get(idAttrezzo);
-            }while (attrezzoSelezionato == null);
-            //System.out.println(attrezzoSelezionato.toString());
+    public Corso nuovoCorso(String nomeCorso, String livello,String focus,String idAttrezzo) throws CorsoException{
+        String idCorso =randId();
+        Attrezzo attrezzoSelezionato = getElencoAttrezzi().get(idAttrezzo);
+        if (attrezzoSelezionato!=null){
             this.corsoCorrente = new Corso(idCorso, nomeCorso, livello, focus, attrezzoSelezionato);
-            confermaCorso(this.corsoCorrente);
-        } catch (Exception e) {
-            System.out.println("ERRORE NELLA LETTURA DA TASTIERA: "+e.getMessage());
-            System.exit(-7);
+        }else{
+            throw new CorsoException("Errore nella ricerca dell'attrezzo");
         }
+        return corsoCorrente;
     }
 
-    public void confermaCorso(Corso corsoCorrente){
-        String s;
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("\n--------RIEPILOGO CORSO--------");
-        System.out.println(corsoCorrente+"\n--------------------------------\n");
-        try{
-            do {
-                s="";
-                System.out.print("Vuoi inserire questo corso? (si/no): ");
-                String str=br.readLine();
-                if (str.equals("si")){
-                    s=str;
-                }
-                if (str.equals("no")){
-                    s=str;
-                }
-                }while (s.equals(""));
-                if (s.equals("si")) {
-                    this.elencoCorsi.put(corsoCorrente.getIdCorso(), corsoCorrente);
-                }
-                do {
-                    s="";
-                    System.out.print("Vuoi inserire una lezione per questo corso? (si/no): ");
-                    String str=br.readLine();
-                    if (str.equals("si")){
-                        s=str;
-                    }
-                    if (str.equals("no")){
-                        s=str;
-                    }
-            }while (s.equals(""));
-            if (s.equals("si")) {
-                inserisciLezione(corsoCorrente);
-            }
-        } catch (Exception e) {
-            System.out.println("ERRORE NELLA LETTURA DA TASTIERA: "+e.getMessage());
-            System.exit(-7);
-        }
+    public boolean confermaCorso(Corso corsoCorrente) {
+        this.elencoCorsi.put(corsoCorrente.getIdCorso(), corsoCorrente);
+        return true;
     }
 
-    public void inserisciLezione(Corso corsoCorrente){
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String  s, idSalaSelezionata, idIstruttoreSelezionato,idSlotSelezionato = "", idLezione ="";
-        String idSlot;
-        Sala salaSelezionata = null;
-        Istruttore istruttoreSelezionato = null;
-        this.corsoCorrente = corsoCorrente;
-
-        try {
-
-            System.out.println("-------Inserisci una Lezione-------\n");
-            if (corsoCorrente.getIdSaleAttrezzate().size()==1){
-                System.out.println("E' disponibile solo la sala: "+corsoCorrente.getIdSaleAttrezzate().get(0));
-                salaSelezionata = elencoSale.get(String.valueOf(corsoCorrente.getIdSaleAttrezzate().get(0)));
-            }else {
-            System.out.println("Elenco degli Sale disponibili per l'attrezzo ~" +corsoCorrente.getAttrezzo().getIdAttrezzo()+"~:");
-            System.out.print(corsoCorrente.getAttrezzo().stampaListaSale());
-            //SCELTA DELLA SALA
-                do {
-                    System.out.print("Inserisci una sala Disponibile: ");
-                    idSalaSelezionata = br.readLine();
-                    if(corsoCorrente.getIdSaleAttrezzate().contains(idSalaSelezionata)){
-                        salaSelezionata = elencoSale.get(idSalaSelezionata);
-                    }
-                }while (salaSelezionata ==null);
-
-            }
-
-            //SCELTA DELLO SLOT
-            if (salaSelezionata.getSlotDisponibili().size()==1){
-                idSlot = salaSelezionata.getSlotDisponibili().get(0);
-                System.out.println("E' disponibile solo lo Slot: "+idSlot);
-                idSlot = salaSelezionata.getSlotDisponibili().get(0);
-            }else{
-                System.out.println("Elenco degli Slot disponibili per la sala ~" + salaSelezionata.getIdSala()+"~:");
-                for (String slot:salaSelezionata.getSlotDisponibili()) {
-                    System.out.print("\tID-Slot: "+ slot +"\n");
-                }
-
-                do {
-                    System.out.print("Inserisci uno slot Disponibile: ");
-                    idSlot = br.readLine();
-                    if(salaSelezionata.getSlotDisponibili().contains(idSlot)){
-                        idSlotSelezionato = idSlot;
-                    }
-                }while (idSlotSelezionato.equals(""));
-            }
-            //SCELTA DELL'ISTRUTTORE
-            Iterator<Map.Entry<String, Istruttore>> it = elencoIstruttori.entrySet().iterator();
-            Map<String,Istruttore> elencoIstruttoriDisponibili=new TreeMap<>();
-
-            while (it.hasNext()) {
-                Map.Entry<String, Istruttore> entry = it.next();
-                Istruttore i = entry.getValue();
-                if (i.isDisponibile(idSlotSelezionato)) {
-                    elencoIstruttoriDisponibili.put(i.getIdIstruttore(), i);
-                }
-            }
-            if (elencoIstruttoriDisponibili.size()==0){
-                System.out.println("NON SONO DISPONIBILI ISTUTTORI SCEGLI UN ALTRO SLOT");
-                inserisciLezione(corsoCorrente);
-            }
-            if (elencoIstruttoriDisponibili.size()==1){
-                for (String key : elencoIstruttoriDisponibili.keySet()) {//STAMPA ISTRUTTORI DISPONIBILI
-                    System.out.println("E' disponibile solo l'istruttore: " + elencoIstruttoriDisponibili.get(key).getIdIstruttore());
-                    istruttoreSelezionato = elencoIstruttori.get(elencoIstruttoriDisponibili.get(key).getIdIstruttore());
-                }
-            }
-            else {
-                System.out.println("Elenco degli Istruttori disponibili per lo Slot ~" + idSlot + "~:");
-                for (String key : elencoIstruttoriDisponibili.keySet()) {//STAMPA ISTRUTTORI DISPONIBILI
-                    System.out.println("\t" + elencoIstruttoriDisponibili.get(key).getIdIstruttore());
-                }
-                do {
-                    System.out.print("Inserisci una istruttore Disponibile: ");
-                    idIstruttoreSelezionato = br.readLine();
-                    if (elencoIstruttoriDisponibili.containsKey(idIstruttoreSelezionato)) {
-                        istruttoreSelezionato = elencoIstruttori.get(idIstruttoreSelezionato);
-                    }
-                } while (istruttoreSelezionato == null);
-                //System.out.println(istruttoreSelezionato);
-            }
-            //TUTTE LE SCELTE SONO ANDATE A BUON FINE
-            idLezione+=corsoCorrente.getIdCorso()+salaSelezionata.getIdSala()+idSlot;
-            System.out.println("\n------------RIEPILOGO------------");
-            System.out.println( "LEZIONE: \n" +
-                                "\tID: " + idLezione + "\n" +
-                                "\tNome Corso: " + corsoCorrente.getNomeCorso() + "\n" +
-                                "\tSala: " + salaSelezionata.getIdSala()+ "\n" +
-                                "\tIstruttore: " + istruttoreSelezionato.getIdIstruttore() + "\n" +
-                                "\tI#D-Slot: " + idSlot);
-            System.out.println("\n--------------------------------\n");
-
-            confermaLezione(idSlot,salaSelezionata,istruttoreSelezionato);
-
-            do {
-                s="";
-            System.out.print("Vuoi inserire un altra lezione per questo corso? (si/no):");
-                String str=br.readLine();
-                if (str.equals("si")){
-                    s=str;
-                }
-                if (str.equals("no")){
-                    s=str;
-                }
-            }while (s.equals(""));
-            if (s.equals("si")) {
-                inserisciLezione(corsoCorrente);
-            }
-        }catch (IOException e) {
-            System.out.println("ERRORE NELLA LETTURA DA TASTIERA:" +e.getMessage());
-            System.exit(-8);
-        }
+    public List<String> getSale(Corso corsoCorrente){
+        return corsoCorrente.getIdSaleAttrezzate();
     }
 
-    public void confermaLezione(String idSlot, Sala salaSelezionata, Istruttore istruttoreSelezionato){
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String  s, idLezione = randId();
-        try {
-            do {
-                s="";
-                System.out.print("Vuoi inserire questa lezione? (si/no): ");
-                String str=br.readLine();
-                if (str.equals("si")){
-                    s=str;
-                    corsoCorrente.inserisciLezione(idLezione, idSlot, corsoCorrente , salaSelezionata, istruttoreSelezionato);
-                    salaSelezionata.setOccupato(idSlot);
-                    istruttoreSelezionato.setOccupato(idSlot);
-                    System.out.println("\n------------CONFERMA INSERIMENTO LEZIONE-------------\n");
-                    System.out.println(corsoCorrente);
-                }
-                if (str.equals("no")){
-                    s=str;
-                }
-            }while (s.equals(""));
-        }catch (Exception e) {
-            System.out.println("ERRORE NELLA LETTURA DA TASTIERA:" +e.getMessage());
-            System.exit(-8);
+    public List<String> getSlot(String idSala){
+        return elencoSale.get(idSala).getSlotDisponibili();
+    }
+
+    public List<String> getIstruttori(String idSlot) throws IstruttoreException {
+        List<String> listIdIstruttori= new ArrayList<>();
+        for(String key : elencoIstruttori.keySet()){
+            Istruttore i=elencoIstruttori.get(key);
+            if(i.isDisponibile(idSlot))listIdIstruttori.add(i.getIdIstruttore());
         }
+        if(listIdIstruttori.size()==0) throw new IstruttoreException("Non ci sono istruttori disponibili in questo slot");
+        return listIdIstruttori;
+    }
+
+    public Lezione creaLezione(String idSala, String idSlot, String idIstruttore){
+        Sala s =elencoSale.get(idSala);
+        Istruttore i =elencoIstruttori.get(idIstruttore);
+        String idLezione="";
+        idLezione+=corsoCorrente.getIdCorso()+s.getIdSala()+idSlot;
+
+        return new Lezione(idLezione,idSlot,corsoCorrente,s,i);
+    }
+
+    public boolean confermaLezione(Lezione lezioneCorrente) {
+        if(corsoCorrente.inserisciLezione(lezioneCorrente)) {
+            lezioneCorrente.getSala().setOccupato(lezioneCorrente.getIdSlot());
+            lezioneCorrente.getIstruttore().setOccupato(lezioneCorrente.getIdSlot());
+            return true;
+        }else return false;
     }
 
     //UC2
-    public void nuovaPrenotazione(String idCliente){
-        int i=0;
-        Map<Integer,Corso> corsi =new TreeMap<>();
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        Cliente logged = elencoClienti.get(idCliente);
-
-        try {
-
+    public List<Corso> nuovaPrenotazione(){
+        List<Corso> listaCorsi=new ArrayList<>();
             for (String key : elencoCorsi.keySet()) {
-                i++;
-                corsi.put(i,getElencoCorsi().get(key));
-                System.out.println("Corsi: " + i);
-                System.out.println(elencoCorsi.get(key).stampaCorsi());
+                listaCorsi.add(elencoCorsi.get(key));
             }
-            int scelta = -1;
-            do{
-                System.out.print("Scegli un corso: ");
-                int s=Integer.parseInt(br.readLine());
-                if (s==0){
-                    return;
-                }
-                if(s>0 && s <= elencoCorsi.size()){
-                    scelta=s;
-                    corsoCorrente =elencoCorsi.get(corsi.get(scelta).getIdCorso());
-                    mostraLezione(logged);
-                }
-            }while(scelta==-1);
-        }catch (Exception e) {
-            System.out.println("ERRORE NELLA LETTURA DA TASTIERA:" +e.getMessage());
-            System.exit(-11);
-        }
+            return listaCorsi;
     }
 
-    /*public void modificaPrenotazione(String idCliente) throws PrenotazioneNonPresenteException {
-        if(elencoPrenotazioni.containsKey(p.getIdPrenotazione())){
-
-        }
-    }*/
-
-    public void mostraLezione(Cliente logged){
-        int i;
-
-        Map<String,Lezione> lezioniDisponibili;
-        Map<Integer,Lezione> sceltaLezioni =new TreeMap<>();
-        Map<String,Prenotazione> elencoPrenotazioneCliente;
-        String s;
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        Lezione lezioneCorrente;
-
-        elencoPrenotazioneCliente=logged.getElencoPrenotazioni();
-        System.out.println();
+    public List<Lezione> mostraLezione(String idCorso,Cliente logged) {
+        corsoCorrente = elencoCorsi.get(idCorso);
+        List<Lezione> lezioniDisponibili = null;
+        Map<String, Prenotazione> elencoPrenotazioneCliente;
+        elencoPrenotazioneCliente = logged.getElencoPrenotazioni();
         try {
-            lezioniDisponibili=corsoCorrente.mostraLezioni(elencoPrenotazioneCliente);
-            if (lezioniDisponibili.size()!=0) {
+            lezioniDisponibili = corsoCorrente.mostraLezioni(elencoPrenotazioneCliente);
+           /* if (lezioniDisponibili.size()!=0) {
             i = 0;
             for (String key : lezioniDisponibili.keySet()) {
                 i++;
@@ -381,8 +168,12 @@ public class Agilegym {
             System.exit(-12);
         } catch (SalaPienaException | ClienteOccupatoException | PrenotazionePresenteException | LezioneNonPresente e) {
             e.printStackTrace();
-        }
+        }*/
 
+        } catch (SalaPienaException | ClienteOccupatoException e) {
+            e.printStackTrace();
+        }
+        return lezioniDisponibili;
     }
 
     public void confermaPrenotazione(String idLezione, Cliente logged) throws PrenotazionePresenteException, LezioneNonPresente {
@@ -399,7 +190,12 @@ public class Agilegym {
         }else System.out.println("Posti per la lezione pieni");
     }
 
+    //UC3
+ /*public void modificaPrenotazione(String idCliente) throws PrenotazioneNonPresenteException {
+        if(elencoPrenotazioni.containsKey(p.getIdPrenotazione())){
 
+        }
+    }*/
 
     //CASO DUSO DI AVVIAMENTO
     public void loadAttrezzi(){
@@ -472,7 +268,7 @@ public class Agilegym {
             BufferedReader bLezioni = new BufferedReader(new FileReader("lezioni.txt"));
             BufferedReader bCliente = new BufferedReader(new FileReader("clienti.txt"));
             BufferedReader bPrenotazioni= new BufferedReader(new FileReader("prenotazioni.txt"));
-
+            //INSERIEMNTO CORSI
             str = bCorsi.readLine();
             while (str != null){
                 strings=str.split("-");
@@ -481,20 +277,20 @@ public class Agilegym {
                 this.elencoCorsi.put(strings[0],c);
                 str = bCorsi.readLine();
             }
-
+            //INSERIMENTO LEZIONI
             str = bLezioni.readLine();
             while (str != null){
                 strings=str.split("-");
-                Corso c=elencoCorsi.get(strings[1]);
-                String idLezione=strings[0];
-                Sala s=elencoSale.get(strings[2]);
-                Istruttore i=elencoIstruttori.get(strings[3]);
-                String idSlot=strings[4];
-                c.inserisciLezione(idLezione,idSlot ,c,s,i);
-                s.setOccupato(idSlot);
-                i.setOccupato(idSlot);
+                corsoCorrente=elencoCorsi.get(strings[0]);
+                Sala s=elencoSale.get(strings[1]);
+                Istruttore i=elencoIstruttori.get(strings[2]);
+                Lezione l=creaLezione(strings[1],strings[3],strings[2]);
+                corsoCorrente.inserisciLezione(l);
+                s.setOccupato(strings[3]);
+                i.setOccupato(strings[3]);
                 str = bLezioni.readLine();
             }
+            //INSERIEMNTO CLIENTI
             str = bCliente.readLine();
             while (str != null){
                 strings=str.split("-");
@@ -502,15 +298,13 @@ public class Agilegym {
                 elencoClienti.put(strings[0],c);
                 str = bCliente.readLine();
             }
+            //INSEIRMENTO PRENOTAZIONI
             str = bPrenotazioni.readLine();
             while (str != null){
                 strings=str.split("-");
                 List<String> slotPrenotati = new ArrayList<>();
 
                 for(String key : elencoCorsi.keySet()){
-                    System.out.println(strings[0]);
-                    System.out.println(elencoCorsi.get(key).getElencoLezioni());
-
                     if(elencoCorsi.get(key).getElencoLezioni().containsKey(strings[0])){
                         corsoCorrente=elencoCorsi.get(key);
                         break;
@@ -535,13 +329,13 @@ public class Agilegym {
         }catch (IOException e) {
             System.out.println("ERRORE NEL CARICAMENTO DELLA PALESTRA\n" );
             System.exit(-9);
-        } catch (CorsoException | PrenotazionePresenteException | LezioneNonPresente e) {
+        } catch (PrenotazionePresenteException | LezioneNonPresente e) {
             e.printStackTrace();
         }
     }
 
     //FUNZIONI DI UTILITY
-    public void scegliCliente(){
+    public Cliente loginCliente(){
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         Cliente logged = null;
         String username;
@@ -553,11 +347,11 @@ public class Agilegym {
                     logged=elencoClienti.get(username);
                 }
             }while (logged ==null);
-            nuovaPrenotazione(logged.getIdCliente());
         }catch (Exception e) {
             System.out.println("ERRORE NELLA LETTURA DA TASTIERA:" +e.getMessage());
             System.exit(-11);
         }
+        return logged;
     }
 
     public static String randId(){

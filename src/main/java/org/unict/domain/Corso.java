@@ -25,23 +25,18 @@ public class Corso {
         return this.getAttrezzo().getSale();
     }
 
-    public void inserisciLezione (String idLezione, String idSlot, Corso c, Sala s, Istruttore i ) throws CorsoException {
-        if(attrezzo.getSale().contains(s.getIdSala()) && s.getListaAttrezzi().contains(attrezzo.getIdAttrezzo()) && s.getSlotDisponibili().contains(idSlot) && i.getMapSlot().get(idSlot)) {
-            Lezione l = new Lezione(idLezione, idSlot, c, s, i);
-            elencoLezioni.put(idLezione, l);
-        }
-        else {
-            throw new CorsoException("Errore Inserimento lezione");
-        }
+    public boolean inserisciLezione (Lezione lezioneCorrente )  {
+        elencoLezioni.put(lezioneCorrente.getIdLezione(), lezioneCorrente);
+        return true;
     }
 
     //UC2
-    public Map<String,Lezione> mostraLezioni(Map<String,Prenotazione> elencoPrenotazioneUtente) throws SalaPienaException, ClienteOccupatoException {
-        Map<String,Lezione> elencoLezioniDisponibili= new HashMap<>();
+    public List<Lezione> mostraLezioni(Map<String,Prenotazione> elencoPrenotazioneUtente) throws SalaPienaException, ClienteOccupatoException {
+        List<Lezione> elencoLezioniDisponibili= new ArrayList<>();
 
         for (String key : elencoLezioni.keySet()){
             if(elencoLezioni.get(key).isPrenotabile(elencoPrenotazioneUtente)){
-                elencoLezioniDisponibili.put(elencoLezioni.get(key).getIdLezione(),elencoLezioni.get(key));
+                elencoLezioniDisponibili.add(elencoLezioni.get(key));
             }
         }
         return elencoLezioniDisponibili;
@@ -98,12 +93,8 @@ public class Corso {
                     "\tFocus: " + focus + "\n" +
                     "\tID-Attrezzo: " + attrezzo.getIdAttrezzo()+ "\n\n";
 
-        if (l.length()!=0){
-            s+="Lista delle lezioni: \n"+l;
-        }
-        else {
-            s+="\n\t\tNESSUNA LEZIONE INSERITA\n";
-        }
+        if (l.length()==0) s+="\n\t\tNESSUNA LEZIONE INSERITA\n";
+
         return s;
     }
 
