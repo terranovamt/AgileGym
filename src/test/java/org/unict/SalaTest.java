@@ -7,14 +7,15 @@ import org.junit.runner.RunWith;
 import org.unict.domain.Sala;
 import org.junit.*;
 
+import java.io.IOException;
 import java.util.*;
 @RunWith(Theories.class)
 public class SalaTest {
 
-    Sala s;
+    private Sala s;
 
     @Before
-    public void setup(){
+    public void setup() throws IOException {
         s= new Sala("Sala1");
     }
 
@@ -28,12 +29,12 @@ public class SalaTest {
         Assert.assertFalse(s.getSlotDisponibili().isEmpty());
     }
     @Test
-    public void getSlotDisponibili_slotLiberi_returnAll() {
+    public void getSlotDisponibili_slotLiberi_returnAll() throws IOException{
         Assert.assertEquals(s.loadSlot().size(), s.getSlotDisponibili().size());
     }
 
     @Test
-    public void getSlotDisponibili_slotOccupato_returnSlotLiberi () {
+    public void getSlotDisponibili_slotOccupato_returnSlotLiberi () throws IOException{
         s.setOccupato("516");
         Assert.assertFalse(s.getSlotDisponibili().contains("516"));
         Assert.assertEquals(s.loadSlot().size()-1, s.getSlotDisponibili().size());

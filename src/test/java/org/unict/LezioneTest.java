@@ -4,6 +4,7 @@ import org.junit.*;
 import org.unict.domain.*;
 import org.unict.domain.exception.*;
 
+import java.io.IOException;
 import java.util.*;
 
 public class LezioneTest {
@@ -17,7 +18,7 @@ public class LezioneTest {
     private Map<String, Prenotazione> e;
 
     @Before
-    public void setup(){
+    public void setup() throws IOException {
         h = new LinkedList<>();
         h.add("Sala1");
         h.add("Sala2");

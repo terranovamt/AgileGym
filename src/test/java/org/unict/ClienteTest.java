@@ -7,9 +7,8 @@ import org.unict.domain.exception.*;
 import java.util.*;
 public class ClienteTest {
 
-    Cliente c;
-    Map<String, Prenotazione> e;
-    Prenotazione p;
+    private Cliente c;
+    private Prenotazione p;
 
     @Before
     public void setup(){
@@ -18,6 +17,7 @@ public class ClienteTest {
     @After
     public void teardown(){
         c=null;
+        p=null;
     }
 
     @Test

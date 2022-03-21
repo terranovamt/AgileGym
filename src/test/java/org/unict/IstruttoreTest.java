@@ -6,7 +6,7 @@ import org.unict.domain.Istruttore;
 
 public class IstruttoreTest {
 
-    Istruttore i;
+    private Istruttore i;
 
     @Before
     public void setup() {

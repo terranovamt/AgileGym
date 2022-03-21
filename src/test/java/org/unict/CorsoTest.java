@@ -4,6 +4,7 @@ import org.junit.*;
 import org.unict.domain.*;
 import org.unict.domain.exception.*;
 
+import java.io.IOException;
 import java.util.*;
 
 
@@ -21,7 +22,7 @@ public class CorsoTest {
 
 
     @Before
-    public void setup(){
+    public void setup() throws IOException {
         l = new LinkedList<>();
         l.add("Sala1");
         l.add("Sala2");
@@ -49,34 +50,34 @@ public class CorsoTest {
     }
     @Test
     public void inserisciILezioneTest_datiValidi_returnTrue() throws CorsoException {
-        c.inserisciLezione("233445", o,c,s,i);
+        c.inserisciLezione(new Lezione("233445", o,c,s,i));
         Assert.assertTrue(c.getElencoLezioni().containsKey("233445"));
         Assert.assertEquals (1,c.getElencoLezioni().size());
     }
 
     @Test
-    public void inserisciILezioneTest_salaErrata_throwsException() {
+    public void inserisciILezioneTest_salaErrata_throwsException() throws IOException{
         s = new Sala("Sala5");
         n =  new LinkedList<>();
         n.add("tappetino");
         s.setListaAttrezzi(n);
-        Throwable e = Assert.assertThrows(CorsoException.class, ()-> c.inserisciLezione("233445", o,c,s,i));
+        Throwable e = Assert.assertThrows(CorsoException.class, ()-> c.inserisciLezione(new Lezione("233445", o,c,s,i)));
         Assert.assertEquals(CorsoException.class,e.getClass());
     }
 
     @Test
     public void inserisciILezioneTest_slotSalaOccupato_throwsException() throws CorsoException{
-        c.inserisciLezione("233445", o,c,s,i);
+        c.inserisciLezione(new Lezione("233445", o,c,s,i));
         s.setOccupato(o);
-        Throwable e = Assert.assertThrows(CorsoException.class, ()-> c.inserisciLezione("233446", o,c,s,i));
+        Throwable e = Assert.assertThrows(CorsoException.class, ()-> c.inserisciLezione(new Lezione("233446", o,c,s,i)));
         Assert.assertEquals(CorsoException.class,e.getClass());
     }
 
     @Test
     public void inserisciILezioneTest_slotIstruttoreOccupato_throwsException() throws CorsoException{
-        c.inserisciLezione("233445", o,c,s,i);
+        c.inserisciLezione(new Lezione("233445", o,c,s,i));
         i.setOccupato(o);
-        Throwable e = Assert.assertThrows(CorsoException.class, ()-> c.inserisciLezione("233446", o,c,s,i));
+        Throwable e = Assert.assertThrows(CorsoException.class, ()-> c.inserisciLezione(new Lezione("233446", o,c,s,i)));
         Assert.assertEquals(CorsoException.class,e.getClass());
     }
 
@@ -85,12 +86,13 @@ public class CorsoTest {
         n = new LinkedList<>();
         n.add("tappetino");
         s.setListaAttrezzi(n);
-        c.inserisciLezione("233445", o,c,s,i);
-        c.inserisciLezione("233446", "316",c,s,i);
-        c.inserisciLezione("233447", "516",c,s,i);
+        c.inserisciLezione(new Lezione("233445", o,c,s,i));
+        c.inserisciLezione(new Lezione("233446", "316",c,s,i));
+        Lezione x= new Lezione("233447", "516",c,s,i);
+        c.inserisciLezione(x);
         e= new TreeMap<>();
         Assert.assertEquals(3, c.mostraLezioni(e).size());
-        Assert.assertTrue(c.mostraLezioni(e).containsKey("233447"));
+        Assert.assertTrue(c.mostraLezioni(e).contains(x));
     }
 
     @Test
@@ -98,14 +100,15 @@ public class CorsoTest {
         n = new LinkedList<>();
         n.add("tappetino");
         s.setListaAttrezzi(n);
-        c.inserisciLezione("233445", o,c,s,i);
-        c.inserisciLezione("233446", "316",c,s,i);
-        c.inserisciLezione("233447", "516",c,s,i);
+        Lezione x = new Lezione("233445", o,c,s,i);
+        c.inserisciLezione(x);
+        c.inserisciLezione(new Lezione("233446", "316",c,s,i));
+        c.inserisciLezione(new Lezione("233447", "516",c,s,i));
         p= new Prenotazione("Pippo",o);
         e= new TreeMap<>();
         e.put(p.getIdPrenotazione(),p);
         Assert.assertEquals(2, c.mostraLezioni(e).size());
-        Assert.assertFalse(c.mostraLezioni(e).containsKey("233445"));
+        Assert.assertFalse(c.mostraLezioni(e).contains(x));
     }
 
     @Test
@@ -113,8 +116,8 @@ public class CorsoTest {
         n = new LinkedList<>();
         n.add("tappetino");
         s.setListaAttrezzi(n);
-        c.inserisciLezione("233445", o,c,s,i);
-        c.inserisciLezione("233446", "316",c,s,i);
+        c.inserisciLezione(new Lezione("233445", o,c,s,i));
+        c.inserisciLezione(new Lezione("233446", "316",c,s,i));
         p= new Prenotazione("Pippo",o);
         e= new TreeMap<>();
         e.put(p.getIdPrenotazione(),p);
@@ -128,9 +131,9 @@ public class CorsoTest {
         n = new LinkedList<>();
         n.add("tappetino");
         s.setListaAttrezzi(n);
-        c.inserisciLezione("233445", o,c,s,i);
-        c.inserisciLezione("233446", "316",c,s,i);
-        c.inserisciLezione("233447", "516",c,s,i);
+        c.inserisciLezione(new Lezione("233445", o,c,s,i));
+        c.inserisciLezione(new Lezione("233446", "316",c,s,i));
+        c.inserisciLezione(new Lezione("233447", "516",c,s,i));
         p= c.confermaPrenotazione("233445", "Pippo");
         Assert.assertNotNull(p);
     }
@@ -140,9 +143,9 @@ public class CorsoTest {
         n = new LinkedList<>();
         n.add("tappetino");
         s.setListaAttrezzi(n);
-        c.inserisciLezione("233445", o,c,s,i);
-        c.inserisciLezione("233446", "316",c,s,i);
-        c.inserisciLezione("233447", "516",c,s,i);
+        c.inserisciLezione(new Lezione("233445", o,c,s,i));
+        c.inserisciLezione(new Lezione("233446", "316",c,s,i));
+        c.inserisciLezione(new Lezione("233447", "516",c,s,i));
         Throwable e = Assert.assertThrows(LezioneNonPresente.class, ()-> c.confermaPrenotazione("333445", "Pippo"));
         Assert.assertEquals(LezioneNonPresente.class,e.getClass());
     }
