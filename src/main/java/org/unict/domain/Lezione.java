@@ -1,7 +1,6 @@
 package org.unict.domain;
 
 import org.unict.domain.exception.ClienteOccupatoException;
-import org.unict.domain.exception.PrenotazioneNonPresenteException;
 import org.unict.domain.exception.PrenotazionePresenteException;
 import org.unict.domain.exception.SalaPienaException;
 
@@ -27,13 +26,13 @@ public class Lezione {
     }
 
     //UC2
-    public boolean isPrenotabile(Map<String,Prenotazione> elencoPrenotazioneCliente) throws ClienteOccupatoException , SalaPienaException {
+    public boolean isPrenotabile(Map<String,Prenotazione> elencoPrenotazioneCliente) {
         List<String> slotUtentePrenotato= new ArrayList<>();
         for (String key : elencoPrenotazioneCliente.keySet()) {
             slotUtentePrenotato.add(elencoPrenotazioneCliente.get(key).getIdSlot());
         }
 
-        if((this.postiDisponibili())!=0) {
+        if((this.postiDisponibili())>0) {
             int value = this.postiDisponibili();
 
             if(!slotUtentePrenotato.contains(this.idSlot)){
@@ -88,6 +87,13 @@ public class Lezione {
         return idSlot;
     }
 
+    public Sala getSala() {
+        return sala;
+    }
+
+    public Istruttore getIstruttore() {
+        return istruttore;
+    }
 
     public Map<String, Prenotazione> getElencoPrenotazioni() {
         return elencoPrenotazioni;
@@ -109,6 +115,7 @@ public class Lezione {
         return str;
     }
 
+
     public String stampaRiepilogo(){
         return  "\tNome Corso: " + c.getNomeCorso() + "\n" +
                 "\tLivello Corso: " + c.getLivello() + "\n" +
@@ -122,7 +129,8 @@ public class Lezione {
         return  "\tID: " + idLezione + "\n" +
                 "\tNome Corso: " + c.getNomeCorso() + "\n" +
                 "\tSala: " + sala.getIdSala()+ "\n" +
-                "\tPosti Disponibili: " + (postiDisponibili() - this.elencoPrenotazioni.size())+ "\n" +
+                "\tPosti Lezione:" + sala.getNumAttrezzi(c.getAttrezzo().getIdAttrezzo())+ "\n" +
+                "\tPosti Disponibili: " + postiDisponibili() + "\n" +
                 "\tIstruttore: " + istruttore.getIdIstruttore() + "\n" +
                 "\tData: " +stampaData(idSlot)+ "\n";
     }

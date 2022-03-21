@@ -8,7 +8,7 @@ public class Sala {
     private  Map<String, Boolean> mapSlot;
     private List<String> listaAttrezzi;
 
-    public Sala(String idSala){
+    public Sala(String idSala) throws IOException {
         this.idSala = idSala;
         this.mapSlot = loadSlot();
         this.listaAttrezzi = new LinkedList<>();
@@ -16,19 +16,14 @@ public class Sala {
 
     //CASO D'USO DI AVVIMENTO
     //Caricamento degli slot da file
-    public Map<String, Boolean>  loadSlot(){
+    public Map<String, Boolean>  loadSlot()throws IOException{
         Map<String, Boolean> map=new TreeMap<>();
         String idSlot;
-        try {
-            BufferedReader br1 = new BufferedReader(new FileReader("slot.txt"));
+        BufferedReader br1 = new BufferedReader(new FileReader("slot.txt"));
+        idSlot = br1.readLine();
+        while (idSlot != null) {
+            map.put(idSlot, true);
             idSlot = br1.readLine();
-            while (idSlot != null) {
-                map.put(idSlot, true);
-                idSlot = br1.readLine();
-            }
-        }catch (IOException e) {
-            System.out.println("ERRORE CARICAMENTO FILE slot.txt IN SALA\n" );
-            System.exit(-1);
         }
         return map;
     }

@@ -47,6 +47,6 @@ public class Cliente {
     //STAMPA
     @Override
     public String toString() {
-        return "\tNome: " + nome + "\n" + "\tCognome:" + cognome;
+        return "\tCliente: " + nome + " " + cognome;
     }
 }
