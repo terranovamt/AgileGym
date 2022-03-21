@@ -277,6 +277,7 @@ public class Agilegym {
             for (String key : elencoCorsi.keySet()) {
                 i++;
                 corsi.put(i,getElencoCorsi().get(key));
+                System.out.println("Corsi: " + i);
                 System.out.println(elencoCorsi.get(key).stampaCorsi());
             }
             int scelta = -1;
