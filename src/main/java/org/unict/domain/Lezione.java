@@ -34,15 +34,20 @@ public class Lezione {
         }
 
         if((this.postiDisponibili())!=0) {
+            int value = this.postiDisponibili();
+
             if(!slotUtentePrenotato.contains(this.idSlot)){
                 return true;
             }
             else   {
-                throw new ClienteOccupatoException("Hai giá una prenotazione in questo orario");//qui inseriamo la stampa della lezione che si sovrappone cosi portiamo
+                //questa fa bloccare il metodo
+                //throw new ClienteOccupatoException("Hai giá una prenotazione in questo orario");//qui inseriamo la stampa della lezione che si sovrappone cosi portiamo
                 // a conoscenza l'utente che esiste quella lezione
+                return  false;
             }
         }else {
-            throw new SalaPienaException("Non ci sono piú posti prenotabili in questa lezione");
+            return false;
+            //throw new SalaPienaException("Non ci sono piú posti prenotabili in questa lezione");
         }
     }
 
@@ -55,6 +60,7 @@ public class Lezione {
         if(elencoPrenotazioni.size() == 0){
             Prenotazione p = new Prenotazione(idCliente, this.idSlot);
             elencoPrenotazioni.put(p.getIdPrenotazione(), p);
+
             return p;
         }
         else{
