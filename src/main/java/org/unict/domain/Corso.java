@@ -93,7 +93,7 @@ public class Corso {
                     "\tFocus: " + focus + "\n" +
                     "\tID-Attrezzo: " + attrezzo.getIdAttrezzo()+ "\n\n";
 
-        if (l.length()==0) s+="\n\t\tNESSUNA LEZIONE INSERITA\n";
+        if (l.length()==0) s+="\t\tNESSUNA LEZIONE INSERITA\n";
 
         return s;
     }

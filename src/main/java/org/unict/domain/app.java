@@ -71,6 +71,9 @@ public class app {
         String username, logged=null;
         try {
             do {
+                System.out.println("\n#--------------------------------------------------------------#");
+                System.out.println("#----------------------------LOGIN-----------------------------#");
+                System.out.println("#--------------------------------------------------------------#\n");
                 System.out.print("Inserisci username: ");
                 username = br.readLine();
                 if (username.equals("ADMIN")){
@@ -344,22 +347,24 @@ public class app {
 
     public static void getCorsiPrenotabili(Cliente logged){
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        Lezione lezioneCorrente = null;
         try {
             List<Corso> corsi =agilegym.nuovaPrenotazione();
-            int index;
-            int i = 0;
+            int index=0, controllo, i = 0;
             for (Corso value : corsi){
                 i++;
                 System.out.println("CORSO: " + i);
-                System.out.print(value.stampaCorsi() + "\n\n");
+                System.out.print(value.stampaCorsi() + "\n");
             }
-            System.out.print("Scegli un corso:");
-            index= Integer.parseInt(br.readLine());
-            String idCorso=corsi.get(index-1).getIdCorso();
-            getLezioniPrenotabili(idCorso,logged);
-
-
+            do {
+                System.out.print("Scegli un corso, 0 per tornare a MENU: ");
+                controllo = Integer.parseInt(br.readLine());
+                if (controllo == 0) return;
+                if (controllo > 0 && controllo <= corsi.size()) {
+                    index = controllo;
+                    String idCorso = corsi.get(index - 1).getIdCorso();
+                    getLezioniPrenotabili(idCorso, logged);
+                }
+            }while (index==0);
         }catch(IOException e){
         System.out.println("ERRORE!"+e.getMessage());
         System.exit(-1);
@@ -370,14 +375,15 @@ public class app {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         List<Lezione> lezioniDisponibili=agilegym.mostraLezione(idCorso,logged);
         Lezione lezioneCorrente;
-        int index;
+        int index,i;
         try {
+            System.out.println();
             if (lezioniDisponibili.size() != 0) {
-                int i = 0;
+                i = 0;
                 for (Lezione value : lezioniDisponibili) {
                     i++;
                     System.out.println("LEZIONE: " + i);
-                    System.out.println(value);
+                    System.out.println(value.stampaRiepilogo());
                 }
 
                 System.out.print("Scegli una lezione: ");
@@ -402,6 +408,17 @@ public class app {
             switch (menu) {
                 case 1:
                     agilegym.confermaPrenotazione(lezioneCorrente.getIdLezione(), logged);
+                    String s;
+                    do {
+                        s = "";
+                        System.out.print("Vuoi iscriverti ad un altra lezione?: ");
+                        String str = br.readLine();
+                        if (str.equals("si")) {
+                            s = str;
+                            getLezioniPrenotabili(idCorso,logged);
+                        }
+                        if (str.equals("no"))return;
+                    } while (s.equals(""));
                     break;
                 case 2:
                     getLezioniPrenotabili(idCorso,logged);
@@ -410,22 +427,9 @@ public class app {
                     getCorsiPrenotabili(logged);
                     break;
                 case 0:
-                    return;
+                    break;
             }
-            String s;
-            do {
-                s = "";
-                System.out.print("Vuoi iscriverti ad un altra lezione?: ");
-                String str = br.readLine();
-                if (str.equals("si")) {
-                    s = str;
-                    getLezioniPrenotabili(idCorso,logged);
-                }
-                if (str.equals("no")) {
-                    s = str;
-                    return;
-                }
-            } while (s.equals(""));
+
         }catch(IOException e){
             System.out.println("ERRORE!"+e.getMessage());
             System.exit(-1);
@@ -444,15 +448,15 @@ public class app {
         for (String key: agilegym.getElencoCorsi().keySet()){
             i++;
             System.out.print    ("\n#--------------------------------------------------------------#\n");
-            System.out.print("CORSO: " +i+"\n");
+            System.out.print("CORSO: " + i +"\n");
             System.out.print(agilegym.getElencoCorsi().get(key));
                 for (String key2 : agilegym.getElencoCorsi().get(key).getElencoLezioni().keySet()){
                     Lezione l = agilegym.getElencoCorsi().get(key).getElencoLezioni().get(key2);
                     if(l.getElencoPrenotazioni().size()!=0){
-                        System.out.println("\nLezione:\n" + l + "\tElenco clienti: ");
+                        System.out.println("Lezione:\n" + l + "\t\t---\n\t\n\tElenco clienti: ");
                         for(String key3 : l.getElencoPrenotazioni().keySet()) {
                             Prenotazione p = l.getElencoPrenotazioni().get(key3);
-                            System.out.println("\t\t---\n\t" + agilegym.getElencoClienti().get(p.getIdCliente()));
+                            System.out.println(agilegym.getElencoClienti().get(p.getIdCliente())+"\n");
                         }
                     }
                     else  System.out.println("\nLezione:\n" + l);
