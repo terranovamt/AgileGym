@@ -152,8 +152,12 @@ public class Agilegym {
         Lezione oldLezione=p.getLezione();
         p.setIdSlot(newLezione.getIdSlot());
         p.setLezione(newLezione);
-        logged.getElencoPrenotazioni().replace(p.getIdPrenotazione(),p);
-        return oldLezione.removePrenotazione(p) && newLezione.updatePrenoptazione(p);
+        if(newLezione.updatePrenoptazione(p)) {
+            logged.getElencoPrenotazioni().replace(p.getIdPrenotazione(), p);
+            oldLezione.removePrenotazione(p);
+            return true;
+        }
+        return false;
     }
 
     //CASO DUSO DI AVVIAMENTO

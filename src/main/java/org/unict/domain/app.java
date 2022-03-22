@@ -383,8 +383,8 @@ public class app {
     public static void getLezioniPrenotabili(String idCorso, Cliente logged){
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         List<Lezione> lezioniDisponibili=agilegym.mostraLezione(idCorso,logged);
-        Lezione lezioneCorrente;
-        int index,i;
+        Lezione lezioneCorrente = null;
+        int index=0,i,controllo;
         try {
             System.out.println();
             if (lezioniDisponibili.size() != 0) {
@@ -394,11 +394,15 @@ public class app {
                     System.out.println("LEZIONE: " + i);
                     System.out.println(value.stampaRiepilogo());
                 }
-
-                System.out.print("Scegli una lezione: ");
-                index = Integer.parseInt(br.readLine());
-                lezioneCorrente = lezioniDisponibili.get(index - 1);
-
+                do {
+                    System.out.print("Scegli una lezione, 0 per tornare a MENU: ");
+                    controllo = Integer.parseInt(br.readLine());
+                    if (controllo == 0) return;
+                    if (controllo > 0 && controllo <= lezioniDisponibili.size()) {
+                        index = controllo;
+                        lezioneCorrente = lezioniDisponibili.get(index - 1);
+                    }
+                }while (index==0);
                 System.out.println("\nLEZIONE SCELTA: " + index + "\n" + lezioneCorrente.stampaRiepilogo());
                 sottoMenu(lezioneCorrente,logged,idCorso);
             }else System.out.print("NON CI SONO LEZIONI PRENOTABILI");
@@ -483,8 +487,8 @@ public class app {
     public static void getLezioni(Prenotazione prenotazione, Cliente logged){
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         List<Lezione> lezioniDisponibili= agilegym.getLezioni(prenotazione, logged);
-        Lezione lezioneCorrente;
-        int index,i;
+        Lezione lezioneCorrente = null;
+        int index=0,i,controllo;
         try {
             System.out.println();
             if (lezioniDisponibili.size() != 0) {
@@ -494,10 +498,15 @@ public class app {
                     System.out.println("LEZIONE: " + i);
                     System.out.println(value.stampaRiepilogo());
                 }
-                System.out.print("Scegli una lezione: ");
-                index = Integer.parseInt(br.readLine());
-                lezioneCorrente = lezioniDisponibili.get(index - 1);
-
+                do {
+                    System.out.print("Scegli una lezione, 0 per tornare a MENU: ");
+                    controllo = Integer.parseInt(br.readLine());
+                    if (controllo == 0) return;
+                    if (controllo > 0 && controllo <= lezioniDisponibili.size()) {
+                        index = controllo;
+                        lezioneCorrente = lezioniDisponibili.get(index - 1);
+                    }
+                }while (index==0);
                 System.out.println("\nLEZIONE SCELTA: " + index + "\n" + lezioneCorrente.stampaRiepilogo());
                 updatePrenotazione(lezioneCorrente,logged, prenotazione);
             }else System.out.print("NON CI SONO LEZIONI PRENOTABILI\n");
@@ -551,10 +560,10 @@ public class app {
                 for (String key2 : agilegym.getElencoCorsi().get(key).getElencoLezioni().keySet()){
                     Lezione l = agilegym.getElencoCorsi().get(key).getElencoLezioni().get(key2);
                     if(l.getElencoPrenotazioni().size()!=0){
-                        System.out.println("Lezione:\n" + l + "\t\t---\n\t\n\tElenco clienti: ");
+                        System.out.println("Lezione:\n" + l + "\t\t---\nElenco clienti:");
                         for(String key3 : l.getElencoPrenotazioni().keySet()) {
                             Prenotazione p = l.getElencoPrenotazioni().get(key3);
-                            System.out.println(agilegym.getElencoClienti().get(p.getIdCliente())+"\n");
+                            System.out.println(agilegym.getElencoClienti().get(p.getIdCliente()));
                         }
                     }
                     else  System.out.println("\nLezione:\n" + l);
