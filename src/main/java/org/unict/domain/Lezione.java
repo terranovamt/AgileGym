@@ -1,8 +1,6 @@
 package org.unict.domain;
 
-import org.unict.domain.exception.ClienteOccupatoException;
 import org.unict.domain.exception.PrenotazionePresenteException;
-import org.unict.domain.exception.SalaPienaException;
 
 import java.util.*;
 
@@ -13,13 +11,13 @@ public class Lezione {
     private  String idSlot;
     private  Sala sala;
     private  Istruttore istruttore;
-    private  Corso c;
+    private  Corso corso;
     private  Map<String, Prenotazione> elencoPrenotazioni;
 
     public Lezione(String idLezione, String idSlot, Corso c, Sala s, Istruttore i){
         this.idLezione = idLezione;
         this.idSlot = idSlot;
-        this.c=c;
+        this.corso =c;
         this.sala =s;
         this.istruttore =i;
         this.elencoPrenotazioni= new TreeMap<>();
@@ -51,21 +49,20 @@ public class Lezione {
     }
 
     public int postiDisponibili(){
-        String idAttrezzo = c.getAttrezzo().getIdAttrezzo();
+        String idAttrezzo = corso.getAttrezzo().getIdAttrezzo();
         return sala.getNumAttrezzi(idAttrezzo)-this.elencoPrenotazioni.size();
     }
 
     public Prenotazione creaPrenotazione(String idCliente) throws PrenotazionePresenteException{
         if(elencoPrenotazioni.size() == 0){
-            Prenotazione p = new Prenotazione(idCliente, this.idSlot);
+            Prenotazione p = new Prenotazione(idCliente, this.idSlot ,this);
             elencoPrenotazioni.put(p.getIdPrenotazione(), p);
-
             return p;
         }
         else{
             for (String key: elencoPrenotazioni.keySet()) {
                 if(!elencoPrenotazioni.get(key).getIdCliente().equals(idCliente)){
-                    Prenotazione p = new Prenotazione(idCliente, this.idSlot);
+                    Prenotazione p = new Prenotazione(idCliente, this.idSlot, this);
                     elencoPrenotazioni.put(p.getIdPrenotazione(), p);
                     return p;
                 }
@@ -75,7 +72,15 @@ public class Lezione {
         return null;
     }
 
-
+    //UC3
+    public boolean updatePrenoptazione(Prenotazione p){
+        elencoPrenotazioni.put(p.getIdPrenotazione(), p);
+        return true;
+    }
+    public boolean removePrenotazione(Prenotazione p){
+        elencoPrenotazioni.remove(p.getIdPrenotazione());
+        return true;
+    }
 
     //GET E SET STANDARD
 
@@ -98,6 +103,11 @@ public class Lezione {
     public Map<String, Prenotazione> getElencoPrenotazioni() {
         return elencoPrenotazioni;
     }
+
+    public Corso getCorso() {
+        return corso;
+    }
+
     //STAMPA
     private String stampaData(String slot){
         String str = "", giorno, ora;
@@ -117,9 +127,9 @@ public class Lezione {
 
 
     public String stampaRiepilogo(){
-        return  "\tNome Corso: " + c.getNomeCorso() + "\n" +
-                "\tLivello Corso: " + c.getLivello() + "\n" +
-                "\tFocus Corso: " + c.getFocus() + "\n" +
+        return  "\tNome Corso: " + corso.getNomeCorso() + "\n" +
+                "\tLivello Corso: " + corso.getLivello() + "\n" +
+                "\tFocus Corso: " + corso.getFocus() + "\n" +
                 "\tSala: " + sala.getIdSala()+ "\n" +
                 "\tIstruttore: " + istruttore.getIdIstruttore() + "\n" +
                 "\tData: " +stampaData(idSlot)+ "\n";
@@ -127,9 +137,9 @@ public class Lezione {
     @Override
     public String toString(){
         return  "\tID: " + idLezione + "\n" +
-                "\tNome Corso: " + c.getNomeCorso() + "\n" +
+                "\tNome Corso: " + corso.getNomeCorso() + "\n" +
                 "\tSala: " + sala.getIdSala()+ "\n" +
-                "\tPosti Lezione:" + sala.getNumAttrezzi(c.getAttrezzo().getIdAttrezzo())+ "\n" +
+                "\tPosti Lezione:" + sala.getNumAttrezzi(corso.getAttrezzo().getIdAttrezzo())+ "\n" +
                 "\tPosti Disponibili: " + postiDisponibili() + "\n" +
                 "\tIstruttore: " + istruttore.getIdIstruttore() + "\n" +
                 "\tData: " +stampaData(idSlot)+ "\n";

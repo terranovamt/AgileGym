@@ -1,8 +1,6 @@
 package org.unict.domain;
 
-import org.unict.domain.exception.PrenotazioneNonPresenteException;
 import org.unict.domain.exception.PrenotazionePresenteException;
-
 import java.util.*;
 
 public class Cliente {

@@ -100,76 +100,12 @@ public class Agilegym {
     }
 
     public List<Lezione> mostraLezione(String idCorso,Cliente logged) {
-        corsoCorrente = elencoCorsi.get(idCorso);
         List<Lezione> lezioniDisponibili = null;
+        corsoCorrente = elencoCorsi.get(idCorso);
         Map<String, Prenotazione> elencoPrenotazioneCliente;
         elencoPrenotazioneCliente = logged.getElencoPrenotazioni();
         try {
             lezioniDisponibili = corsoCorrente.mostraLezioni(elencoPrenotazioneCliente);
-           /* if (lezioniDisponibili.size()!=0) {
-            i = 0;
-            for (String key : lezioniDisponibili.keySet()) {
-                i++;
-                System.out.println("LEZIONE: " + i);
-                sceltaLezioni.put(i, lezioniDisponibili.get(key));
-                System.out.println(lezioniDisponibili.get(key));
-            }
-
-            int scelta = -1;
-
-                do {
-                    System.out.print("Scegli una lezione: ");
-                    int s1 = Integer.parseInt(br.readLine());
-                    if (s1==0){
-                        return;
-                    }
-                    if (s1 > 0 && s1 <= lezioniDisponibili.size()) {
-                        scelta = s1;
-                    }
-                } while (scelta == -1);
-                lezioneCorrente = sceltaLezioni.get(scelta);
-
-                System.out.println("\nLEZIONE SCELTA: " + scelta + "\n" + lezioneCorrente.stampaRiepilogo());
-
-                System.out.print("-------MENU-------\n 1. Conferma la scelta\n 2. Cambia Lezione\n 3. Cambia Corso\n 0.Menu principale\nScelta:");
-                int menu = Integer.parseInt(br.readLine());
-                switch (menu) {
-                    case 1:
-                        confermaPrenotazione(lezioneCorrente.getIdLezione(), logged);
-                        break;
-                    case 2:
-                        mostraLezione(logged);
-                        break;
-                    case 3:
-                        nuovaPrenotazione(logged.getIdCliente());
-                        break;
-                    case 0:
-                        break;
-                }
-                do {
-                    s = "";
-                    System.out.print("Vuoi iscriverti ad un altra lezione?: ");
-                    String str = br.readLine();
-                    if (str.equals("si")) {
-                        s = str;
-                        mostraLezione(logged);
-                    }
-                    if (str.equals("no")) {
-                        s = str;
-                        nuovaPrenotazione(logged.getIdCliente());
-                    }
-                } while (s.equals(""));
-            }else{
-                System.out.println("\nNON CI SONO LEZIONI ATTUALEMTE PRENOTABILI");
-                nuovaPrenotazione(logged.getIdCliente());
-            }
-        } catch (IOException e) {
-            System.out.println("ERRORE NELLA LETTURA DA TASTIERA:" + e.getMessage());
-            System.exit(-12);
-        } catch (SalaPienaException | ClienteOccupatoException | PrenotazionePresenteException | LezioneNonPresente e) {
-            e.printStackTrace();
-        }*/
-
         } catch (SalaPienaException | ClienteOccupatoException e) {
             e.printStackTrace();
         }
@@ -191,11 +127,34 @@ public class Agilegym {
     }
 
     //UC3
- /*public void modificaPrenotazione(String idCliente) throws PrenotazioneNonPresenteException {
-        if(elencoPrenotazioni.containsKey(p.getIdPrenotazione())){
+    public List<Prenotazione> modificaPrenotazione(String idCliente)   {
+         List<Prenotazione> listaPrenotazioni=new ArrayList<>();
+         for (String key : elencoClienti.get(idCliente).getElencoPrenotazioni().keySet()) {
+             listaPrenotazioni.add(elencoClienti.get(idCliente).getElencoPrenotazioni().get(key));
+         }
+         return listaPrenotazioni;
+    }
 
+    public List<Lezione> getLezioni(Prenotazione prenotazione,Cliente logged) {
+        List<Lezione> lezioniDisponibili = null;
+        corsoCorrente = prenotazione.getLezione().getCorso();
+        Map<String, Prenotazione> elencoPrenotazioneCliente;
+        elencoPrenotazioneCliente = logged.getElencoPrenotazioni();
+        try {
+            lezioniDisponibili = corsoCorrente.mostraLezioni(elencoPrenotazioneCliente);
+        } catch (SalaPienaException | ClienteOccupatoException e) {
+            e.printStackTrace();
         }
-    }*/
+        return lezioniDisponibili;
+    }
+
+    public boolean updatePrenotazione(Lezione newLezione, Prenotazione p, Cliente logged){
+        Lezione oldLezione=p.getLezione();
+        p.setIdSlot(newLezione.getIdSlot());
+        p.setLezione(newLezione);
+        logged.getElencoPrenotazioni().replace(p.getIdPrenotazione(),p);
+        return oldLezione.removePrenotazione(p) && newLezione.updatePrenoptazione(p);
+    }
 
     //CASO DUSO DI AVVIAMENTO
     public void loadAttrezzi(){
