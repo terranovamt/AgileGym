@@ -4,13 +4,13 @@ import org.unict.domain.exception.PrenotazionePresenteException;
 import java.util.*;
 
 public class Cliente {
-    private final String idCliente;
-    private final String nome;
-    private final String cognome;
-    private final Map<String,Prenotazione> elencoPrenotazioni;
+    private  String idCliente;
+    private  String nome;
+    private  String cognome;
+    private  Map<String,Prenotazione> elencoPrenotazioni;
 
 
-    public  Cliente(String username, String nome, String cognome, String dataNascita){
+    public  Cliente(String username, String nome, String cognome){
         this.idCliente = username;
         this.nome=nome;
         this.cognome=cognome;

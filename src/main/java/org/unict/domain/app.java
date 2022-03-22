@@ -22,9 +22,7 @@ public class app {
                 do {
                     scelta = menuAdmin();
                     switch (scelta) {
-                        case 1 -> {
-                            inserisciCorso();
-                        }
+                        case 1 -> inserisciCorso();
                         case 2 -> {
                             if (agilegym.getElencoCorsi().isEmpty()) {
                                 stampaCorsi();
@@ -180,7 +178,7 @@ public class app {
         }
         try {
             Corso corsoCorrente = agilegym.nuovoCorso(nomeCorso, livello, focus, idAttrezzo);
-            String s,s1="",s2="",s3="";
+            String s,s1="",s2="";
             System.out.println("\n--------RIEPILOGO CORSO--------");
             System.out.println(corsoCorrente + "\n--------------------------------\n");
             do {
@@ -200,11 +198,9 @@ public class app {
                         if (s.equals("si")||s.equals("no")){
                             s2=s;
                             if(s2.equals("si")) {
-                                if(inserisciLezione(corsoCorrente)!=null) throw new LezioneNonCreataException("ERRORE NELLA CREAZIONE DELLA LEZIONE");
+                                Lezione l=inserisciLezione(corsoCorrente);
+                                if(l==null) throw new LezioneNonCreataException("ERRORe creazione lezione");
                                 s2="";
-                            }
-                            else {
-                                s2=s2;
                             }
                         }
                     }while (s2.equals(""));
@@ -223,6 +219,7 @@ public class app {
         Lezione lezioneCorrente = null;
 
         if (corsoSelezionato!=null){
+
             //GET IDSALE
             System.out.println("-------Inserisci una Lezione-------\n");
             listIdSale = agilegym.getSale(corsoSelezionato);
@@ -235,6 +232,7 @@ public class app {
                     System.out.print("\t"+value + "\n");
                 }
             }
+
             //SCELTA DELLA SALA
             while (idSalaSelezionata.equals("")){
                 System.out.print("Inserisci una sala Disponibile: ");
@@ -243,17 +241,26 @@ public class app {
                     idSalaSelezionata=controllo;
                 }
             }
+
             //GET IDSLOT
             listIdSlot= agilegym.getSlot(idSalaSelezionata);
             if (listIdSlot.size()==1){
                 idSlotSelezionato = listIdSlot.get(0);
                 System.out.println("E' disponibile solo lo Slot: "+idSlotSelezionato);
             }else{
-                System.out.println("Elenco degli slot disponibili per la sala ~" + idSalaSelezionata+"~:");
+                System.out.println("Elenco degli slot disponibili per la sala ~" + idSalaSelezionata+"~:");;
+                int i=49;
                 for (String value : listIdSlot) {
-                    System.out.print("\t" + value + "\n");
+                    if(value.charAt(0)==i) {
+                        System.out.print("\t" + value);
+                    }else {
+                        i++;
+                        System.out.print("\n\t" + value );
+                    }
                 }
             }
+            System.out.println();
+
             //SCELTA SLOT
             while (idSlotSelezionato.equals("")) {
                 System.out.print("Inserisci uno slot disponibile: ");
@@ -281,7 +288,7 @@ public class app {
                     idIstruttoreSelezionato = controllo;
                 }
             }
-            lezioneCorrente=agilegym.creaLezione(idSalaSelezionata,idSlotSelezionato,idIstruttoreSelezionato);
+            lezioneCorrente=agilegym.creaLezione(corsoSelezionato,idSalaSelezionata,idSlotSelezionato,idIstruttoreSelezionato);
 
             if(lezioneCorrente !=null) {
                 String st, s1 = "";
@@ -455,9 +462,8 @@ public class app {
     public static void modificaPrenotazione(Cliente logged){
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         List<Prenotazione> prenotazioni;
-        List<Lezione> lezioni;
         int index=0, controllo, i = 0;
-
+        System.out.println();
         try {
             prenotazioni =agilegym.modificaPrenotazione(logged.getIdCliente());
             for (Prenotazione value : prenotazioni){
@@ -488,9 +494,9 @@ public class app {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         List<Lezione> lezioniDisponibili= agilegym.getLezioni(prenotazione, logged);
         Lezione lezioneCorrente = null;
-        int index=0,i,controllo;
+        int index=0, i, controllo;
         try {
-            System.out.println();
+            System.out.println("\nELENCO DELLE LEZIONI PRENOTABILI:");
             if (lezioniDisponibili.size() != 0) {
                 i = 0;
                 for (Lezione value : lezioniDisponibili) {
@@ -528,7 +534,7 @@ public class app {
                         s1 = st;
                         if (s1.equals("si")) {
                             if(agilegym.updatePrenotazione(lezione,prenotazione,logged)){
-                                System.out.println("\nPRENOTAZIONE AGGIORANTA CORRETTAMENTE\n");
+                                System.out.println("\nPRENOTAZIONE AGGIORNATA CORRETTAMENTE");
                             }else throw new PrenotazionePresenteException("Errore nella modifica della prenotazione");
                         }else return;
                     }

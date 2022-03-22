@@ -73,7 +73,8 @@ public class Agilegym {
         return listIdIstruttori;
     }
 
-    public Lezione creaLezione(String idSala, String idSlot, String idIstruttore){
+    public Lezione creaLezione(Corso corsoSelezionato,String idSala, String idSlot, String idIstruttore){
+        corsoCorrente=corsoSelezionato;
         Sala s =elencoSale.get(idSala);
         Istruttore i =elencoIstruttori.get(idIstruttore);
         String idLezione="";
@@ -247,7 +248,7 @@ public class Agilegym {
                 corsoCorrente=elencoCorsi.get(strings[0]);
                 Sala s=elencoSale.get(strings[1]);
                 Istruttore i=elencoIstruttori.get(strings[2]);
-                Lezione l=creaLezione(strings[1],strings[3],strings[2]);
+                Lezione l=creaLezione(corsoCorrente,strings[1],strings[3],strings[2]);
                 corsoCorrente.inserisciLezione(l);
                 s.setOccupato(strings[3]);
                 i.setOccupato(strings[3]);
@@ -257,7 +258,7 @@ public class Agilegym {
             str = bCliente.readLine();
             while (str != null){
                 strings=str.split("-");
-                Cliente c=new Cliente(strings[0], strings[1], strings[2], strings[3]);
+                Cliente c=new Cliente(strings[0], strings[1], strings[2]);
                 elencoClienti.put(strings[0],c);
                 str = bCliente.readLine();
             }
@@ -281,14 +282,13 @@ public class Agilegym {
                 if((lezioneSelezionata.postiDisponibili()-lezioneSelezionata.getElencoPrenotazioni().size())!=0){
                     if(!slotPrenotati.contains(lezioneSelezionata.getIdSlot())){
                         p = corsoCorrente.confermaPrenotazione(strings[0], logged.getIdCliente());
-                        //System.out.println(p.toString());
                         logged.addPrenotazione(p);
                     }else System.out.println("Hai gia una lezione prenotata coincidente ");
                 }else System.out.println("Posti per la lezione pieni");
                 str = bPrenotazioni.readLine();
             }
 
-            System.out.println("\nI corsi e le lezioni sono stati inseriti con successo");
+            System.out.println("\n\tBackup caricato con successo");
         }catch (IOException e) {
             System.out.println("ERRORE NEL CARICAMENTO DELLA PALESTRA\n" );
             System.exit(-9);

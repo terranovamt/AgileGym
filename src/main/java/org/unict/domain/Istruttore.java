@@ -54,12 +54,11 @@ public class Istruttore {
     private String stampaData(String slot){
         String str = "", giorno, ora;
         giorno = switch (Integer.parseInt(String.valueOf(slot.charAt(0)))) {
-            case 1 -> "LUNEDI' ore ";
-            case 2 -> "MARTEDI' ore ";
-            case 3 -> "MERCOLEDI' ore ";
-            case 4 -> "GIOVEDI ore ";
-            case 5 -> "VENERDI ore ";
-            case 6 -> "SABATO ore ";
+            case 1 -> "LUNEDI' \tore ";
+            case 2 -> "MARTEDI'\tore ";
+            case 3 -> "MERCOLEDI'\tore ";
+            case 4 -> "GIOVEDI'\tore ";
+            case 5 -> "VENERDI'\tore ";
             default -> "";
         };
         ora= slot.charAt(1)+String.valueOf((slot.charAt(2)));
@@ -71,7 +70,7 @@ public class Istruttore {
         String dis;
         StringBuilder s = new StringBuilder();
         for (String key: mapSlot.keySet()){
-            if (mapSlot.get(key))dis="  Disponibile";else dis="  Occupato";
+            if (mapSlot.get(key))dis=" Disponibile";else dis=" Occupato";
             s.append("\t").append(stampaData(key)).append(dis).append("\n");
         }
         return s.toString();
