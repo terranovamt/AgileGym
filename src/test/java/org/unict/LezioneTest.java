@@ -5,6 +5,7 @@ import org.unict.domain.*;
 import org.unict.domain.exception.*;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class LezioneTest {
@@ -13,6 +14,7 @@ public class LezioneTest {
     private Sala s;
     private Istruttore i;
     private Attrezzo a;
+    private Corso c;
     private Prenotazione p;
     private List<String> h;
     private Map<String, Prenotazione> e;
@@ -23,15 +25,14 @@ public class LezioneTest {
         h.add("Sala1");
         h.add("Sala2");
         a = new Attrezzo("tappetino", h);
-        Corso c = new Corso("1000", "Yoga", "principiante", "equilibrio", a);
+        c = new Corso("1000", "Yoga", "principiante", "equilibrio", a);
         s = new Sala("Sala1");
         List<String> n = new LinkedList<>();
         n.add("tappetino");
         n.add("tappetino");
         s.setListaAttrezzi(n);
         i = new Istruttore("Gianni");
-
-        l = new Lezione("233445","116", c,s,i);
+        l = new Lezione("233445","110", c,s,i);
     }
 
     @After
@@ -40,15 +41,16 @@ public class LezioneTest {
         a=null;
         s=null;
         i=null;
+        c=null;
         h.clear();
     }
 
     @Test
     public void isPrenotabile_lezioneNonHaPrenotazioni_returnTrue()throws PrenotazionePresenteException, ClienteOccupatoException, SalaPienaException{
         e = new TreeMap<>();
-        p= new Prenotazione("Pippo","316");
+        p= new Prenotazione("Pippo","316",l);
         e.put(p.getIdPrenotazione(),p);
-        p=new Prenotazione("Pippo","516");
+        p=new Prenotazione("Pippo","516",l);
         e.put(p.getIdPrenotazione(),p);
         Assert.assertTrue(l.isPrenotabile(e));
     }
@@ -60,24 +62,23 @@ public class LezioneTest {
     }
 
     @Test
-    public void isPrenotabile_salaPiena_returnException()throws PrenotazionePresenteException, ClienteOccupatoException, SalaPienaException{
+    public void isPrenotabile_salaPiena_returnFalse()throws PrenotazionePresenteException, ClienteOccupatoException, SalaPienaException{
         e = new TreeMap<>();
-        p= new Prenotazione("Pippo","316");
+        p= new Prenotazione("Pippo","316",l);
         e.put(p.getIdPrenotazione(),p);
-        p=new Prenotazione("Pippo","516");
+        p=new Prenotazione("Pippo","516",l);
         e.put(p.getIdPrenotazione(),p);
         l.creaPrenotazione("Pippo"); //manca il controllo su idCliente in isPrenotabile
         l.creaPrenotazione("Orazio");
-        Throwable ex = Assert.assertThrows(SalaPienaException.class, ()-> l.isPrenotabile(e));
-        Assert.assertEquals(SalaPienaException.class, ex.getClass());
+        Assert.assertFalse(l.isPrenotabile(e));
     }
 
     @Test
     public void isPrenotabile_slotClienteOccupato_returnFalse()throws PrenotazionePresenteException, ClienteOccupatoException, SalaPienaException{
         e = new TreeMap<>();
-        p= new Prenotazione("Pippo","116");
+        p= new Prenotazione("Pippo","116",l);
         e.put(p.getIdPrenotazione(),p);
-        p=new Prenotazione("Pippo","516");
+        p=new Prenotazione("Pippo","516",l);
         e.put(p.getIdPrenotazione(),p);
         //l.creaPrenotazione("Pippo");
         l.creaPrenotazione("Orazio");
@@ -113,5 +114,28 @@ public class LezioneTest {
         l.creaPrenotazione("Pippo");
         Throwable ex = Assert.assertThrows(PrenotazionePresenteException.class, ()-> l.creaPrenotazione("Pippo"));
         Assert.assertEquals(PrenotazionePresenteException.class, ex.getClass());
+    }
+
+    @Test
+    public void controlloNewPrenotazione_prenotazioneLezioneInCorso_returnFalse(){
+        LocalDateTime d= LocalDateTime.now();
+        String now=String.valueOf(((d.getDayOfWeek().ordinal()+1)*100)+d.getHour());
+        l = new Lezione("233445", now, c,s,i);
+        e= new TreeMap<>();
+        Assert.assertFalse( l.isPrenotabile(e));
+    }
+
+    @Test
+    public void updatePrenotazione_elencoPrenotazioniEmpty_returnTrue() {
+        p=new Prenotazione("Pippo",l.getIdSlot(),l);
+        Assert.assertTrue(l.updatePrenoptazione(p));
+        Assert.assertEquals(1, l.getElencoPrenotazioni().size());
+    }
+
+    @Test
+    public void removePrenotazione_unaPrenotazioneInElenco_returnTrue() throws PrenotazionePresenteException{
+        p=l.creaPrenotazione("Pippo");
+        Assert.assertTrue(l.removePrenotazione(p));
+        Assert.assertEquals(0, l.getElencoPrenotazioni().size());
     }
 }
