@@ -63,7 +63,8 @@ public class Sala {
 
     //STAMPA
     private String stampaData(String slot){
-        String str = "", giorno, ora;
+        String giorno;
+        char h1=slot.charAt(1),h2=slot.charAt(2);
         giorno = switch (slot.charAt(0)) {
             case '1' -> "LUNEDI' \tore ";
             case '2' -> "MARTEDI'\tore ";
@@ -72,16 +73,15 @@ public class Sala {
             case '5' -> "VENERDI'\tore ";
             default -> "";
         };
-        ora= slot.charAt(1)+String.valueOf((slot.charAt(2)));
-        str+=giorno+ora+":00";
-        return str;
+        return giorno+h1+h2+":00";
     }
 
     public String stampaListaSlot(){
         String dis;
         StringBuilder s = new StringBuilder();
         for (String key: mapSlot.keySet()){
-            if (mapSlot.get(key))dis=" Disponibile";else dis=" Occupato";
+            if (mapSlot.get(key))dis=" Disponibile";
+            else dis=" Occupato";
             s.append("\t").append(stampaData(key)).append(dis).append("\n");
         }
         return s.toString();

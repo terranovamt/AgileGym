@@ -67,7 +67,7 @@ public class Agilegym {
         List<String> listIdIstruttori= new ArrayList<>();
         for(String key : elencoIstruttori.keySet()){
             Istruttore i=elencoIstruttori.get(key);
-            if(i.isDisponibile(idSlot))listIdIstruttori.add(i.getIdIstruttore());
+            if(i.getMapSlot().get(idSlot))listIdIstruttori.add(i.getIdIstruttore());
         }
         if(listIdIstruttori.size()==0) throw new IstruttoreException("Non ci sono istruttori disponibili in questo slot");
         return listIdIstruttori;
