@@ -30,17 +30,11 @@ public class Istruttore {
         }
         return map;
     }
-
     //UC1
-    //Ricerca nella listaSlot se l'attributo disponibilità è settato su falso
-    public  boolean isDisponibile(String idSlot){
-        return this.mapSlot.get(idSlot);
-
-    }
-
     public void setOccupato(String idSlot){
         this.mapSlot.replace(idSlot,false);
     }
+
     //GET E SET STANDARD
     public String getIdIstruttore() {
         return idIstruttore;

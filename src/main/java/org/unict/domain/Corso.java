@@ -25,8 +25,8 @@ public class Corso {
         return this.getAttrezzo().getSale();
     }
 
-    public boolean inserisciLezione (Lezione lezioneCorrente )  {
-        elencoLezioni.put(lezioneCorrente.getIdLezione(), lezioneCorrente);
+    public boolean inserisciLezione (Lezione l )  {
+        elencoLezioni.put(l.getIdLezione(), l);
         return true;
     }
 
