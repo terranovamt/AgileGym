@@ -41,7 +41,7 @@ public class Agilegym {
     //UC1
     public Corso nuovoCorso(String nomeCorso, String livello,String focus,String idAttrezzo) throws CorsoException{
         String idCorso =randId();
-        Attrezzo attrezzoSelezionato = getElencoAttrezzi().get(idAttrezzo);
+        Attrezzo attrezzoSelezionato = elencoAttrezzi.get(idAttrezzo);
         if (attrezzoSelezionato!=null){
             this.corsoCorrente = new Corso(idCorso, nomeCorso, livello, focus, attrezzoSelezionato);
         }else{
@@ -51,8 +51,8 @@ public class Agilegym {
     }
 
     public boolean confermaCorso(Corso corsoCorrente) {
-        this.elencoCorsi.put(corsoCorrente.getIdCorso(), corsoCorrente);
-        return true;
+        //se = null nessun problema
+        return this.elencoCorsi.put(corsoCorrente.getIdCorso(), corsoCorrente)==null;
     }
 
     public List<String> getSale(Corso corsoCorrente){
@@ -129,11 +129,8 @@ public class Agilegym {
 
     //UC3
     public List<Prenotazione> modificaPrenotazione(String idCliente)   {
-         List<Prenotazione> listaPrenotazioni=new ArrayList<>();
-         for (String key : elencoClienti.get(idCliente).getElencoPrenotazioni().keySet()) {
-             listaPrenotazioni.add(elencoClienti.get(idCliente).getElencoPrenotazioni().get(key));
-         }
-         return listaPrenotazioni;
+         Cliente logged =elencoClienti.get(idCliente);
+         return logged.getlistPrenotazioni();
     }
 
     public List<Lezione> getLezioni(Prenotazione prenotazione,Cliente logged) {

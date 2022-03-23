@@ -1,6 +1,8 @@
 package org.unict.domain;
 
 import org.unict.domain.exception.PrenotazionePresenteException;
+
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class Cliente {
@@ -26,7 +28,25 @@ public class Cliente {
     }
 
     //UC3
+    public List<Prenotazione> getlistPrenotazioni(){
+        List<Prenotazione> listaPrenotazioni=new ArrayList<>();
+        for (String key: this.getElencoPrenotazioni().keySet()){
+            Prenotazione p=this.getElencoPrenotazioni().get(key);
+            if(this.controlloOra(p.getIdSlot()))listaPrenotazioni.add(p);
+            else{
+                System.out.println("\nPRENOTAZIONE TROPPO VICINA PER LA MOFDIFICA");
+                System.out.print(p);
+            }
+        }
+        return listaPrenotazioni;
+    }
 
+    private boolean controlloOra(String idSlot){
+        LocalDateTime d= LocalDateTime.now();
+        float now=(((d.getDayOfWeek().ordinal()+1)*100)+d.getHour());
+        float controllo= Float.parseFloat(idSlot);
+        return (controllo - now) > 2 || (now - controllo) > 0;
+    }
 
 
     //GET E SET STANDARD

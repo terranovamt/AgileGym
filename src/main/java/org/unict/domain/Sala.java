@@ -1,6 +1,7 @@
 package org.unict.domain;
 
 import java.io.*;
+import java.time.*;
 import java.util.*;
 
 public class Sala {
@@ -32,11 +33,9 @@ public class Sala {
     //Ricerca nella listaSlot se l'attributo disponibilità è settato su falso
     public  List<String> getSlotDisponibili(){
         List<String> s=new LinkedList<>();
-
         for (Map.Entry<String, Boolean> entry : this.mapSlot.entrySet()) {
-            if (entry.getValue()) {
-                s.add(entry.getKey());
-            }
+            if (entry.getValue()) s.add(entry.getKey());
+            else s.add(entry.getKey().charAt(0) + "--");
         }
         return s;
     }
@@ -48,11 +47,8 @@ public class Sala {
     //UC2
     public int getNumAttrezzi(String idAttrezzo){
         int count=0;
-        for (String s :listaAttrezzi){
-            if(s.equals(idAttrezzo)){
-                count++;
-            }
-        }
+        for (String id :listaAttrezzi)
+            if(id.equals(idAttrezzo)) count++;
         return count;
     }
 
@@ -65,19 +61,15 @@ public class Sala {
         this.listaAttrezzi = listaAttrezzi;
     }
 
-    public List<String> getListaAttrezzi() {
-        return listaAttrezzi;
-    }
-
     //STAMPA
     private String stampaData(String slot){
         String str = "", giorno, ora;
-        giorno = switch (Integer.parseInt(String.valueOf(slot.charAt(0)))) {
-            case 1 -> "LUNEDI' \tore ";
-            case 2 -> "MARTEDI'\tore ";
-            case 3 -> "MERCOLEDI'\tore ";
-            case 4 -> "GIOVEDI'\tore ";
-            case 5 -> "VENERDI'\tore ";
+        giorno = switch (slot.charAt(0)) {
+            case '1' -> "LUNEDI' \tore ";
+            case '2' -> "MARTEDI'\tore ";
+            case '3' -> "MERCOLEDI'\tore ";
+            case '4' -> "GIOVEDI'\tore ";
+            case '5' -> "VENERDI'\tore ";
             default -> "";
         };
         ora= slot.charAt(1)+String.valueOf((slot.charAt(2)));
@@ -102,8 +94,7 @@ public class Sala {
         for (String l : listaAttrezzi) {
             if (!lista.contains(l)) {
                 lista.add(l);
-                int n = getNumAttrezzi(l);
-                s.append("\t\t n").append(n).append(" ").append(l).append("\n");
+                s.append("\t\t n").append(getNumAttrezzi(l)).append(" ").append(l).append("\n");
             }
         }
         return s.toString();

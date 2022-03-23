@@ -2,6 +2,7 @@ package org.unict.domain;
 
 import org.unict.domain.exception.PrenotazionePresenteException;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 
@@ -26,24 +27,27 @@ public class Lezione {
     //UC2
     public boolean isPrenotabile(Map<String,Prenotazione> elencoPrenotazioneCliente) {
         List<String> slotUtentePrenotato= new ArrayList<>();
+
         for (String key : elencoPrenotazioneCliente.keySet()) {
             slotUtentePrenotato.add(elencoPrenotazioneCliente.get(key).getIdSlot());
         }
 
         if((this.postiDisponibili())>0) {
-            int value = this.postiDisponibili();
-
             if(!slotUtentePrenotato.contains(this.idSlot)){
-                return true;
-            }
-            else   {
+                if (controlloNewPrenotazione(this.idSlot)) return true;
+                else{
+                    System.out.println("\nLEZIONE TROPPO VICINA");
+                    System.out.print(this);
+                    return false;
+                }
+            }else{
                 //questa fa bloccare il metodo
                 //throw new ClienteOccupatoException("Hai giá una prenotazione in questo orario");
                 // qui inseriamo la stampa della lezione che si sovrappone cosi portiamo
                 // a conoscenza l'utente che esiste quella lezione
                 System.out.println("\nLEZIONE CON SOVRAPPOSIZIONE");
                 System.out.print(this);
-                return  false;
+                return false;
             }
         }else {
             System.out.println("\nLEZIONE GIA' PIENA");
@@ -51,6 +55,13 @@ public class Lezione {
             return false;
             //throw new SalaPienaException("Non ci sono piú posti prenotabili in questa lezione");
         }
+    }
+
+    private boolean controlloNewPrenotazione(String idSlot){
+        LocalDateTime d= LocalDateTime.now();
+        float now=(((d.getDayOfWeek().ordinal()+1)*100)+d.getHour());
+        float controllo= Float.parseFloat(idSlot);
+        return (controllo - now) > 0 || (now - controllo) > 0;
     }
 
     public int postiDisponibili(){
@@ -129,7 +140,6 @@ public class Lezione {
         str+=giorno+ora+":00";
         return str;
     }
-
 
     public String stampaRiepilogo(){
         return  "\tNome Corso: " + corso.getNomeCorso() + "\n" +

@@ -251,9 +251,11 @@ public class app {
                 System.out.println("Elenco degli slot disponibili per la sala ~" + idSalaSelezionata+"~:");;
                 int i=49;
                 for (String value : listIdSlot) {
-                    if(value.charAt(0)==i) {
-                        System.out.print("\t" + value);
-                    }else {
+                    if(value.charAt(0)==i|value.charAt(1)=='-') {
+                        if (value.charAt(1)=='-')System.out.print("\t---");
+                        else System.out.print("\t" + value);
+                    }
+                    else {
                         i++;
                         System.out.print("\n\t" + value );
                     }
@@ -393,7 +395,7 @@ public class app {
         Lezione lezioneCorrente = null;
         int index=0,i,controllo;
         try {
-            System.out.println();
+            System.out.println("\n ELENCO LEZIONI PRENOTABILI\n");
             if (lezioniDisponibili.size() != 0) {
                 i = 0;
                 for (Lezione value : lezioniDisponibili) {
@@ -466,6 +468,7 @@ public class app {
         System.out.println();
         try {
             prenotazioni =agilegym.modificaPrenotazione(logged.getIdCliente());
+            System.out.println("\nELENCO PRENOTAZIONI MODIFICABILI\n");
             for (Prenotazione value : prenotazioni){
                 i++;
                 System.out.println("Prenotazione: " + i);
