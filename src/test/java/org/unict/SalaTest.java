@@ -31,13 +31,13 @@ public class SalaTest {
     @Test
     public void getSlotDisponibili_slotLiberi_returnAll() throws IOException{
         Assert.assertEquals(s.loadSlot().size(), s.getSlotDisponibili().size());
+        Assert.assertFalse(s.getSlotDisponibili().contains("--"));
     }
 
     @Test
     public void getSlotDisponibili_slotOccupato_returnSlotLiberi () throws IOException{
         s.setOccupato("516");
         Assert.assertFalse(s.getSlotDisponibili().contains("516"));
-        Assert.assertEquals(s.loadSlot().size()-1, s.getSlotDisponibili().size());
     }
 
     @DataPoints
