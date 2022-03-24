@@ -31,6 +31,11 @@ public class Istruttore {
         return map;
     }
     //UC1
+    public  boolean isDisponibile(String idSlot){
+        return this.mapSlot.get(idSlot);
+
+    }
+
     public void setOccupato(String idSlot){
         this.mapSlot.replace(idSlot,false);
     }
