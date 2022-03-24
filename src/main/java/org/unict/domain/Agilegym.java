@@ -83,7 +83,8 @@ public class Agilegym {
         return new Lezione(idLezione,idSlot,corsoCorrente,s,i);
     }
 
-    public boolean confermaLezione(Lezione lezioneCorrente) {
+    public boolean confermaLezione(Lezione lezioneCorrente) throws LezioneException {
+        if(corsoCorrente.getElencoLezioni().containsValue(lezioneCorrente)) throw new LezioneException("LEZIONE GIA CREATA");
         if(corsoCorrente.inserisciLezione(lezioneCorrente)) {
             lezioneCorrente.getSala().setOccupato(lezioneCorrente.getIdSlot());
             lezioneCorrente.getIstruttore().setOccupato(lezioneCorrente.getIdSlot());
@@ -113,7 +114,7 @@ public class Agilegym {
         return lezioniDisponibili;
     }
 
-    public void confermaPrenotazione(String idLezione, Cliente logged) throws PrenotazionePresenteException, LezioneNonPresente {
+    public void confermaPrenotazione(String idLezione, Cliente logged) throws PrenotazionePresenteException, LezioneException {
         List<String> slotPrenotati = new ArrayList<>();
         Lezione lezioneSelezionata=corsoCorrente.getElencoLezioni().get(idLezione);
         for (String key : logged.getElencoPrenotazioni().keySet()) {
@@ -148,14 +149,7 @@ public class Agilegym {
 
     public boolean updatePrenotazione(Lezione newLezione, Prenotazione p, Cliente logged){
         Lezione oldLezione=p.getLezione();
-        p.setIdSlot(newLezione.getIdSlot());
-        p.setLezione(newLezione);
-        if(newLezione.updatePrenoptazione(p)) {
-            logged.getElencoPrenotazioni().replace(p.getIdPrenotazione(), p);
-            oldLezione.removePrenotazione(p);
-            return true;
-        }
-        return false;
+        return !logged.replacePrenotazione(p, newLezione, oldLezione);
     }
 
     //CASO DUSO DI AVVIAMENTO
@@ -289,7 +283,7 @@ public class Agilegym {
         }catch (IOException e) {
             System.out.println("ERRORE NEL CARICAMENTO DELLA PALESTRA\n" );
             System.exit(-9);
-        } catch (PrenotazionePresenteException | LezioneNonPresente e) {
+        } catch (PrenotazionePresenteException | LezioneException e) {
             e.printStackTrace();
         }
     }

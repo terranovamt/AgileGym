@@ -4,13 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6a5b2f05-9589-4439-bd70-8ff067af0e69" name="Changes" comment="MTTcommit">
+    <list default="true" id="6a5b2f05-9589-4439-bd70-8ff067af0e69" name="Changes" comment="update Istruttore.java">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/unict/UI/MainFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/unict/UI/MainFrame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/unict/domain/Agilegym.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/unict/domain/Agilegym.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/unict/domain/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/unict/domain/Cliente.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/unict/domain/Corso.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/unict/domain/Corso.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/unict/domain/Lezione.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/unict/domain/Lezione.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/unict/domain/app.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/unict/domain/app.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/unict/domain/exception/LezioneNonCreataException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/unict/domain/exception/LezioneNonPresente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/unict/domain/exception/LezioneException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/unict/AgilegymTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/unict/AgilegymTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/unict/CorsoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/unict/CorsoTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/unict/LezioneTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/unict/LezioneTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,11 +41,18 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/main/java/org/unict/domain/Prenotazione.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/org/unict/domain/Corso.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/org/unict/UI/MainFrame.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/org/unict/domain/Cliente.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/org/unict/domain/Istruttore.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/org/unict/domain/app.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/org/unict/domain/Sala.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/org/unict/UI/AppUI.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/clienti.txt" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/org/unict/domain/Agilegym.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/java/org/unict/domain/Slot.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/org/unict/domain/Lezione.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/org/unict/domain/Attrezzo.java" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -109,9 +121,26 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ClienteTest.getlistPrenotazioni_prenotazioniRavvicinate_returnLast" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="AgileGym" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.unict.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.unict" />
+      <option name="MAIN_CLASS_NAME" value="org.unict.ClienteTest" />
+      <option name="METHOD_NAME" value="getlistPrenotazioni_prenotazioniRavvicinate_returnLast" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.app" />
+        <item itemvalue="JUnit.ClienteTest.getlistPrenotazioni_prenotazioniRavvicinate_returnLast" />
         <item itemvalue="Application.AppUI" />
       </list>
     </recent_temporary>
@@ -144,6 +173,7 @@
       <workItem from="1647336029096" duration="302000" />
       <workItem from="1647336496856" duration="9842000" />
       <workItem from="1647364093373" duration="4014000" />
+      <workItem from="1648135287322" duration="4048000" />
     </task>
     <task id="LOCAL-00001" summary="firs commit">
       <created>1640797810569</created>
@@ -236,7 +266,14 @@
       <option name="project" value="LOCAL" />
       <updated>1647349610198</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="update Istruttore.java">
+      <created>1648135521197</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1648135521197</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -261,7 +298,8 @@
     <MESSAGE value="commit build" />
     <MESSAGE value="FabiolaCommit" />
     <MESSAGE value="MTTcommit" />
-    <option name="LAST_COMMIT_MESSAGE" value="MTTcommit" />
+    <MESSAGE value="update Istruttore.java" />
+    <option name="LAST_COMMIT_MESSAGE" value="update Istruttore.java" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -277,14 +315,20 @@
           <option name="timeStamp" value="16" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/unict/domain/app.java</url>
-          <line>16</line>
-          <option name="timeStamp" value="38" />
+          <url>file://$PROJECT_DIR$/src/main/java/org/unict/domain/Lezione.java</url>
+          <line>95</line>
+          <option name="timeStamp" value="45" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/unict/domain/Lezione.java</url>
+          <line>92</line>
+          <option name="timeStamp" value="46" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
+        <PinnedItemInfo parentTag="java.util.HashMap" />
         <PinnedItemInfo parentTag="org.unict.domain.Lezione" memberName="elencoPrenotazioni" />
       </pinned-members>
     </pin-to-top-manager>

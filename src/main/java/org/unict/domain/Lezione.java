@@ -61,7 +61,7 @@ public class Lezione {
         LocalDateTime d= LocalDateTime.now();
         float now=(((d.getDayOfWeek().ordinal()+1)*100)+d.getHour());
         float controllo= Float.parseFloat(idSlot);
-        return (controllo - now) > 0 || (now - controllo) > 0;
+        return (controllo - now) > 1 || (now - controllo) > 0;
     }
 
     public int postiDisponibili(){
@@ -89,13 +89,11 @@ public class Lezione {
     }
 
     //UC3
-    public boolean updatePrenoptazione(Prenotazione p){
-        elencoPrenotazioni.put(p.getIdPrenotazione(), p);
-        return true;
+    public boolean updatePrenotazione(Prenotazione p){
+        return elencoPrenotazioni.put(p.getIdPrenotazione(), p)!=null;
     }
     public boolean removePrenotazione(Prenotazione p){
-        elencoPrenotazioni.remove(p.getIdPrenotazione());
-        return true;
+        return elencoPrenotazioni.remove(p.getIdPrenotazione())!=null;
     }
 
     //GET E SET STANDARD

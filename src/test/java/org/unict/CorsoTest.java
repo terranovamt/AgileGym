@@ -129,7 +129,7 @@ public class CorsoTest {
     }
 
     @Test
-    public void confermaPrenotazione_lezionePresente_returnPrenotazione() throws CorsoException, LezioneNonPresente, PrenotazionePresenteException {
+    public void confermaPrenotazione_lezionePresente_returnPrenotazione() throws CorsoException, LezioneException, PrenotazionePresenteException {
         n = new LinkedList<>();
         n.add("tappetino");
         s.setListaAttrezzi(n);
@@ -141,14 +141,14 @@ public class CorsoTest {
     }
 
     @Test
-    public void confermaPrenotazione_lezioneNonPresente_throwsException()throws CorsoException, LezioneNonPresente, PrenotazionePresenteException{
+    public void confermaPrenotazione_lezioneNonPresente_throwsException()throws CorsoException, LezioneException, PrenotazionePresenteException{
         n = new LinkedList<>();
         n.add("tappetino");
         s.setListaAttrezzi(n);
         c.inserisciLezione(new Lezione("233445", o,c,s,i));
         c.inserisciLezione(new Lezione("233446", "316",c,s,i));
         c.inserisciLezione(new Lezione("233447", "516",c,s,i));
-        Throwable e = Assert.assertThrows(LezioneNonPresente.class, ()-> c.confermaPrenotazione("333445", "Pippo"));
-        Assert.assertEquals(LezioneNonPresente.class,e.getClass());
+        Throwable e = Assert.assertThrows(LezioneException.class, ()-> c.confermaPrenotazione("333445", "Pippo"));
+        Assert.assertEquals(LezioneException.class,e.getClass());
     }
 }

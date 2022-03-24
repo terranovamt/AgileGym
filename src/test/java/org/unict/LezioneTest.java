@@ -128,7 +128,7 @@ public class LezioneTest {
     @Test
     public void updatePrenotazione_elencoPrenotazioniEmpty_returnTrue() {
         p=new Prenotazione("Pippo",l.getIdSlot(),l);
-        Assert.assertTrue(l.updatePrenoptazione(p));
+        Assert.assertTrue(l.updatePrenotazione(p));
         Assert.assertEquals(1, l.getElencoPrenotazioni().size());
     }
 

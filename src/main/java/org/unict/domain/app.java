@@ -199,7 +199,7 @@ public class app {
                             s2=s;
                             if(s2.equals("si")) {
                                 Lezione l=inserisciLezione(corsoCorrente);
-                                if(l==null) throw new LezioneNonCreataException("ERRORe creazione lezione");
+                                if(l==null) throw new LezioneException("ERRORE creazione lezione");
                                 s2="";
                             }
                         }
@@ -207,12 +207,12 @@ public class app {
                 }
             } while (s1.equals(""));
 
-        } catch (CorsoException | IOException | LezioneNonCreataException | IstruttoreException e) {
+        } catch (CorsoException | IOException | LezioneException | IstruttoreException e) {
             e.printStackTrace();
         }
     }
 
-    public static Lezione inserisciLezione(Corso corsoSelezionato) throws IOException, IstruttoreException, LezioneNonCreataException,CorsoException {
+    public static Lezione inserisciLezione(Corso corsoSelezionato) throws IOException, IstruttoreException, CorsoException, LezioneException {
         List<String> listIdSale, listIdSlot, listIdIstruttore;
         String idSalaSelezionata = "",idSlotSelezionato="",idIstruttoreSelezionato="", controllo;
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -311,7 +311,7 @@ public class app {
 
                 } while (s1.equals(""));
             }
-            else throw new LezioneNonCreataException("Errore nella creazione della lezione");
+            else throw new LezioneException("Errore nella creazione della lezione");
         }
         return lezioneCorrente;
     }
@@ -357,7 +357,7 @@ public class app {
         }catch(IOException e){
             System.out.println("ERRORE INPUT DA TASTIERA!");
             System.exit(-1);
-        } catch (IstruttoreException | CorsoException | LezioneNonCreataException e) {
+        } catch (IstruttoreException | CorsoException | LezioneException e) {
             e.printStackTrace();
         }
     }
@@ -455,7 +455,7 @@ public class app {
         }catch(IOException e){
             System.out.println("ERRORE!"+e.getMessage());
             System.exit(-1);
-        } catch (LezioneNonPresente | PrenotazionePresenteException e) {
+        } catch (LezioneException | PrenotazionePresenteException e) {
             e.printStackTrace();
         }
     }
@@ -543,15 +543,14 @@ public class app {
                     }
                 } while (s1.equals(""));
             }
-            else throw new LezioneNonCreataException("Errore nella selezione della lezione");
+            else throw new LezioneException("Errore nella selezione della lezione");
         } catch (IOException  e){
             System.out.println("ERRORE!"+e.getMessage());
             System.exit(-1);
-        } catch (PrenotazionePresenteException | LezioneNonCreataException e) {
+        } catch (PrenotazionePresenteException | LezioneException e) {
             e.printStackTrace();
         }
     }
-
 
     //STAMPE
     public static void stampaCorsi(){
@@ -577,7 +576,7 @@ public class app {
                     }
                     else  System.out.println("\nLezione:\n" + l);
                 }
-
+            System.out.print("\n");
         }
     }
 
