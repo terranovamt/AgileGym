@@ -10,8 +10,8 @@ import java.util.List;
 public class AgilegymTest {
 
     private Agilegym gym;
-    Corso c;
-    Cliente x;
+    private Corso c;
+    private Cliente x;
 
     @Before
     public void setup(){
@@ -209,13 +209,17 @@ public class AgilegymTest {
 
     //UC3
     @Test
-    public void modificaPrenotazione_(){
-
-    }
-
-    @Test
-    public void getLezioni_(){
-
+    public void getLezioni_prenotazioneDaModificare_returnOthers() throws CorsoException, LezioneException, PrenotazionePresenteException{
+        x= new Cliente("Pippo","Pippo","Franco");
+        gym.confermaCorso(c=gym.nuovoCorso("Yoga","principiante","equilibrio","tappetino"));
+        Lezione l;
+        gym.confermaLezione(gym.creaLezione(c,"Sala1","110","Matteo"));
+        gym.confermaLezione(gym.creaLezione(c,"Sala1","310","Matteo"));
+        gym.confermaLezione(l=gym.creaLezione(c,"Sala1","510","Matteo"));
+        Prenotazione p= new Prenotazione(x.getIdCliente(),l);
+        x.addPrenotazione(p);
+        Assert.assertEquals(2,gym.getLezioni(p,x).size());
+        Assert.assertFalse(gym.getLezioni(p,x).contains(l));
     }
 
     @Test

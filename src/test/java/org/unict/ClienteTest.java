@@ -34,6 +34,10 @@ public class ClienteTest {
         c=null;
         p=null;
         l=null;
+        a=null;
+        s=null;
+        i=null;
+        x=null;
     }
 
     @Test
