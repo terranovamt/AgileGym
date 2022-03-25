@@ -48,11 +48,11 @@ public class Cliente {
         return (controllo - now) > 2 || (now - controllo) > 0;
     }
 
-    public boolean replacePrenotazione(Prenotazione p, Lezione corrente, Lezione old){
+    public Prenotazione replacePrenotazione(Prenotazione p, Lezione corrente, Lezione old){
         old.removePrenotazione(p);
         corrente.updatePrenotazione(p);
         p.setLezione(corrente);
-        return this.elencoPrenotazioni.replace(p.getIdPrenotazione(), p)==null;
+        return this.elencoPrenotazioni.replace(p.getIdPrenotazione(), p);
     }
 
     //GET E SET STANDARD

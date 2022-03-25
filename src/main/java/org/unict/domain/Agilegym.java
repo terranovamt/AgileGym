@@ -149,7 +149,7 @@ public class Agilegym {
 
     public boolean updatePrenotazione(Lezione newLezione, Prenotazione p, Cliente logged){
         Lezione oldLezione=p.getLezione();
-        if(oldLezione != newLezione) return !logged.replacePrenotazione(p, newLezione, oldLezione);
+        if(oldLezione != newLezione) return logged.replacePrenotazione(p, newLezione, oldLezione)!=null;
         else return false;
     }
 

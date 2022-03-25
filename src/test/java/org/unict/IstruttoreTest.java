@@ -23,11 +23,9 @@ public class IstruttoreTest {
         Assert.assertFalse(i.getMapSlot().isEmpty());
     }
 
-    /* EMMORTO
     @Test
-    public void idDisponibileTest(){
-        i.setOccupato("501");
-        Assert.assertFalse(i.isDisponibile("501"));
+    public void isDisponibileTest(){
+        i.setOccupato("510");
+        Assert.assertFalse(i.isDisponibile("510"));
     }
-    */
 }
