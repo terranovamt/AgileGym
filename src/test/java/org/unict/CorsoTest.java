@@ -46,7 +46,6 @@ public class CorsoTest {
         p=null;
         l.clear();
         n.clear();
-
     }
     @Test
     public void inserisciILezioneTest_datiValidi_returnTrue() throws CorsoException {
@@ -136,7 +135,7 @@ public class CorsoTest {
         c.inserisciLezione(new Lezione("233445", o,c,s,i));
         c.inserisciLezione(new Lezione("233446", "316",c,s,i));
         c.inserisciLezione(new Lezione("233447", "516",c,s,i));
-        p= c.confermaPrenotazione("233445", "Pippo");
+        p= c.confermaPrenotazione(c.getElencoLezioni().get("233445"), "Pippo");
         Assert.assertNotNull(p);
     }
 
@@ -148,7 +147,7 @@ public class CorsoTest {
         c.inserisciLezione(new Lezione("233445", o,c,s,i));
         c.inserisciLezione(new Lezione("233446", "316",c,s,i));
         c.inserisciLezione(new Lezione("233447", "516",c,s,i));
-        Throwable e = Assert.assertThrows(LezioneException.class, ()-> c.confermaPrenotazione("333445", "Pippo"));
+        Throwable e = Assert.assertThrows(LezioneException.class, ()-> c.confermaPrenotazione(c.getElencoLezioni().get("334555"), "Pippo"));
         Assert.assertEquals(LezioneException.class,e.getClass());
     }
 }

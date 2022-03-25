@@ -114,15 +114,15 @@ public class Agilegym {
         return lezioniDisponibili;
     }
 
-    public void confermaPrenotazione(String idLezione, Cliente logged) throws PrenotazionePresenteException, LezioneException {
+    public void confermaPrenotazione(Lezione lezioneSelezionata, Cliente logged) throws PrenotazionePresenteException, LezioneException {
         List<String> slotPrenotati = new ArrayList<>();
-        Lezione lezioneSelezionata=corsoCorrente.getElencoLezioni().get(idLezione);
+
         for (String key : logged.getElencoPrenotazioni().keySet()) {
             slotPrenotati.add(logged.getElencoPrenotazioni().get(key).getLezione().getIdSlot());
         }
         if((lezioneSelezionata.postiDisponibili())>0){
             if(!slotPrenotati.contains(lezioneSelezionata.getIdSlot())){
-                Prenotazione p = corsoCorrente.confermaPrenotazione(idLezione, logged.getIdCliente());
+                Prenotazione p = corsoCorrente.confermaPrenotazione(lezioneSelezionata, logged.getIdCliente());
                 logged.addPrenotazione(p);
              }else System.out.println("Hai gia una lezione prenotata coincidente ");
         }else System.out.println("Posti per la lezione pieni");
@@ -273,7 +273,7 @@ public class Agilegym {
                 }
                 if((lezioneSelezionata.postiDisponibili()-lezioneSelezionata.getElencoPrenotazioni().size())!=0){
                     if(!slotPrenotati.contains(lezioneSelezionata.getIdSlot())){
-                        p = corsoCorrente.confermaPrenotazione(strings[0], logged.getIdCliente());
+                        p = corsoCorrente.confermaPrenotazione(corsoCorrente.getElencoLezioni().get(strings[0]), logged.getIdCliente());
                         logged.addPrenotazione(p);
                     }else System.out.println("Hai gia una lezione prenotata coincidente ");
                 }else System.out.println("Posti per la lezione pieni");
