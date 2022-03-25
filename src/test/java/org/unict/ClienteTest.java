@@ -38,14 +38,14 @@ public class ClienteTest {
 
     @Test
     public void addPrenotazione_elencoPrenotazioniEmpty_returnAdded()throws PrenotazionePresenteException{
-        p=new Prenotazione(c.getIdCliente(),"516",l);
+        p=new Prenotazione(c.getIdCliente(),l);
         c.addPrenotazione(p);
         Assert.assertTrue(c.getElencoPrenotazioni().containsValue(p));
     }
 
     @Test
     public void addPrenotazione_prenotazionePresente_throwsException() throws PrenotazionePresenteException{
-        p=new Prenotazione(c.getIdCliente(),"516",l);
+        p=new Prenotazione(c.getIdCliente(),l);
         c.addPrenotazione(p);
         Throwable ex= Assert.assertThrows(PrenotazionePresenteException.class, ()->c.addPrenotazione(p));
         Assert.assertEquals(PrenotazionePresenteException.class, ex.getClass());
@@ -53,9 +53,9 @@ public class ClienteTest {
 
     @Test
     public void addPrenotazione_prenotazioniInElenco_returnAdded()throws PrenotazionePresenteException{
-        p=new Prenotazione(c.getIdCliente(),"516",l);
+        p=new Prenotazione(c.getIdCliente(),l);
         c.addPrenotazione(p);
-        p=new Prenotazione(c.getIdCliente(),"316",l);
+        p=new Prenotazione(c.getIdCliente(),l);
         c.addPrenotazione(p);
         Assert.assertTrue(c.getElencoPrenotazioni().containsValue(p));
     }
@@ -64,11 +64,14 @@ public class ClienteTest {
     public void getlistPrenotazioni_prenotazioniRavvicinate_returnLast() throws PrenotazionePresenteException{
         LocalDateTime d= LocalDateTime.now();
         float now=(((d.getDayOfWeek().ordinal()+1)*100)+d.getHour());
-        p=new Prenotazione(c.getIdCliente(),String.valueOf(now),l);
+        l=new Lezione((String.valueOf(now)),(String.valueOf(now)),x,s,i);
+        p=new Prenotazione(c.getIdCliente(),l);
         c.addPrenotazione(p);
-        p=new Prenotazione(c.getIdCliente(),String.valueOf(now+2),l);
+        l=new Lezione((String.valueOf(now+1)),(String.valueOf(now+2)),x,s,i);
+        p=new Prenotazione(c.getIdCliente(),l);
         c.addPrenotazione(p);
-        p=new Prenotazione(c.getIdCliente(),String.valueOf(now+3),l);
+        l=new Lezione((String.valueOf(now+2)),(String.valueOf(now+3)),x,s,i);
+        p=new Prenotazione(c.getIdCliente(),l);
         c.addPrenotazione(p);
         Assert.assertEquals(1,c.getlistPrenotazioni().size());
         Assert.assertEquals(p, c.getlistPrenotazioni().get(0));

@@ -48,9 +48,9 @@ public class LezioneTest {
     @Test
     public void isPrenotabile_lezioneNonHaPrenotazioni_returnTrue()throws PrenotazionePresenteException, ClienteOccupatoException, SalaPienaException{
         e = new TreeMap<>();
-        p= new Prenotazione("Pippo","316",l);
+        p= new Prenotazione("Pippo",l);
         e.put(p.getIdPrenotazione(),p);
-        p=new Prenotazione("Pippo","516",l);
+        p=new Prenotazione("Pippo",l);
         e.put(p.getIdPrenotazione(),p);
         Assert.assertTrue(l.isPrenotabile(e));
     }
@@ -64,9 +64,9 @@ public class LezioneTest {
     @Test
     public void isPrenotabile_salaPiena_returnFalse()throws PrenotazionePresenteException, ClienteOccupatoException, SalaPienaException{
         e = new TreeMap<>();
-        p= new Prenotazione("Pippo","316",l);
+        p= new Prenotazione("Pippo",l);
         e.put(p.getIdPrenotazione(),p);
-        p=new Prenotazione("Pippo","516",l);
+        p=new Prenotazione("Pippo",l);
         e.put(p.getIdPrenotazione(),p);
         l.creaPrenotazione("Pippo"); //manca il controllo su idCliente in isPrenotabile
         l.creaPrenotazione("Orazio");
@@ -76,9 +76,9 @@ public class LezioneTest {
     @Test
     public void isPrenotabile_slotClienteOccupato_returnFalse()throws PrenotazionePresenteException, ClienteOccupatoException, SalaPienaException{
         e = new TreeMap<>();
-        p= new Prenotazione("Pippo","116",l);
+        p= new Prenotazione("Pippo",l);
         e.put(p.getIdPrenotazione(),p);
-        p=new Prenotazione("Pippo","516",l);
+        p=new Prenotazione("Pippo",l);
         e.put(p.getIdPrenotazione(),p);
         //l.creaPrenotazione("Pippo");
         l.creaPrenotazione("Orazio");
@@ -127,7 +127,7 @@ public class LezioneTest {
 
     @Test
     public void updatePrenotazione_elencoPrenotazioniEmpty_returnTrue() {
-        p=new Prenotazione("Pippo",l.getIdSlot(),l);
+        p=new Prenotazione("Pippo",l);
         Assert.assertTrue(l.updatePrenotazione(p));
         Assert.assertEquals(1, l.getElencoPrenotazioni().size());
     }

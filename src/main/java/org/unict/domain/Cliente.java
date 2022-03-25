@@ -32,7 +32,7 @@ public class Cliente {
         List<Prenotazione> listaPrenotazioni=new ArrayList<>();
         for (String key: this.getElencoPrenotazioni().keySet()){
             Prenotazione p=this.getElencoPrenotazioni().get(key);
-            if(this.controlloOra(p.getIdSlot()))listaPrenotazioni.add(p);
+            if(this.controlloOra(p.getLezione().getIdSlot()))listaPrenotazioni.add(p);
             else{
                 System.out.println("\nPRENOTAZIONE TROPPO VICINA PER LA MOFDIFICA");
                 System.out.print(p);
@@ -51,7 +51,6 @@ public class Cliente {
     public boolean replacePrenotazione(Prenotazione p, Lezione corrente, Lezione old){
         old.removePrenotazione(p);
         corrente.updatePrenotazione(p);
-        p.setIdSlot(corrente.getIdSlot());
         p.setLezione(corrente);
         return this.elencoPrenotazioni.replace(p.getIdPrenotazione(), p)==null;
     }

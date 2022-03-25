@@ -104,7 +104,7 @@ public class CorsoTest {
         c.inserisciLezione(x);
         c.inserisciLezione(new Lezione("233446", "316",c,s,i));
         c.inserisciLezione(new Lezione("233447", "516",c,s,i));
-        p= new Prenotazione("Pippo",o,x);
+        p= new Prenotazione("Pippo",x);
         e= new TreeMap<>();
         e.put(p.getIdPrenotazione(),p);
         Assert.assertEquals(2, c.mostraLezioni(e).size());
@@ -118,12 +118,12 @@ public class CorsoTest {
         s.setListaAttrezzi(n);
         Lezione x= new Lezione("233445", o,c,s,i);
         c.inserisciLezione(x);
-        p= new Prenotazione("Pippo",o,x);
+        p= new Prenotazione("Pippo",x);
         x=new Lezione("233446", "316",c,s,i);
         c.inserisciLezione(x);
         e= new TreeMap<>();
         e.put(p.getIdPrenotazione(),p);
-        p= new Prenotazione("Pippo","316",x);
+        p= new Prenotazione("Pippo",x);
         e.put(p.getIdPrenotazione(),p);
         Assert.assertTrue(c.mostraLezioni(e).isEmpty());
     }

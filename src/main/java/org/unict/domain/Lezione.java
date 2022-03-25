@@ -24,12 +24,13 @@ public class Lezione {
         this.elencoPrenotazioni= new TreeMap<>();
     }
 
+
     //UC2
     public boolean isPrenotabile(Map<String,Prenotazione> elencoPrenotazioneCliente) {
         List<String> slotUtentePrenotato= new ArrayList<>();
 
         for (String key : elencoPrenotazioneCliente.keySet()) {
-            slotUtentePrenotato.add(elencoPrenotazioneCliente.get(key).getIdSlot());
+            slotUtentePrenotato.add(elencoPrenotazioneCliente.get(key).getLezione().getIdSlot());
         }
 
         if((this.postiDisponibili())>0) {
@@ -71,14 +72,14 @@ public class Lezione {
 
     public Prenotazione creaPrenotazione(String idCliente) throws PrenotazionePresenteException{
         if(elencoPrenotazioni.size() == 0){
-            Prenotazione p = new Prenotazione(idCliente, this.idSlot ,this);
+            Prenotazione p = new Prenotazione(idCliente,this);
             elencoPrenotazioni.put(p.getIdPrenotazione(), p);
             return p;
         }
         else{
             for (String key: elencoPrenotazioni.keySet()) {
                 if(!elencoPrenotazioni.get(key).getIdCliente().equals(idCliente)){
-                    Prenotazione p = new Prenotazione(idCliente, this.idSlot, this);
+                    Prenotazione p = new Prenotazione(idCliente, this);
                     elencoPrenotazioni.put(p.getIdPrenotazione(), p);
                     return p;
                 }

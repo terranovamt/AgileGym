@@ -118,9 +118,9 @@ public class Agilegym {
         List<String> slotPrenotati = new ArrayList<>();
         Lezione lezioneSelezionata=corsoCorrente.getElencoLezioni().get(idLezione);
         for (String key : logged.getElencoPrenotazioni().keySet()) {
-            slotPrenotati.add(logged.getElencoPrenotazioni().get(key).getIdSlot());
+            slotPrenotati.add(logged.getElencoPrenotazioni().get(key).getLezione().getIdSlot());
         }
-        if((lezioneSelezionata.postiDisponibili()-lezioneSelezionata.getElencoPrenotazioni().size())!=0){
+        if((lezioneSelezionata.postiDisponibili())>0){
             if(!slotPrenotati.contains(lezioneSelezionata.getIdSlot())){
                 Prenotazione p = corsoCorrente.confermaPrenotazione(idLezione, logged.getIdCliente());
                 logged.addPrenotazione(p);
@@ -149,7 +149,8 @@ public class Agilegym {
 
     public boolean updatePrenotazione(Lezione newLezione, Prenotazione p, Cliente logged){
         Lezione oldLezione=p.getLezione();
-        return !logged.replacePrenotazione(p, newLezione, oldLezione);
+        if(oldLezione != newLezione) return !logged.replacePrenotazione(p, newLezione, oldLezione);
+        else return false;
     }
 
     //CASO DUSO DI AVVIAMENTO
@@ -268,7 +269,7 @@ public class Agilegym {
                 Cliente logged=elencoClienti.get(strings[1]);
                 Lezione lezioneSelezionata=corsoCorrente.getElencoLezioni().get(strings[0]);
                 for (String key : logged.getElencoPrenotazioni().keySet()) {
-                    slotPrenotati.add(logged.getElencoPrenotazioni().get(key).getIdSlot());
+                    slotPrenotati.add(logged.getElencoPrenotazioni().get(key).getLezione().getIdSlot());
                 }
                 if((lezioneSelezionata.postiDisponibili()-lezioneSelezionata.getElencoPrenotazioni().size())!=0){
                     if(!slotPrenotati.contains(lezioneSelezionata.getIdSlot())){

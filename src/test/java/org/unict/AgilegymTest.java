@@ -110,7 +110,7 @@ public class AgilegymTest {
         gym.confermaLezione(gym.creaLezione(c,"Sala1","310","Matteo"));
         gym.confermaLezione(l=gym.creaLezione(c,"Sala1","510","Matteo"));
         x= new Cliente("Pippo","Pippo","Franco");
-        Prenotazione p= new Prenotazione(x.getIdCliente(),l.getIdSlot(),l);
+        Prenotazione p= new Prenotazione(x.getIdCliente(),l);
         x.addPrenotazione(p);
         e=gym.mostraLezione(c.getIdCorso(),x);
         Assert.assertEquals(2,e.size());
@@ -126,7 +126,7 @@ public class AgilegymTest {
         gym.confermaLezione(gym.creaLezione(c,"Sala1","310","Matteo"));
         gym.confermaLezione(l=gym.creaLezione(c,"Sala1","510","Matteo"));
         x= new Cliente("Pippo","Pippo","Franco");
-        Prenotazione p= new Prenotazione(x.getIdCliente(),l.getIdSlot(),l);
+        Prenotazione p= new Prenotazione(x.getIdCliente(),l);
         x.addPrenotazione(p);
         gym.confermaCorso(c=gym.nuovoCorso("Yoga","avanzato","equilibrio","tappetino"));
         e=gym.mostraLezione(c.getIdCorso(),x);
@@ -143,7 +143,7 @@ public class AgilegymTest {
         gym.confermaLezione(gym.creaLezione(c,"Sala1","310","Matteo"));
         gym.confermaLezione(l=gym.creaLezione(c,"Sala1","510","Matteo"));
         x= new Cliente("Pippo","Pippo","Franco");
-        Prenotazione p= new Prenotazione(x.getIdCliente(),l.getIdSlot(),l);
+        Prenotazione p= new Prenotazione(x.getIdCliente(),l);
         x.addPrenotazione(p);
         gym.confermaCorso(c=gym.nuovoCorso("Yoga","avanzato","equilibrio","tappetino"));
         gym.confermaLezione(gym.creaLezione(c,"Sala2","510","Federica"));
@@ -159,10 +159,10 @@ public class AgilegymTest {
         List<Lezione> e;
         gym.confermaLezione(l=gym.creaLezione(c,"Sala1","110","Matteo"));
         x= new Cliente("Pippo","Pippo","Franco");
-        Prenotazione p= new Prenotazione(x.getIdCliente(),l.getIdSlot(),l);
+        Prenotazione p= new Prenotazione(x.getIdCliente(),l);
         x.addPrenotazione(p);
         gym.confermaLezione(l=gym.creaLezione(c,"Sala1","310","Matteo"));
-        p= new Prenotazione(x.getIdCliente(),l.getIdSlot(),l);
+        p= new Prenotazione(x.getIdCliente(),l);
         x.addPrenotazione(p);
         e=gym.mostraLezione(c.getIdCorso(),x);
         Assert.assertEquals(0,e.size());
@@ -185,7 +185,7 @@ public class AgilegymTest {
         x= new Cliente("Pippo","Pippo","Franco");
         gym.confermaCorso(c=gym.nuovoCorso("Yoga","principiante","equilibrio","tappetino"));
         gym.confermaLezione(l=gym.creaLezione(c,"Sala1","110","Matteo"));
-        Prenotazione p= new Prenotazione(x.getIdCliente(),l.getIdSlot(),l);
+        Prenotazione p= new Prenotazione(x.getIdCliente(),l);
         x.addPrenotazione(p);
         gym.confermaPrenotazione(l.getIdLezione(),x);
         Assert.assertEquals(1,x.getlistPrenotazioni().size());
