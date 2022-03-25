@@ -4,13 +4,14 @@ import org.junit.*;
 import org.unict.domain.*;
 import org.unict.domain.exception.*;
 
-import java.io.IOException;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 
 public class AgilegymTest {
 
     private Agilegym gym;
     Corso c;
+    Cliente x;
 
     @Before
     public void setup(){
@@ -20,6 +21,7 @@ public class AgilegymTest {
     @After
     public void teardown(){
         gym=null;
+        x=null;
     }
     //UC1
     @Test
@@ -78,27 +80,131 @@ public class AgilegymTest {
     }
 
     @Test
-    public void confermaLezione_lezioneValida_returnAdded() throws CorsoException{
+    public void confermaLezione_lezioneValida_returnAdded() throws CorsoException, LezioneException{
         Corso c=gym.nuovoCorso("Judo","principiante","forza","tappetino");
         Lezione l=gym.creaLezione(c,"Sala1","510","Matteo");
-        //Assert.assertTrue(gym.confermaLezione(l));
+        Assert.assertTrue(gym.confermaLezione(l));
         //Assert.assertFalse(gym.getElencoIstruttori().get(l.getIstruttore().getIdIstruttore()).isDisponibile(l.getIdSlot()));
         Assert.assertFalse(gym.getElencoSale().get(l.getSala().getIdSala()).getSlotDisponibili().contains("510"));
     }
     //UC2
     @Test
-    public void nuovaPrenotazione_(){
-
+    public void nuovaPrenotazione_elencoCorsiEmpty_returnEmpty(){
+        Assert.assertEquals(0,gym.nuovaPrenotazione().size());
     }
 
     @Test
-    public void mostraLezione_(){
-
+    public void nuovaPrenotazione_corsoInElenco_returnCorso()throws CorsoException, LezioneException{
+        Corso c=gym.nuovoCorso("Judo","principiante","forza","tappetino");
+        gym.confermaCorso(c);
+        Assert.assertEquals(1,gym.nuovaPrenotazione().size());
+        Assert.assertTrue(gym.nuovaPrenotazione().contains(c));
     }
 
     @Test
-    public void confermaPrenotazione_(){
+    public void mostraLezione_lezionePrenotata_returnOthers()throws CorsoException,LezioneException,PrenotazionePresenteException{
+        gym.confermaCorso(c=gym.nuovoCorso("Yoga","principiante","equilibrio","tappetino"));
+        Lezione l;
+        List<Lezione> e;
+        gym.confermaLezione(gym.creaLezione(c,"Sala1","110","Matteo"));
+        gym.confermaLezione(gym.creaLezione(c,"Sala1","310","Matteo"));
+        gym.confermaLezione(l=gym.creaLezione(c,"Sala1","510","Matteo"));
+        x= new Cliente("Pippo","Pippo","Franco");
+        Prenotazione p= new Prenotazione(x.getIdCliente(),l.getIdSlot(),l);
+        x.addPrenotazione(p);
+        e=gym.mostraLezione(c.getIdCorso(),x);
+        Assert.assertEquals(2,e.size());
+        Assert.assertFalse(e.contains(l));
+    }
 
+    @Test
+    public void mostraLezione_corsoNonHaLezioni_returnEmpty() throws CorsoException,LezioneException,PrenotazionePresenteException{
+        gym.confermaCorso(c=gym.nuovoCorso("Yoga","principiante","equilibrio","tappetino"));
+        Lezione l;
+        List<Lezione> e;
+        gym.confermaLezione(gym.creaLezione(c,"Sala1","110","Matteo"));
+        gym.confermaLezione(gym.creaLezione(c,"Sala1","310","Matteo"));
+        gym.confermaLezione(l=gym.creaLezione(c,"Sala1","510","Matteo"));
+        x= new Cliente("Pippo","Pippo","Franco");
+        Prenotazione p= new Prenotazione(x.getIdCliente(),l.getIdSlot(),l);
+        x.addPrenotazione(p);
+        gym.confermaCorso(c=gym.nuovoCorso("Yoga","avanzato","equilibrio","tappetino"));
+        e=gym.mostraLezione(c.getIdCorso(),x);
+        Assert.assertEquals(0,e.size());
+        Assert.assertNotNull(e);
+    }
+
+    @Test
+    public void mostraLezione_lezioneOrarioCoincidente_returnEmpty() throws CorsoException,LezioneException,PrenotazionePresenteException{
+        gym.confermaCorso(c=gym.nuovoCorso("Yoga","principiante","equilibrio","tappetino"));
+        Lezione l;
+        List<Lezione> e;
+        gym.confermaLezione(gym.creaLezione(c,"Sala1","110","Matteo"));
+        gym.confermaLezione(gym.creaLezione(c,"Sala1","310","Matteo"));
+        gym.confermaLezione(l=gym.creaLezione(c,"Sala1","510","Matteo"));
+        x= new Cliente("Pippo","Pippo","Franco");
+        Prenotazione p= new Prenotazione(x.getIdCliente(),l.getIdSlot(),l);
+        x.addPrenotazione(p);
+        gym.confermaCorso(c=gym.nuovoCorso("Yoga","avanzato","equilibrio","tappetino"));
+        gym.confermaLezione(gym.creaLezione(c,"Sala2","510","Federica"));
+        e=gym.mostraLezione(c.getIdCorso(),x);
+        Assert.assertEquals(0,e.size());
+        Assert.assertNotNull(e);
+    }
+
+    @Test
+    public void mostraLezione_lezioniTuttePrenotate_returnEmpty() throws CorsoException,LezioneException,PrenotazionePresenteException{
+        gym.confermaCorso(c=gym.nuovoCorso("Yoga","principiante","equilibrio","tappetino"));
+        Lezione l;
+        List<Lezione> e;
+        gym.confermaLezione(l=gym.creaLezione(c,"Sala1","110","Matteo"));
+        x= new Cliente("Pippo","Pippo","Franco");
+        Prenotazione p= new Prenotazione(x.getIdCliente(),l.getIdSlot(),l);
+        x.addPrenotazione(p);
+        gym.confermaLezione(l=gym.creaLezione(c,"Sala1","310","Matteo"));
+        p= new Prenotazione(x.getIdCliente(),l.getIdSlot(),l);
+        x.addPrenotazione(p);
+        e=gym.mostraLezione(c.getIdCorso(),x);
+        Assert.assertEquals(0,e.size());
+        Assert.assertNotNull(e);
+    }
+
+    @Test
+    public void confermaPrenotazione_elencoPrenotazioniClienteEmpty_returnAdded() throws CorsoException, LezioneException, PrenotazionePresenteException{
+        Lezione l;
+        x= new Cliente("Pippo","Pippo","Franco");
+        gym.confermaCorso(c=gym.nuovoCorso("Yoga","principiante","equilibrio","tappetino"));
+        gym.confermaLezione(l=gym.creaLezione(c,"Sala1","110","Matteo"));
+        gym.confermaPrenotazione(l.getIdLezione(),x);
+        Assert.assertEquals(1,x.getlistPrenotazioni().size());
+    }
+
+    @Test
+    public void confermaPrenotazione_lezionePrenotata_returnZero() throws CorsoException, LezioneException, PrenotazionePresenteException{
+        Lezione l;
+        x= new Cliente("Pippo","Pippo","Franco");
+        gym.confermaCorso(c=gym.nuovoCorso("Yoga","principiante","equilibrio","tappetino"));
+        gym.confermaLezione(l=gym.creaLezione(c,"Sala1","110","Matteo"));
+        Prenotazione p= new Prenotazione(x.getIdCliente(),l.getIdSlot(),l);
+        x.addPrenotazione(p);
+        gym.confermaPrenotazione(l.getIdLezione(),x);
+        Assert.assertEquals(1,x.getlistPrenotazioni().size());
+    }
+
+    @Test
+    public void confermaPrenotazione_limitePostiRaggiunto_returnZero() throws CorsoException, LezioneException, PrenotazionePresenteException{
+        Lezione l;
+        Sala s= gym.getElencoSale().get("Sala1");
+        List<String> a= new LinkedList<>();
+        a.add("tappetino");
+        s.setListaAttrezzi(a);
+        x= new Cliente("Pippo","Pippo","Franco");
+        gym.confermaCorso(c=gym.nuovoCorso("Yoga","principiante","equilibrio","tappetino"));
+        gym.confermaLezione(l=gym.creaLezione(c,"Sala1","110","Matteo"));
+        gym.confermaPrenotazione(l.getIdLezione(),x);
+        Cliente y= new Cliente("GAscia","Giuseppe","Ascia");
+        gym.confermaPrenotazione(l.getIdLezione(),y);
+        Assert.assertEquals(0,y.getlistPrenotazioni().size());
     }
 
     //UC3
