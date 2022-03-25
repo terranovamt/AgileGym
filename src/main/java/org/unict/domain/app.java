@@ -429,7 +429,7 @@ public class app {
             int menu = Integer.parseInt(br.readLine());
             switch (menu) {
                 case 1:
-                    agilegym.confermaPrenotazione(lezioneCorrente.getIdLezione(), logged);
+                    agilegym.confermaPrenotazione(lezioneCorrente, logged);
                     String s;
                     do {
                         s = "";

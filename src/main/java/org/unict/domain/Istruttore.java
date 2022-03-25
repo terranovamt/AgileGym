@@ -33,7 +33,6 @@ public class Istruttore {
     //UC1
     public  boolean isDisponibile(String idSlot){
         return this.mapSlot.get(idSlot);
-
     }
 
     public void setOccupato(String idSlot){
