@@ -74,4 +74,17 @@ public class ClienteTest {
         Assert.assertEquals(p, c.getlistPrenotazioni().get(0));
     }
 
+    @Test
+    public void replacePrenotazioneTest() throws PrenotazionePresenteException{
+        Lezione lc,lo;
+        lo=new Lezione("00a316","316",x,s,i);
+        lc=new Lezione("00a516","516",x,s,i);
+        p=lo.creaPrenotazione("Pippo");
+        Assert.assertTrue(c.replacePrenotazione(p,lc,lo));
+        Assert.assertTrue(lc.getElencoPrenotazioni().containsValue(p));
+        Assert.assertFalse(lo.getElencoPrenotazioni().containsValue(p));
+        Assert.assertEquals(lc,p.getLezione());
+
+    }
+
 }
