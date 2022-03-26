@@ -82,10 +82,7 @@ public class CorsoTest {
     }
 
     @Test
-    public void mostraLezioni_elencoPrenotazioneEmpty_returnAll() throws SalaException, ClienteException, CorsoException {
-        n = new LinkedList<>();
-        n.add("tappetino");
-        s.setListaAttrezzi(n);
+    public void mostraLezioni_elencoPrenotazioneEmpty_returnAll() throws ClienteException, SalaException {
         c.inserisciLezione(new Lezione("233445", o,c,s,i));
         c.inserisciLezione(new Lezione("233446", "316",c,s,i));
         Lezione x= new Lezione("233447", "516",c,s,i);
@@ -96,10 +93,7 @@ public class CorsoTest {
     }
 
     @Test
-    public void mostraLezioni_prenotazioneInserita_returnLezioniDisponibili() throws SalaException, ClienteException, CorsoException {
-        n = new LinkedList<>();
-        n.add("tappetino");
-        s.setListaAttrezzi(n);
+    public void mostraLezioni_prenotazioneInserita_returnLezioniDisponibili() throws ClienteException, SalaException {
         Lezione x = new Lezione("233445", o,c,s,i);
         c.inserisciLezione(x);
         c.inserisciLezione(new Lezione("233446", "316",c,s,i));
@@ -112,10 +106,7 @@ public class CorsoTest {
     }
 
     @Test
-    public void mostraLezioni_lezioniPrenotate_returnEmpty() throws SalaException, ClienteException, CorsoException {
-        n = new LinkedList<>();
-        n.add("tappetino");
-        s.setListaAttrezzi(n);
+    public void mostraLezioni_lezioniPrenotate_returnEmpty() throws ClienteException, SalaException {
         Lezione x= new Lezione("233445", o,c,s,i);
         c.inserisciLezione(x);
         p= new Prenotazione("Pippo",x);
@@ -130,9 +121,6 @@ public class CorsoTest {
 
     @Test
     public void confermaPrenotazione_lezionePresente_returnPrenotazione() throws CorsoException, LezioneException, PrenotazionePresenteException {
-        n = new LinkedList<>();
-        n.add("tappetino");
-        s.setListaAttrezzi(n);
         c.inserisciLezione(new Lezione("233445", o,c,s,i));
         c.inserisciLezione(new Lezione("233446", "316",c,s,i));
         c.inserisciLezione(new Lezione("233447", "516",c,s,i));
@@ -142,9 +130,6 @@ public class CorsoTest {
 
     @Test
     public void confermaPrenotazione_lezioneNonPresente_throwsException()throws CorsoException, LezioneException, PrenotazionePresenteException{
-        n = new LinkedList<>();
-        n.add("tappetino");
-        s.setListaAttrezzi(n);
         c.inserisciLezione(new Lezione("233445", o,c,s,i));
         c.inserisciLezione(new Lezione("233446", "316",c,s,i));
         c.inserisciLezione(new Lezione("233447", "516",c,s,i));

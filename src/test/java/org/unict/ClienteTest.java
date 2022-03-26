@@ -1,6 +1,10 @@
 package org.unict;
 
 import org.junit.*;
+import org.junit.experimental.theories.DataPoints;
+import org.junit.experimental.theories.Theories;
+import org.junit.experimental.theories.Theory;
+import org.junit.runner.RunWith;
 import org.unict.domain.*;
 import org.unict.domain.exception.*;
 
@@ -8,6 +12,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 
+@RunWith(Theories.class)
 public class ClienteTest {
 
     private Cliente c;
@@ -64,21 +69,25 @@ public class ClienteTest {
         Assert.assertTrue(c.getElencoPrenotazioni().containsValue(p));
     }
 
-    @Test
-    public void getlistPrenotazioni_prenotazioniRavvicinate_returnLast() throws PrenotazionePresenteException{
+    @DataPoints
+    public static int[][] dati() {
+        return new int[][] {{0,0},{2,0},{3,1}};
+    }
+    @Theory
+    public void getlistPrenotazioni_prenotazioniRavvicinate_returnLast(final int[] dati) throws PrenotazionePresenteException{
         LocalDateTime d= LocalDateTime.now();
         float now=(((d.getDayOfWeek().ordinal()+1)*100)+d.getHour());
-        l=new Lezione((String.valueOf(now)),(String.valueOf(now)),x,s,i);
+        l=new Lezione((String.valueOf(now)),(String.valueOf(now+dati[0])),x,s,i);
         p=new Prenotazione(c.getIdCliente(),l);
         c.addPrenotazione(p);
-        l=new Lezione((String.valueOf(now+1)),(String.valueOf(now+2)),x,s,i);
+        /*l=new Lezione((String.valueOf(now+1)),(String.valueOf(now+2)),x,s,i);
         p=new Prenotazione(c.getIdCliente(),l);
         c.addPrenotazione(p);
         l=new Lezione((String.valueOf(now+2)),(String.valueOf(now+3)),x,s,i);
         p=new Prenotazione(c.getIdCliente(),l);
-        c.addPrenotazione(p);
-        Assert.assertEquals(1,c.getlistPrenotazioni().size());
-        Assert.assertEquals(p, c.getlistPrenotazioni().get(0));
+        c.addPrenotazione(p);*/
+        Assert.assertEquals(dati[1],c.getlistPrenotazioni().size());
+        Assert.assertTrue(dati[1]==0 || c.getlistPrenotazioni().contains(p));
     }
 
     @Test

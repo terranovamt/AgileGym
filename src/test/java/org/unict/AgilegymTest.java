@@ -13,6 +13,7 @@ public class AgilegymTest {
     private Agilegym gym;
     private Corso c;
     private Cliente x;
+    private Lezione l;
 
     @Before
     public void setup(){
@@ -28,6 +29,8 @@ public class AgilegymTest {
         gym.loadSale();
         gym=null;
         x=null;
+        c=null;
+        l=null;
     }
     //UC1
     @Test
@@ -88,7 +91,7 @@ public class AgilegymTest {
     @Test
     public void confermaLezione_lezioneValida_returnAdded() throws CorsoException, LezioneException{
         Corso c=gym.nuovoCorso("Judo","principiante","forza","tappetino");
-        Lezione l=gym.creaLezione(c,"Sala1","510","Matteo");
+        l=gym.creaLezione(c,"Sala1","510","Matteo");
         Assert.assertTrue(gym.confermaLezione(l));
         Assert.assertFalse(gym.getElencoIstruttori().get(l.getIstruttore().getIdIstruttore()).isDisponibile(l.getIdSlot()));
         Assert.assertFalse(gym.getElencoSale().get(l.getSala().getIdSala()).getSlotDisponibili().contains("510"));
@@ -110,7 +113,6 @@ public class AgilegymTest {
     @Test
     public void mostraLezione_lezionePrenotata_returnOthers()throws CorsoException,LezioneException,PrenotazionePresenteException{
         gym.confermaCorso(c=gym.nuovoCorso("Yoga","principiante","equilibrio","tappetino"));
-        Lezione l;
         List<Lezione> e;
         gym.confermaLezione(gym.creaLezione(c,"Sala1","110","Matteo"));
         gym.confermaLezione(gym.creaLezione(c,"Sala1","310","Matteo"));
@@ -126,7 +128,6 @@ public class AgilegymTest {
     @Test
     public void mostraLezione_corsoNonHaLezioni_returnEmpty() throws CorsoException,LezioneException,PrenotazionePresenteException{
         gym.confermaCorso(c=gym.nuovoCorso("Yoga","principiante","equilibrio","tappetino"));
-        Lezione l;
         List<Lezione> e;
         gym.confermaLezione(gym.creaLezione(c,"Sala1","110","Matteo"));
         gym.confermaLezione(gym.creaLezione(c,"Sala1","310","Matteo"));
@@ -143,7 +144,6 @@ public class AgilegymTest {
     @Test
     public void mostraLezione_lezioneOrarioCoincidente_returnEmpty() throws CorsoException,LezioneException,PrenotazionePresenteException{
         gym.confermaCorso(c=gym.nuovoCorso("Yoga","principiante","equilibrio","tappetino"));
-        Lezione l;
         List<Lezione> e;
         gym.confermaLezione(gym.creaLezione(c,"Sala1","110","Matteo"));
         gym.confermaLezione(gym.creaLezione(c,"Sala1","310","Matteo"));
@@ -161,7 +161,6 @@ public class AgilegymTest {
     @Test
     public void mostraLezione_lezioniTuttePrenotate_returnEmpty() throws CorsoException,LezioneException,PrenotazionePresenteException{
         gym.confermaCorso(c=gym.nuovoCorso("Yoga","principiante","equilibrio","tappetino"));
-        Lezione l;
         List<Lezione> e;
         gym.confermaLezione(l=gym.creaLezione(c,"Sala1","110","Matteo"));
         x= new Cliente("Pippo","Pippo","Franco");
@@ -177,7 +176,6 @@ public class AgilegymTest {
 
     @Test
     public void confermaPrenotazione_elencoPrenotazioniClienteEmpty_returnAdded() throws CorsoException, LezioneException, PrenotazionePresenteException{
-        Lezione l;
         x= new Cliente("Pippo","Pippo","Franco");
         gym.confermaCorso(c=gym.nuovoCorso("Yoga","principiante","equilibrio","tappetino"));
         gym.confermaLezione(l=gym.creaLezione(c,"Sala1","110","Matteo"));
@@ -187,7 +185,6 @@ public class AgilegymTest {
 
     @Test
     public void confermaPrenotazione_lezionePrenotata_returnZero() throws CorsoException, LezioneException, PrenotazionePresenteException{
-        Lezione l;
         x= new Cliente("Pippo","Pippo","Franco");
         gym.confermaCorso(c=gym.nuovoCorso("Yoga","principiante","equilibrio","tappetino"));
         gym.confermaLezione(l=gym.creaLezione(c,"Sala1","110","Matteo"));
@@ -199,7 +196,6 @@ public class AgilegymTest {
 
     @Test
     public void confermaPrenotazione_limitePostiRaggiunto_returnZero() throws CorsoException, LezioneException, PrenotazionePresenteException{
-        Lezione l;
         Sala s= gym.getElencoSale().get("Sala1");
         List<String> a= new LinkedList<>();
         a.add("tappetino");
@@ -218,7 +214,6 @@ public class AgilegymTest {
     public void getLezioni_lezionePrenotata_returnOthers() throws CorsoException, LezioneException, PrenotazionePresenteException{
         x= new Cliente("Pippo","Pippo","Franco");
         gym.confermaCorso(c=gym.nuovoCorso("Yoga","principiante","equilibrio","tappetino"));
-        Lezione l;
         gym.confermaLezione(gym.creaLezione(c,"Sala1","110","Matteo"));
         gym.confermaLezione(gym.creaLezione(c,"Sala1","310","Matteo"));
         gym.confermaLezione(l=gym.creaLezione(c,"Sala1","510","Matteo"));

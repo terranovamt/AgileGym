@@ -1,6 +1,10 @@
 package org.unict;
 
 import org.junit.*;
+import org.junit.experimental.theories.DataPoints;
+import org.junit.experimental.theories.Theories;
+import org.junit.experimental.theories.Theory;
+import org.junit.runner.RunWith;
 import org.unict.domain.*;
 import org.unict.domain.exception.*;
 
@@ -8,6 +12,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 
+@RunWith(Theories.class)
 public class LezioneTest {
 
     private Lezione l;
@@ -115,14 +120,17 @@ public class LezioneTest {
         Throwable ex = Assert.assertThrows(PrenotazionePresenteException.class, ()-> l.creaPrenotazione("Pippo"));
         Assert.assertEquals(PrenotazionePresenteException.class, ex.getClass());
     }
-
-    @Test
-    public void controlloNewPrenotazione_prenotazioneLezioneInCorso_returnFalse(){
+    @DataPoints
+    public static int[][] dati() {
+        return new int[][] {{0,0},{1,0},{2,1}};
+    }
+    @Theory
+    public void controlloNewPrenotazione_prenotazioneLezioneInCorso_returnFalse(final int[] dati){
         LocalDateTime d= LocalDateTime.now();
-        String now=String.valueOf(((d.getDayOfWeek().ordinal()+1)*100)+d.getHour());
+        String now=String.valueOf(((d.getDayOfWeek().ordinal()+1)*100)+d.getHour()+dati[0]);
         l = new Lezione("233445", now, c,s,i);
         e= new TreeMap<>();
-        Assert.assertFalse( l.isPrenotabile(e));
+        Assert.assertEquals( dati[1]==1,l.isPrenotabile(e));
     }
 
     @Test
