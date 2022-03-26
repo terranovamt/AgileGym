@@ -73,13 +73,14 @@ public class Agilegym {
         return listIdIstruttori;
     }
 
-    public Lezione creaLezione(Corso corsoSelezionato,String idSala, String idSlot, String idIstruttore){
+    public Lezione creaLezione(Corso corsoSelezionato,String idSala, String idSlot, String idIstruttore) {
         corsoCorrente=corsoSelezionato;
-        Sala s =elencoSale.get(idSala); //?aggiungere controllo if(s.getNumAttrezzi(corsoCorrente.getAttrezzo())>0)
+        Sala s =elencoSale.get(idSala); //?aggiungere controllo
+        //if(s.getNumAttrezzi(corsoCorrente.getAttrezzo().getIdAttrezzo())<=0) throw new SalaException("La sala non contiene l'attrezzo");
         Istruttore i =elencoIstruttori.get(idIstruttore); //?aggiungere controllo if(i.isDisponibile(idSlot));
         String idLezione="";
         idLezione+=corsoCorrente.getIdCorso()+s.getIdSala()+idSlot;
-//?aggiungere controllo doppioni if(corsoCorrente.getElencoLezioni().containsKey(idLezione));
+        //?aggiungere controllo doppioni if(corsoCorrente.getElencoLezioni().containsKey(idLezione));
         return new Lezione(idLezione,idSlot,corsoCorrente,s,i);
     }
 
@@ -108,7 +109,7 @@ public class Agilegym {
         elencoPrenotazioneCliente = logged.getElencoPrenotazioni();
         try {
             lezioniDisponibili = corsoCorrente.mostraLezioni(elencoPrenotazioneCliente);
-        } catch (SalaPienaException | ClienteOccupatoException e) {
+        } catch (SalaException | ClienteException e) {
             e.printStackTrace();
         }
         return lezioniDisponibili;
@@ -141,7 +142,7 @@ public class Agilegym {
         elencoPrenotazioneCliente = logged.getElencoPrenotazioni();
         try {
             lezioniDisponibili = corsoCorrente.mostraLezioni(elencoPrenotazioneCliente);
-        } catch (SalaPienaException | ClienteOccupatoException e) {
+        } catch (SalaException | ClienteException e) {
             e.printStackTrace();
         }
         return lezioniDisponibili;

@@ -80,7 +80,7 @@ public class AgilegymTest {
     }
 //aggiungere eventualmente test case per lezioni doppie
     @Test //caso corsoSelezionato=null?
-    public void creaLezione_corsoValido_returnNotNull() throws CorsoException{
+    public void creaLezione_corsoValido_returnNotNull() throws CorsoException {
         Corso c=gym.nuovoCorso("Judo","principiante","forza","tappetino");
         Assert.assertNotNull(gym.creaLezione(c,"Sala1","510","Matteo"));
     }

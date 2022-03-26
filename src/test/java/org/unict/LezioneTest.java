@@ -47,7 +47,7 @@ public class LezioneTest {
     }
 
     @Test
-    public void isPrenotabile_lezioneNonHaPrenotazioni_returnTrue()throws PrenotazionePresenteException, ClienteOccupatoException, SalaPienaException{
+    public void isPrenotabile_lezioneNonHaPrenotazioni_returnTrue()throws PrenotazionePresenteException, ClienteException, SalaException {
         e = new TreeMap<>();
         p= new Prenotazione("Pippo",l);
         e.put(p.getIdPrenotazione(),p);
@@ -59,13 +59,13 @@ public class LezioneTest {
     }
 
     @Test
-    public void isPrenotabile_clienteNonHaPrenotazioni_returnTrue()throws PrenotazionePresenteException, ClienteOccupatoException, SalaPienaException{
+    public void isPrenotabile_clienteNonHaPrenotazioni_returnTrue()throws PrenotazionePresenteException, ClienteException, SalaException {
         e = new TreeMap<>();
         Assert.assertTrue(l.isPrenotabile(e));
     }
 
     @Test
-    public void isPrenotabile_salaPiena_returnFalse()throws PrenotazionePresenteException, ClienteOccupatoException, SalaPienaException{
+    public void isPrenotabile_salaPiena_returnFalse()throws PrenotazionePresenteException, ClienteException, SalaException {
         e = new TreeMap<>();
         p= new Prenotazione("Pippo",l);
         e.put(p.getIdPrenotazione(),p);
@@ -77,7 +77,7 @@ public class LezioneTest {
     }
 
     @Test
-    public void isPrenotabile_slotClienteOccupato_returnFalse()throws PrenotazionePresenteException, ClienteOccupatoException, SalaPienaException{
+    public void isPrenotabile_slotClienteOccupato_returnFalse()throws PrenotazionePresenteException, ClienteException, SalaException {
         e = new TreeMap<>();
         p= new Prenotazione("Pippo",l);
         e.put(p.getIdPrenotazione(),p);

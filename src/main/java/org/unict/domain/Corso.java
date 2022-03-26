@@ -26,12 +26,17 @@ public class Corso {
     }
 
     public boolean inserisciLezione (Lezione l )  {
-        elencoLezioni.put(l.getIdLezione(), l); //?aggiungere controllo if(this.getIdSaleAttrezzate().contains(l.getSala().getIdSala())|| l.getIstruttore().isDisponibile(l.getIdSlot()) || l.getSala().getSlotDisponibili().contains(l.getIdSlot()));
-        return true;
+         if(this.getIdSaleAttrezzate().contains(l.getSala().getIdSala())&&
+            l.getIstruttore().isDisponibile(l.getIdSlot()) &&
+            l.getSala().getSlotDisponibili().contains(l.getIdSlot())) {
+                elencoLezioni.put(l.getIdLezione(), l);
+                return true;
+            }
+         return false;
     }
 
     //UC2
-    public List<Lezione> mostraLezioni(Map<String,Prenotazione> elencoPrenotazioneUtente) throws SalaPienaException, ClienteOccupatoException {
+    public List<Lezione> mostraLezioni(Map<String,Prenotazione> elencoPrenotazioneUtente) throws SalaException, ClienteException {
         List<Lezione> elencoLezioniDisponibili= new ArrayList<>();
 
         for (String key : elencoLezioni.keySet()){

@@ -42,8 +42,6 @@ public class Lezione {
                     return false;
                 }
             }else{
-                //questa fa bloccare il metodo
-                //throw new ClienteOccupatoException("Hai giá una prenotazione in questo orario");
                 // qui inseriamo la stampa della lezione che si sovrappone cosi portiamo
                 // a conoscenza l'utente che esiste quella lezione
                 System.out.println("\nLEZIONE CON SOVRAPPOSIZIONE");
@@ -85,23 +83,13 @@ public class Lezione {
             elencoPrenotazioni.put(p.getIdPrenotazione(), p);
             return p;
         }
-
-            /*for (String key: elencoPrenotazioni.keySet()) {
-                if(!elencoPrenotazioni.get(key).getIdCliente().equals(idCliente)){
-                    Prenotazione p = new Prenotazione(idCliente, this);
-                    elencoPrenotazioni.put(p.getIdPrenotazione(), p);
-                    return p;
-                }
-                else throw new PrenotazionePresenteException("Esiste giá una prenotazione per questo cliente");
-            }
-        }
-        return null;*/
     }
 
     //UC3
     public boolean updatePrenotazione(Prenotazione p){
         return elencoPrenotazioni.put(p.getIdPrenotazione(), p)==null;
     }
+
     public boolean removePrenotazione(Prenotazione p){
         return elencoPrenotazioni.remove(p.getIdPrenotazione())!=null;
     }

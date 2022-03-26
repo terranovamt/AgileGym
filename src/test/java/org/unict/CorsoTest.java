@@ -82,7 +82,7 @@ public class CorsoTest {
     }
 
     @Test
-    public void mostraLezioni_elencoPrenotazioneEmpty_returnAll() throws SalaPienaException, ClienteOccupatoException, CorsoException {
+    public void mostraLezioni_elencoPrenotazioneEmpty_returnAll() throws SalaException, ClienteException, CorsoException {
         n = new LinkedList<>();
         n.add("tappetino");
         s.setListaAttrezzi(n);
@@ -96,7 +96,7 @@ public class CorsoTest {
     }
 
     @Test
-    public void mostraLezioni_prenotazioneInserita_returnLezioniDisponibili() throws SalaPienaException, ClienteOccupatoException, CorsoException {
+    public void mostraLezioni_prenotazioneInserita_returnLezioniDisponibili() throws SalaException, ClienteException, CorsoException {
         n = new LinkedList<>();
         n.add("tappetino");
         s.setListaAttrezzi(n);
@@ -112,7 +112,7 @@ public class CorsoTest {
     }
 
     @Test
-    public void mostraLezioni_lezioniPrenotate_returnEmpty() throws SalaPienaException, ClienteOccupatoException, CorsoException {
+    public void mostraLezioni_lezioniPrenotate_returnEmpty() throws SalaException, ClienteException, CorsoException {
         n = new LinkedList<>();
         n.add("tappetino");
         s.setListaAttrezzi(n);
