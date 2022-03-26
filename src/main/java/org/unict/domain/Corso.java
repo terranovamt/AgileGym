@@ -26,7 +26,7 @@ public class Corso {
     }
 
     public boolean inserisciLezione (Lezione l )  {
-        elencoLezioni.put(l.getIdLezione(), l);
+        elencoLezioni.put(l.getIdLezione(), l); //?aggiungere controllo if(this.getIdSaleAttrezzate().contains(l.getSala().getIdSala())|| l.getIstruttore().isDisponibile(l.getIdSlot()) || l.getSala().getSlotDisponibili().contains(l.getIdSlot()));
         return true;
     }
 

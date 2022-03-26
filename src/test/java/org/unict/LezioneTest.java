@@ -37,6 +37,7 @@ public class LezioneTest {
 
     @After
     public void teardown(){
+        l.getElencoPrenotazioni().clear();
         l=null;
         a=null;
         s=null;
@@ -50,9 +51,11 @@ public class LezioneTest {
         e = new TreeMap<>();
         p= new Prenotazione("Pippo",l);
         e.put(p.getIdPrenotazione(),p);
-        p=new Prenotazione("Pippo",l);
+        p=new Prenotazione("Orazio",l);
         e.put(p.getIdPrenotazione(),p);
+        l=new Lezione("233446","310", c,s,i);
         Assert.assertTrue(l.isPrenotabile(e));
+        Assert.assertEquals(0,l.getElencoPrenotazioni().size());
     }
 
     @Test
@@ -78,9 +81,6 @@ public class LezioneTest {
         e = new TreeMap<>();
         p= new Prenotazione("Pippo",l);
         e.put(p.getIdPrenotazione(),p);
-        p=new Prenotazione("Pippo",l);
-        e.put(p.getIdPrenotazione(),p);
-        //l.creaPrenotazione("Pippo");
         l.creaPrenotazione("Orazio");
         Assert.assertFalse(l.isPrenotabile(e));
     }

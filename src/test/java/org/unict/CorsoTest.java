@@ -41,6 +41,7 @@ public class CorsoTest {
         c=null;
         a=null;
         o=null;
+        s.setListaAttrezzi(new LinkedList<>());
         s=null;
         i=null;
         p=null;
@@ -53,7 +54,7 @@ public class CorsoTest {
         Assert.assertTrue(c.getElencoLezioni().containsKey("233445"));
         Assert.assertEquals (1,c.getElencoLezioni().size());
     }
-
+//non vanno senza controllo,no exception-> if(attrezzo.getSale().contains(s.getIdSala()) && s.getListaAttrezzi().contains(attrezzo.getIdAttrezzo()) && s.getSlotDisponibili().contains(idSlot) && i.getMapSlot().get(idSlot))
     @Test
     public void inserisciILezioneTest_salaErrata_throwsException() throws IOException{
         s = new Sala("Sala5");
@@ -147,7 +148,7 @@ public class CorsoTest {
         c.inserisciLezione(new Lezione("233445", o,c,s,i));
         c.inserisciLezione(new Lezione("233446", "316",c,s,i));
         c.inserisciLezione(new Lezione("233447", "516",c,s,i));
-        Throwable e = Assert.assertThrows(LezioneException.class, ()-> c.confermaPrenotazione(c.getElencoLezioni().get("334555"), "Pippo"));
+        Throwable e = Assert.assertThrows(LezioneException.class, ()-> c.confermaPrenotazione(new Lezione("233444","510",c,s,i),"Pippo"));
         Assert.assertEquals(LezioneException.class,e.getClass());
     }
 }

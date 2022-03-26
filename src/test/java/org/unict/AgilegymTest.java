@@ -1,6 +1,7 @@
 package org.unict;
 
 import org.junit.*;
+
 import org.unict.domain.*;
 import org.unict.domain.exception.*;
 
@@ -19,7 +20,12 @@ public class AgilegymTest {
     }
 
     @After
-    public void teardown(){
+    public void tearDown(){
+        gym.getElencoCorsi().clear();
+        gym.getElencoClienti().clear();
+        gym.loadIstruttore();
+        gym.loadAttrezzi();
+        gym.loadSale();
         gym=null;
         x=null;
     }
@@ -72,7 +78,7 @@ public class AgilegymTest {
         Throwable ex= Assert.assertThrows(IstruttoreException.class, ()->gym.getIstruttori("516"));
         Assert.assertEquals(IstruttoreException.class, ex.getClass());
     }
-
+//aggiungere eventualmente test case per lezioni doppie
     @Test //caso corsoSelezionato=null?
     public void creaLezione_corsoValido_returnNotNull() throws CorsoException{
         Corso c=gym.nuovoCorso("Judo","principiante","forza","tappetino");
@@ -84,7 +90,7 @@ public class AgilegymTest {
         Corso c=gym.nuovoCorso("Judo","principiante","forza","tappetino");
         Lezione l=gym.creaLezione(c,"Sala1","510","Matteo");
         Assert.assertTrue(gym.confermaLezione(l));
-        //Assert.assertFalse(gym.getElencoIstruttori().get(l.getIstruttore().getIdIstruttore()).isDisponibile(l.getIdSlot()));
+        Assert.assertFalse(gym.getElencoIstruttori().get(l.getIstruttore().getIdIstruttore()).isDisponibile(l.getIdSlot()));
         Assert.assertFalse(gym.getElencoSale().get(l.getSala().getIdSala()).getSlotDisponibili().contains("510"));
     }
     //UC2
