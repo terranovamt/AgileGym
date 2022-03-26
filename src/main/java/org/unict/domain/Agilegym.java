@@ -75,12 +75,11 @@ public class Agilegym {
 
     public Lezione creaLezione(Corso corsoSelezionato,String idSala, String idSlot, String idIstruttore) {
         corsoCorrente=corsoSelezionato;
-        Sala s =elencoSale.get(idSala); //?aggiungere controllo
-        //if(s.getNumAttrezzi(corsoCorrente.getAttrezzo().getIdAttrezzo())<=0) throw new SalaException("La sala non contiene l'attrezzo");
-        Istruttore i =elencoIstruttori.get(idIstruttore); //?aggiungere controllo if(i.isDisponibile(idSlot));
+        Sala s =elencoSale.get(idSala);
+        Istruttore i =elencoIstruttori.get(idIstruttore);
         String idLezione="";
         idLezione+=corsoCorrente.getIdCorso()+s.getIdSala()+idSlot;
-        //?aggiungere controllo doppioni if(corsoCorrente.getElencoLezioni().containsKey(idLezione));
+
         return new Lezione(idLezione,idSlot,corsoCorrente,s,i);
     }
 
