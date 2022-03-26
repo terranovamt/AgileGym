@@ -311,8 +311,8 @@ public class Agilegym {
     }
 
     public static String randId(){
-        String s=String.valueOf((abs((int) System.currentTimeMillis() + (int)(Math.random()*(1000000000)))/10));
-        return s.substring(3,7);
+        String s=String.valueOf((abs((int) System.currentTimeMillis() + (int)(Math.random()*(1000000000)))%100000));
+        return s;
     }
 
     //GET E SET STANDARD

@@ -52,7 +52,7 @@ public class LezioneTest {
     }
 
     @Test
-    public void isPrenotabile_lezioneNonHaPrenotazioni_returnTrue()throws PrenotazionePresenteException, ClienteException, SalaException {
+    public void isPrenotabile_lezioneNonHaPrenotazioni_returnTrue(){
         e = new TreeMap<>();
         p= new Prenotazione("Pippo",l);
         e.put(p.getIdPrenotazione(),p);
@@ -64,25 +64,25 @@ public class LezioneTest {
     }
 
     @Test
-    public void isPrenotabile_clienteNonHaPrenotazioni_returnTrue()throws PrenotazionePresenteException, ClienteException, SalaException {
+    public void isPrenotabile_clienteNonHaPrenotazioni_returnTrue(){
         e = new TreeMap<>();
         Assert.assertTrue(l.isPrenotabile(e));
     }
 
     @Test
-    public void isPrenotabile_salaPiena_returnFalse()throws PrenotazionePresenteException, ClienteException, SalaException {
+    public void isPrenotabile_salaPiena_returnFalse()throws PrenotazionePresenteException {
         e = new TreeMap<>();
         p= new Prenotazione("Pippo",l);
         e.put(p.getIdPrenotazione(),p);
         p=new Prenotazione("Pippo",l);
         e.put(p.getIdPrenotazione(),p);
-        l.creaPrenotazione("Pippo"); //manca il controllo su idCliente in isPrenotabile
+        l.creaPrenotazione("Pippo");
         l.creaPrenotazione("Orazio");
         Assert.assertFalse(l.isPrenotabile(e));
     }
 
     @Test
-    public void isPrenotabile_slotClienteOccupato_returnFalse()throws PrenotazionePresenteException, ClienteException, SalaException {
+    public void isPrenotabile_slotClienteOccupato_returnFalse()throws PrenotazionePresenteException {
         e = new TreeMap<>();
         p= new Prenotazione("Pippo",l);
         e.put(p.getIdPrenotazione(),p);
@@ -120,6 +120,7 @@ public class LezioneTest {
         Throwable ex = Assert.assertThrows(PrenotazionePresenteException.class, ()-> l.creaPrenotazione("Pippo"));
         Assert.assertEquals(PrenotazionePresenteException.class, ex.getClass());
     }
+
     @DataPoints
     public static int[][] dati() {
         return new int[][] {{0,0},{1,0},{2,1}};

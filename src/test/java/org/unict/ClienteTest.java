@@ -71,7 +71,7 @@ public class ClienteTest {
 
     @DataPoints
     public static int[][] dati() {
-        return new int[][] {{0,0},{2,0},{3,1}};
+        return new int[][] {{0,0},{1,0},{2,0},{3,1}};
     }
     @Theory
     public void getlistPrenotazioni_prenotazioniRavvicinate_returnLast(final int[] dati) throws PrenotazionePresenteException{
@@ -80,12 +80,6 @@ public class ClienteTest {
         l=new Lezione((String.valueOf(now)),(String.valueOf(now+dati[0])),x,s,i);
         p=new Prenotazione(c.getIdCliente(),l);
         c.addPrenotazione(p);
-        /*l=new Lezione((String.valueOf(now+1)),(String.valueOf(now+2)),x,s,i);
-        p=new Prenotazione(c.getIdCliente(),l);
-        c.addPrenotazione(p);
-        l=new Lezione((String.valueOf(now+2)),(String.valueOf(now+3)),x,s,i);
-        p=new Prenotazione(c.getIdCliente(),l);
-        c.addPrenotazione(p);*/
         Assert.assertEquals(dati[1],c.getlistPrenotazioni().size());
         Assert.assertTrue(dati[1]==0 || c.getlistPrenotazioni().contains(p));
     }
@@ -101,7 +95,6 @@ public class ClienteTest {
         Assert.assertTrue(lc.getElencoPrenotazioni().containsValue(p));
         Assert.assertFalse(lo.getElencoPrenotazioni().containsValue(p));
         Assert.assertEquals(lc,p.getLezione());
-
     }
 
 }

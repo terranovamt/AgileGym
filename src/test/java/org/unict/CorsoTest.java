@@ -49,40 +49,40 @@ public class CorsoTest {
         n.clear();
     }
     @Test
-    public void inserisciILezioneTest_datiValidi_returnTrue() throws CorsoException {
+    public void inserisciILezioneTest_datiValidi_returnTrue() throws LezioneException {
         c.inserisciLezione(new Lezione("233445", o,c,s,i));
         Assert.assertTrue(c.getElencoLezioni().containsKey("233445"));
         Assert.assertEquals (1,c.getElencoLezioni().size());
     }
-//non vanno senza controllo,no exception-> if(attrezzo.getSale().contains(s.getIdSala()) && s.getListaAttrezzi().contains(attrezzo.getIdAttrezzo()) && s.getSlotDisponibili().contains(idSlot) && i.getMapSlot().get(idSlot))
+
     @Test
     public void inserisciILezioneTest_salaErrata_throwsException() throws IOException{
         s = new Sala("Sala5");
         n =  new LinkedList<>();
         n.add("tappetino");
         s.setListaAttrezzi(n);
-        Throwable e = Assert.assertThrows(CorsoException.class, ()-> c.inserisciLezione(new Lezione("233445", o,c,s,i)));
-        Assert.assertEquals(CorsoException.class,e.getClass());
+        Throwable e = Assert.assertThrows(LezioneException.class, ()-> c.inserisciLezione(new Lezione("233445", o,c,s,i)));
+        Assert.assertEquals(LezioneException.class,e.getClass());
     }
 
     @Test
-    public void inserisciILezioneTest_slotSalaOccupato_throwsException() throws CorsoException{
+    public void inserisciILezioneTest_slotSalaOccupato_throwsException() throws LezioneException{
         c.inserisciLezione(new Lezione("233445", o,c,s,i));
         s.setOccupato(o);
-        Throwable e = Assert.assertThrows(CorsoException.class, ()-> c.inserisciLezione(new Lezione("233446", o,c,s,i)));
-        Assert.assertEquals(CorsoException.class,e.getClass());
+        Throwable e = Assert.assertThrows(LezioneException.class, ()-> c.inserisciLezione(new Lezione("233446", o,c,s,i)));
+        Assert.assertEquals(LezioneException.class,e.getClass());
     }
 
     @Test
-    public void inserisciILezioneTest_slotIstruttoreOccupato_throwsException() throws CorsoException{
+    public void inserisciILezioneTest_slotIstruttoreOccupato_throwsException() throws LezioneException{
         c.inserisciLezione(new Lezione("233445", o,c,s,i));
         i.setOccupato(o);
-        Throwable e = Assert.assertThrows(CorsoException.class, ()-> c.inserisciLezione(new Lezione("233446", o,c,s,i)));
-        Assert.assertEquals(CorsoException.class,e.getClass());
+        Throwable e = Assert.assertThrows(LezioneException.class, ()-> c.inserisciLezione(new Lezione("233446", o,c,s,i)));
+        Assert.assertEquals(LezioneException.class,e.getClass());
     }
 
     @Test
-    public void mostraLezioni_elencoPrenotazioneEmpty_returnAll() throws ClienteException, SalaException {
+    public void mostraLezioni_elencoPrenotazioneEmpty_returnAll() throws ClienteException, SalaException, LezioneException {
         c.inserisciLezione(new Lezione("233445", o,c,s,i));
         c.inserisciLezione(new Lezione("233446", "316",c,s,i));
         Lezione x= new Lezione("233447", "516",c,s,i);
@@ -93,7 +93,7 @@ public class CorsoTest {
     }
 
     @Test
-    public void mostraLezioni_prenotazioneInserita_returnLezioniDisponibili() throws ClienteException, SalaException {
+    public void mostraLezioni_prenotazioneInserita_returnLezioniDisponibili() throws ClienteException, SalaException, LezioneException {
         Lezione x = new Lezione("233445", o,c,s,i);
         c.inserisciLezione(x);
         c.inserisciLezione(new Lezione("233446", "316",c,s,i));
@@ -106,7 +106,7 @@ public class CorsoTest {
     }
 
     @Test
-    public void mostraLezioni_lezioniPrenotate_returnEmpty() throws ClienteException, SalaException {
+    public void mostraLezioni_lezioniPrenotate_returnEmpty() throws ClienteException, SalaException, LezioneException {
         Lezione x= new Lezione("233445", o,c,s,i);
         c.inserisciLezione(x);
         p= new Prenotazione("Pippo",x);
@@ -120,7 +120,7 @@ public class CorsoTest {
     }
 
     @Test
-    public void confermaPrenotazione_lezionePresente_returnPrenotazione() throws CorsoException, LezioneException, PrenotazionePresenteException {
+    public void confermaPrenotazione_lezionePresente_returnPrenotazione() throws  LezioneException, PrenotazionePresenteException {
         c.inserisciLezione(new Lezione("233445", o,c,s,i));
         c.inserisciLezione(new Lezione("233446", "316",c,s,i));
         c.inserisciLezione(new Lezione("233447", "516",c,s,i));
@@ -129,7 +129,7 @@ public class CorsoTest {
     }
 
     @Test
-    public void confermaPrenotazione_lezioneNonPresente_throwsException()throws CorsoException, LezioneException, PrenotazionePresenteException{
+    public void confermaPrenotazione_lezioneNonPresente_throwsException()throws LezioneException{
         c.inserisciLezione(new Lezione("233445", o,c,s,i));
         c.inserisciLezione(new Lezione("233446", "316",c,s,i));
         c.inserisciLezione(new Lezione("233447", "516",c,s,i));

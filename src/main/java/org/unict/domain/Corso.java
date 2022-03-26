@@ -25,14 +25,14 @@ public class Corso {
         return this.getAttrezzo().getSale();
     }
 
-    public boolean inserisciLezione (Lezione l )  {
+    public boolean inserisciLezione (Lezione l ) throws LezioneException {
          if(this.getIdSaleAttrezzate().contains(l.getSala().getIdSala())&&
             l.getIstruttore().isDisponibile(l.getIdSlot()) &&
             l.getSala().getSlotDisponibili().contains(l.getIdSlot())) {
                 elencoLezioni.put(l.getIdLezione(), l);
                 return true;
             }
-         return false;
+         throw new LezioneException("Errore nell'inserimento Lezione");
     }
 
     //UC2

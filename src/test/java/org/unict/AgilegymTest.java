@@ -47,7 +47,7 @@ public class AgilegymTest {
     }
 
     @Test
-    public void nuovoCorso_attrezzoNonPresente_throwsException() throws CorsoException{
+    public void nuovoCorso_attrezzoNonPresente_throwsException(){
         Throwable ex= Assert.assertThrows(CorsoException.class, ()-> gym.nuovoCorso("Judo","principiante","forza","tatami"));
         Assert.assertEquals(CorsoException.class, ex.getClass());
     }
@@ -72,7 +72,7 @@ public class AgilegymTest {
     }
 
     @Test
-    public void getIstruttori_istruttoriOccupati_throwsException() throws IstruttoreException{
+    public void getIstruttori_istruttoriOccupati_throwsException(){
         Istruttore i;
         for(String key : gym.getElencoIstruttori().keySet()){
             i=gym.getElencoIstruttori().get(key);
@@ -103,7 +103,7 @@ public class AgilegymTest {
     }
 
     @Test
-    public void nuovaPrenotazione_corsoInElenco_returnCorso()throws CorsoException, LezioneException{
+    public void nuovaPrenotazione_corsoInElenco_returnCorso()throws CorsoException{
         Corso c=gym.nuovoCorso("Judo","principiante","forza","tappetino");
         gym.confermaCorso(c);
         Assert.assertEquals(1,gym.nuovaPrenotazione().size());
